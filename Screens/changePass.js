@@ -1,0 +1,153 @@
+import { StatusBar } from 'expo-status-bar';
+import React, {useState} from 'react';
+import { Dimensions, StyleSheet, Text, View, Image, TextInput, Button, Header } from 'react-native';
+import { TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
+var width = Dimensions.get('window').width;
+var height = Dimensions.get('window').height;
+export default function ChangepassScreen({navigation}) {
+	return (
+		<View style = {styles.container}>
+			<View style={{flex:1}}> 
+				<View
+					style={{
+						borderBottomColor: 'gray',
+						borderBottomWidth: 1,
+						flex:1,
+						justifyContent:'center',
+					}}
+				>
+					<Image
+						style = {styles.imageHeader}
+						source={require('./StepCounterImg.png')}
+					/>
+					<Text style={styles.titleText}> Change Password </Text>
+				</View>
+			</View>
+			<View style={{flex:9}}>
+				<View style={{flex:3,justifyContent: 'center',alignItems: 'center'}}>
+					<View style={styles.container1}>
+					<Image
+						style = {styles.image}
+						source={require('./StepCounterImg.png')}
+					/>
+					</View>
+				</View>
+				<View style={{flex:7,}}>
+					<View style={{flex:4,justifyContent:'center'}}>
+						<View style={{flex:1,justifyContent:'center'}} >
+							<Text style = {styles.passText}>Old PassWord</Text>
+							<TextInput
+								style = {styles.input}
+								placeholder = "  Old password"
+								secureTextEntry={true}
+								textAlign ='left'
+							/>
+						</View>
+						<View style={{flex:1,justifyContent:'center'}}>
+							<Text style = {styles.passText}>New PassWord</Text>
+							<TextInput
+								style = {styles.input}
+								placeholder = "  New password"
+								secureTextEntry={true}
+							/>
+						</View>
+						<View style={{flex:1,justifyContent:'center'}}>
+							<Text style = {styles.passText}>Confirm New PassWord</Text>
+							<TextInput
+								style = {styles.input}
+								placeholder = "  Password"
+								secureTextEntry={true}
+							/>
+						</View>
+					</View>
+					<View style={{flex:2}}>
+						<View style={styles.buttonSection}>
+							<TouchableOpacity style={[styles.button,{color:'blue',marginLeft:20}]}>
+								<Text>Confirm</Text>
+							</TouchableOpacity>
+							<TouchableOpacity style={[styles.button,{marginRight:20}]}>
+								<Text>Cancel</Text>
+							</TouchableOpacity>
+						</View>
+					</View>
+				</View>
+			</View>
+			
+		</View>
+	);
+}
+const styles = StyleSheet.create({
+	container:{
+		flex:1,
+		flexDirection:'column',
+		backgroundColor: '#C1CDCD',
+	},
+	container1: {
+		alignItems:'center',
+		justifyContent:'center',
+		shadowColor: "#000",
+		shadowOffset: {
+		width: -5,
+		height: 10,
+	},
+		shadowOpacity: 0.23,
+		elevation: 4,
+		height:108,
+		borderRadius:20,
+		width:108,
+	},
+	image: {
+		resizeMode: 'center',
+		height:'100%',
+		width:'100%'
+	},
+	imageHeader: {
+		height:'100%',
+		width:width/6,
+		resizeMode:'contain'
+	},
+	titleText:{
+		flex:1,
+		textAlign:'center',
+		color:'black',
+		fontSize:30,
+		fontWeight:'bold',
+		textAlignVertical: 'bottom',
+	},
+	passText:{
+		fontSize: 20,
+		marginLeft: width/6,
+	},
+	input:{
+		height: 40,
+		borderWidth: 1,
+		marginLeft:width/6,
+		marginRight:width/6,
+	},
+	buttonSection:{
+		flexDirection: 'row',
+		alignItems: 'center',
+		justifyContent: 'space-evenly',
+		flex:1
+	},
+	button: {
+		alignItems: "center",
+		justifyContent:'center',
+		textAlignVertical:'center',
+		width:120,
+		height:40,
+		borderRadius:10,
+		backgroundColor:'dodgerblue',
+	},
+	sidebar:{
+		alignItems:'center',
+		textAlignVertical:'center',
+		justifyContent:'center',
+	},
+	sibarSection:{
+		flex:1,
+		flexDirection:'row',
+		backgroundColor:'gray',
+		justifyContent:'center',
+	}
+});

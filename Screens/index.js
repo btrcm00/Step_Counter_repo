@@ -1,0 +1,6 @@
+export {default as HomeScreen} from './home'
+export {default as ChangepassScreen} from './changePass'
+export {default as LoginScreen} from './login'
+export {default as RegisterScreen} from './register'
+export {default as DashboardScreen} from './dashboard'
+export {default as LeaderboardScreen} from './leaderboard'
