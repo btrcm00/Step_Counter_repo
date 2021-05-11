@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useState} from 'react';
-import { Dimensions, StyleSheet, Text, View, Image, TextInput, Button, Header } from 'react-native';
+import { Dimensions, StyleSheet, Text, View, Image, TextInput, Button, Header, Alert } from 'react-native';
 import { TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
@@ -14,6 +14,7 @@ export default function ChangepassScreen({navigation}) {
 						borderBottomWidth: 1,
 						flex:1,
 						justifyContent:'center',
+						flexDirection:'row'
 					}}
 				>
 					<Image
@@ -62,10 +63,16 @@ export default function ChangepassScreen({navigation}) {
 					</View>
 					<View style={{flex:2}}>
 						<View style={styles.buttonSection}>
-							<TouchableOpacity style={[styles.button,{color:'blue',marginLeft:20}]}>
+							<TouchableOpacity 
+								style={[styles.button,{color:'blue',marginLeft:20}]}
+								onPress = {()=>{ navigation.navigate('HomeScreen')}}
+							>
 								<Text>Confirm</Text>
 							</TouchableOpacity>
-							<TouchableOpacity style={[styles.button,{marginRight:20}]}>
+							<TouchableOpacity 
+								style={[styles.button,{marginRight:20}]}
+								onPress = {()=>{ navigation.goBack()}}
+							>
 								<Text>Cancel</Text>
 							</TouchableOpacity>
 						</View>
@@ -80,7 +87,7 @@ const styles = StyleSheet.create({
 	container:{
 		flex:1,
 		flexDirection:'column',
-		backgroundColor: '#C1CDCD',
+		backgroundColor: '#b0e0e6',
 	},
 	container1: {
 		alignItems:'center',
@@ -108,11 +115,9 @@ const styles = StyleSheet.create({
 	},
 	titleText:{
 		flex:1,
-		textAlign:'center',
 		color:'black',
-		fontSize:30,
+		fontSize:24,
 		fontWeight:'bold',
-		textAlignVertical: 'bottom',
 	},
 	passText:{
 		fontSize: 20,

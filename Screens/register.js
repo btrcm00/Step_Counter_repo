@@ -1,9 +1,13 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, Button} from 'react-native';
 export default function RegisterScreen({navigation}) {
 	return (
-		<View style = {styles.container}>
-            <Text>register</Text>
+		<View style={{ flex: 1,backgroundColor:'pink', alignItems: 'center', justifyContent: 'center' }}>
+        <Button
+            title = "Login"
+            mode="outlined"
+            onPress={() => navigation.navigate('LoginScreen')}
+        />
         </View>
 	);
 }
