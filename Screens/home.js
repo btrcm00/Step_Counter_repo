@@ -1,10 +1,9 @@
-import { Dimensions, StyleSheet, Text, View, Image, TextInput, Button, Header } from 'react-native';
+import { StyleSheet, View, Image, TextInput, Button, Header } from 'react-native';
 import React from 'react';
 
 export default function HomeScreen({navigation}){
     return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <Text>go to Change Password</Text>
+        <View style={{ flex: 1,backgroundColor:'#b0e0e6', alignItems: 'center', justifyContent: 'center' }}>
           <Button
             title="Go to ChangePassword!"
             onPress={() => navigation.navigate('ChangepassScreen')}
@@ -28,3 +27,8 @@ export default function HomeScreen({navigation}){
         </View>
       );
 }
+const styles = StyleSheet.create({
+  button:{
+    color:'red'
+  }
+})
