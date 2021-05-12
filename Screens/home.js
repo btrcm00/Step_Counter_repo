@@ -1,30 +1,53 @@
-import { StyleSheet, View, Image, TextInput, Button, Header } from 'react-native';
 import React from 'react';
+import {StyleSheet,View,Button } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
 
+import Icon from 'react-native-vector-icons/MaterialIcons';
+const HomeStack = createStackNavigator();
+function HomeStackScreen({navigation}){
+    return(
+      <View style={{ flex: 1,backgroundColor:'#b0e0e6', alignItems: 'center', justifyContent: 'center' }}>
+      <Button
+        title="Go to ChangePassword!"
+        onPress={() => navigation.navigate('Changepass')}
+      />
+      <Button
+        title="Go to Register!"
+        onPress={() => navigation.navigate('Register')}
+      />
+      <Button
+        title="Go to Login!"
+        onPress={() => navigation.navigate('Login')}
+      />
+      <Button
+        title="Go to Dashboard!"
+        onPress={() => navigation.navigate('DashBoard')}
+      />
+      <Button
+        title="Go to LeaderBoard!"
+        onPress={() => navigation.navigate('LeaderBoard')}
+      />
+    </View>
+    );
+};
 export default function HomeScreen({navigation}){
     return (
-        <View style={{ flex: 1,backgroundColor:'#b0e0e6', alignItems: 'center', justifyContent: 'center' }}>
-          <Button
-            title="Go to ChangePassword!"
-            onPress={() => navigation.navigate('ChangepassScreen')}
-          />
-          <Button
-            title="Go to Register!"
-            onPress={() => navigation.navigate('RegisterScreen')}
-          />
-          <Button
-            title="Go to Login!"
-            onPress={() => navigation.navigate('LoginScreen')}
-          />
-          <Button
-            title="Go to Dashboard!"
-            onPress={() => navigation.navigate('DashboardScreen')}
-          />
-          <Button
-            title="Go to LeaderBoard!"
-            onPress={() => navigation.navigate('LeaderboardScreen')}
-          />
-        </View>
+      <HomeStack.Navigator screenOptions={{
+        headerStyle: {
+        backgroundColor: '#009387',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+        fontWeight: 'bold'
+        }
+    }}>
+        <HomeStack.Screen name="HomeSc" component={HomeStackScreen} options={{
+        title:'Step Counter',
+        headerLeft: () => (
+            <Icon.Button name="menu" size={25} backgroundColor="#009387" onPress={() => navigation.openDrawer()}></Icon.Button>
+        )
+        }} />
+</HomeStack.Navigator>
       );
 }
 const styles = StyleSheet.create({
