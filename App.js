@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { ChangepassScreen, HomeScreen, RegisterScreen, LoginScreen, DashboardScreen, LeaderboardScreen, StartScreen} from './Screens'
+import { ChangepassScreen, HomeScreen, RegisterScreen, LoginScreen, DashboardScreen, LeaderboardScreen, StartScreen, AnalyticScreen} from './Screens'
 const Stack = createStackNavigator();
 function App() {
   return (
@@ -16,6 +16,7 @@ function App() {
         <Stack.Screen name="RegisterScreen" component={RegisterScreen}  />
         <Stack.Screen name="DashboardScreen" component={DashboardScreen}  />
         <Stack.Screen name="LeaderboardScreen" component={LeaderboardScreen}  />
+        <Stack.Screen name="AnalyticScreen" component={AnalyticScreen}  />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -24,6 +24,10 @@ export default function HomeScreen({navigation}){
             title="Go to LeaderBoard!"
             onPress={() => navigation.navigate('LeaderboardScreen')}
           />
+          <Button
+            title="Go to Analytic!"
+            onPress={() => navigation.navigate('AnalyticScreen')}
+          />
         </View>
       );
 }
