@@ -26,7 +26,7 @@ const MyBarChart = () => {
             backgroundGradientTo: '#a8c6fa',
             decimalPlaces: 0,
           
-            color: (opacity = 1) => `rgba(1, 1, 1, ${opacity})`,
+            color: (opacity = 0) => `rgba(03, 30, 75, 0.7)`,
             style: {
               borderRadius: 0,
             },
@@ -68,7 +68,7 @@ const MyLineChart = () => {
             backgroundGradientFrom: '#a8c6fa',
             backgroundGradientTo: '#a8c6fa',
             decimalPlaces: 2,
-            color: (opacity=0) => `rgba(1, 0, 0, ${opacity})`,
+            color: (opacity=0) => `rgba(03, 30, 75, 0.7)`,
             style: {
               borderRadius: 16,
             },
