@@ -1,11 +1,13 @@
 import React from 'react';
-import {SafeAreaView,Text,View,StyleSheet,Dimensions} from 'react-native';
+import {SafeAreaView,Text,View,StyleSheet,Dimensions,ScrollView,ImageBackground} from 'react-native';
 import {LineChart,BarChart} from 'react-native-chart-kit';
 
 const MyBarChart = () => {
     return (
       <>
+      <ImageBackground style={styles.Background1}>
         <Text style={styles.header}>This week (22/3 - 28/3 )</Text>
+        <ScrollView horizontal={true}>
         <BarChart
           data={{
             labels:
@@ -16,23 +18,28 @@ const MyBarChart = () => {
               },
             ],
           }}
-          width={Dimensions.get('window').width - 12}
-          height={220}
+          width={ 500}  // Dimensions.get('window').width
+          height={300}
           chartConfig={{
             backgroundColor: '#a8c6fa',
             backgroundGradientFrom: '#a8c6fa',
             backgroundGradientTo: '#a8c6fa',
-            decimalPlaces: 1,
+            decimalPlaces: 0,
+          
             color: (opacity = 1) => `rgba(1, 1, 1, ${opacity})`,
             style: {
-              borderRadius: 10,
+              borderRadius: 0,
             },
           }}
+
           style={{
-            marginVertical: 8,
-            borderRadius: 16,
+            marginVertical: 0,
+            marginHorizontal: 0,
+            borderRadius: 0,
           }}
         />
+        </ScrollView>
+      </ImageBackground>
       </>
     );
   };
@@ -40,7 +47,9 @@ const MyBarChart = () => {
 const MyLineChart = () => {
     return (
       <>
+        <ImageBackground style={styles.Background2}>
         <Text style={styles.header}>Line Chart</Text>
+        <ScrollView horizontal={true}>
         <LineChart
           data={{
             labels: 
@@ -52,14 +61,14 @@ const MyLineChart = () => {
               },
             ],
           }}
-          width={Dimensions.get('window').width - 16}
-          height={220}
+          width={700 }  //Dimensions.get('window').width
+          height={300}
           chartConfig={{
-            backgroundColor: '#1cc910',
-            backgroundGradientFrom: '#eff3ff',
-            backgroundGradientTo: '#efefef',
+            backgroundColor: '#a8c6fa',
+            backgroundGradientFrom: '#a8c6fa',
+            backgroundGradientTo: '#a8c6fa',
             decimalPlaces: 2,
-            color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+            color: (opacity=0) => `rgba(1, 0, 0, ${opacity})`,
             style: {
               borderRadius: 16,
             },
@@ -69,6 +78,8 @@ const MyLineChart = () => {
             borderRadius: 16,
           }}
         />
+        </ScrollView>
+         </ImageBackground>
       </>
     );
   };
@@ -76,6 +87,7 @@ const MyLineChart = () => {
 export default function AnalyticScreen({navigation}) {
 	return (
         <SafeAreaView style={{flex: 1}}>
+          <ScrollView>
         <View style={styles.container}>
           <View>
             <MyBarChart/>
@@ -83,6 +95,7 @@ export default function AnalyticScreen({navigation}) {
             <MyLineChart/>
           </View>
         </View>
+        </ScrollView>
         </SafeAreaView>
     );
 }
@@ -94,12 +107,25 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
       textAlign: 'center',
+      marginBottom: 0,
       padding: 10,
     },
     header: {
       textAlign: 'center',
       fontSize: 18,
       padding: 16,
-      marginTop: 16,
+      marginTop: 0,
+
     },
+    Background1: {
+      height: 350,
+      backgroundColor: '#a8c6fa',
+      marginBottom:50,
+    },
+
+    Background2: {
+      height: 350,
+      backgroundColor: '#a8c6fa',
+
+    }
   });
