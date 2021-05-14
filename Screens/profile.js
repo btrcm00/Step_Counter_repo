@@ -7,11 +7,6 @@ function ProfileStack({navigation}){
     return(
         <View style={styles.container}>
         <Button
-            title = "Sign Up"
-            mode="outlined"
-            onPress={() => navigation.navigate('Register')}
-        />
-        <Button
             title = "Change Password"
             mode="outlined"
             onPress={() => navigation.navigate('Changepass')}
