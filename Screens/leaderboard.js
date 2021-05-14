@@ -17,7 +17,7 @@ export default function LeaderboardScreen({navigation}) {
 	return (
 		<HomeStack.Navigator screenOptions={{
             headerStyle: {
-            backgroundColor: '#d02860',
+            backgroundColor: '#CC3366',
             },
             headerTintColor: '#fff',
             headerTitleStyle: {
@@ -27,7 +27,7 @@ export default function LeaderboardScreen({navigation}) {
             <HomeStack.Screen name="LeaderBoardSc" component={LeaderboardStack} options={{
             title:'LeaderBoard',
             headerLeft: () => (
-                <Icon.Button name="leaderboard" size={25} backgroundColor="#d02860" onPress={() => navigation.openDrawer()}></Icon.Button>
+                <Icon.Button name="leaderboard" size={25} backgroundColor="#CC3366" onPress={() => navigation.openDrawer()}></Icon.Button>
             )
             }} />
         </HomeStack.Navigator>
