@@ -54,13 +54,13 @@ export function DrawerContent(props) {
                         <DrawerItem 
                             icon={({color, size}) => (
                                 <Icon 
-                                name="dashboard" 
+                                name="analytics" 
                                 color={color}
                                 size={size}
                                 />
                             )}
-                            label="DashBoard"
-                            onPress={() => {props.navigation.navigate('DashBoard')}}
+                            label="Analytic"
+                            onPress={() => {props.navigation.navigate('Analytic')}}
                         />
                         <DrawerItem 
                             icon={({color, size}) => (
@@ -71,7 +71,7 @@ export function DrawerContent(props) {
                                 />
                             )}
                             label="LeaderBoard"
-                            onPress={() => {props.navigation.navigate('LeaderBoard')}}
+                            onPress={() => {props.navigation.navigate('Leaderboard')}}
                         />
                     </Drawer.Section>
                 </View>

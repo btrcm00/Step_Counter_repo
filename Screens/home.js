@@ -20,10 +20,6 @@ function HomeStackScreen({navigation}){
             onPress={() => navigation.navigate('Login')}
           />
           <Button
-            title="Go to Dashboard!"
-            onPress={() => navigation.navigate('Dashboard')}
-          />
-          <Button
             title="Go to LeaderBoard!"
             onPress={() => navigation.navigate('Leaderboard')}
           />
@@ -38,7 +34,7 @@ export default function HomeScreen({navigation}){
     return (
       <HomeStack.Navigator screenOptions={{
         headerStyle: {
-        backgroundColor: '#009387',
+        backgroundColor: '#6699FF',
         },
         headerTintColor: '#fff',
         headerTitleStyle: {
@@ -48,7 +44,7 @@ export default function HomeScreen({navigation}){
         <HomeStack.Screen name="HomeSc" component={HomeStackScreen} options={{
         title:'Step Counter',
         headerLeft: () => (
-            <Icon.Button name="menu" size={25} backgroundColor="#009387" onPress={() => navigation.openDrawer()}></Icon.Button>
+            <Icon.Button name="menu" size={25} backgroundColor="#6699FF" onPress={() => navigation.openDrawer()}></Icon.Button>
         )
         }} />
     </HomeStack.Navigator>
