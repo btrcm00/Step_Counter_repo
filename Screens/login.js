@@ -1,5 +1,4 @@
 import React from 'react'
-
 import { ScrollView,Image, StyleSheet, View, Text} from 'react-native'
 import { Button ,TextInput } from 'react-native-paper'
 
@@ -8,7 +7,8 @@ export default function LoginScreen({navigation}) {
     const [password, setPassword] = React.useState('')
     
     
-    return <ScrollView style={styles.screen}>
+    return (
+      <ScrollView style={styles.screen}>
 
         <TextInput 
         mode="outlined"
@@ -39,6 +39,7 @@ export default function LoginScreen({navigation}) {
         </View>
     
         </ScrollView>
+);
 }
 
 const styles = StyleSheet.create({
