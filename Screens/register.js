@@ -10,7 +10,8 @@ export default function RegisterScreen({navigation}) {
     const [cpassword,setConfirmPassword]= React.useState('')
     
 
-    return <ScrollView style={styles.screen}>
+    return (
+  <ScrollView style={styles.screen}>
 
         <TextInput
             mode="outlined"
@@ -49,6 +50,7 @@ export default function RegisterScreen({navigation}) {
         
 
     </ScrollView>
+);
 }
 
 const styles = StyleSheet.create({
