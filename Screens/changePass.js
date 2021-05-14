@@ -71,11 +71,11 @@ export default function ChangepassScreen({navigation}) {
 	return (
 		<HomeStack.Navigator screenOptions={{
             headerStyle: {
-            backgroundColor: '#1f65ff',
+            	backgroundColor: '#1f65ff',
             },
             headerTintColor: '#fff',
             headerTitleStyle: {
-            fontWeight: 'bold'
+            	fontWeight: 'bold'
             }
         }}>
             <HomeStack.Screen name="ChangepassSc" component={ChangeStack} options={{
@@ -91,7 +91,6 @@ const styles = StyleSheet.create({
 	container:{
 		flex:1,
 		flexDirection:'column',
-		backgroundColor: '#b0e0e6',
 	},
 	container1: {
 		alignItems:'center',
@@ -148,15 +147,4 @@ const styles = StyleSheet.create({
 		borderRadius:10,
 		backgroundColor:'dodgerblue',
 	},
-	sidebar:{
-		alignItems:'center',
-		textAlignVertical:'center',
-		justifyContent:'center',
-	},
-	sibarSection:{
-		flex:1,
-		flexDirection:'row',
-		backgroundColor:'gray',
-		justifyContent:'center',
-	}
 });
