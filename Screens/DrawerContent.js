@@ -27,7 +27,6 @@ export function DrawerContent(props) {
                             </View>
                         </View>
                     </View>
-
                     <Drawer.Section style={styles.drawerSection}>
                         <DrawerItem 
                             icon={({color, size}) => (
@@ -54,13 +53,13 @@ export function DrawerContent(props) {
                         <DrawerItem 
                             icon={({color, size}) => (
                                 <Icon 
-                                name="dashboard" 
+                                name="analytics" 
                                 color={color}
                                 size={size}
                                 />
                             )}
-                            label="DashBoard"
-                            onPress={() => {props.navigation.navigate('DashBoard')}}
+                            label="Analytic"
+                            onPress={() => {props.navigation.navigate('Analytic')}}
                         />
                         <DrawerItem 
                             icon={({color, size}) => (
@@ -71,7 +70,7 @@ export function DrawerContent(props) {
                                 />
                             )}
                             label="LeaderBoard"
-                            onPress={() => {props.navigation.navigate('LeaderBoard')}}
+                            onPress={() => {props.navigation.navigate('Leaderboard')}}
                         />
                     </Drawer.Section>
                 </View>
@@ -105,24 +104,6 @@ const styles = StyleSheet.create({
       marginTop: 3,
       fontWeight: 'bold',
     },
-    caption: {
-      fontSize: 14,
-      lineHeight: 14,
-    },
-    row: {
-      marginTop: 20,
-      flexDirection: 'row',
-      alignItems: 'center',
-    },
-    section: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      marginRight: 15,
-    },
-    paragraph: {
-      fontWeight: 'bold',
-      marginRight: 3,
-    },
     drawerSection: {
       marginTop: 15,
     },
@@ -130,11 +111,5 @@ const styles = StyleSheet.create({
         marginBottom: 15,
         borderTopColor: '#f4f4f4',
         borderTopWidth: 1
-    },
-    preference: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      paddingVertical: 12,
-      paddingHorizontal: 16,
     },
   });
