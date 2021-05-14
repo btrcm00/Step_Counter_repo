@@ -7,27 +7,31 @@ const HomeStack = createStackNavigator();
 function HomeStackScreen({navigation}){
     return(
       <View style={{ flex: 1,backgroundColor:'#b0e0e6', alignItems: 'center', justifyContent: 'center' }}>
-      <Button
-        title="Go to ChangePassword!"
-        onPress={() => navigation.navigate('Changepass')}
-      />
-      <Button
-        title="Go to Register!"
-        onPress={() => navigation.navigate('Register')}
-      />
-      <Button
-        title="Go to Login!"
-        onPress={() => navigation.navigate('Login')}
-      />
-      <Button
-        title="Go to Dashboard!"
-        onPress={() => navigation.navigate('DashBoard')}
-      />
-      <Button
-        title="Go to LeaderBoard!"
-        onPress={() => navigation.navigate('LeaderBoard')}
-      />
-    </View>
+          <Button
+            title="Go to ChangePassword!"
+            onPress={() => navigation.navigate('Changepass')}
+          />
+          <Button
+            title="Go to Register!"
+            onPress={() => navigation.navigate('Register')}
+          />
+          <Button
+            title="Go to Login!"
+            onPress={() => navigation.navigate('Login')}
+          />
+          <Button
+            title="Go to Dashboard!"
+            onPress={() => navigation.navigate('Dashboard')}
+          />
+          <Button
+            title="Go to LeaderBoard!"
+            onPress={() => navigation.navigate('Leaderboard')}
+          />
+          <Button
+            title="Go to Analytic!"
+            onPress={() => navigation.navigate('Analytic')}
+          />
+        </View>
     );
 };
 export default function HomeScreen({navigation}){
@@ -47,7 +51,7 @@ export default function HomeScreen({navigation}){
             <Icon.Button name="menu" size={25} backgroundColor="#009387" onPress={() => navigation.openDrawer()}></Icon.Button>
         )
         }} />
-</HomeStack.Navigator>
+    </HomeStack.Navigator>
       );
 }
 const styles = StyleSheet.create({
