@@ -1,7 +1,25 @@
 import React from 'react';
 import {SafeAreaView,Text,View,StyleSheet,Dimensions,ScrollView,ImageBackground} from 'react-native';
 import {LineChart,BarChart} from 'react-native-chart-kit';
+import { createStackNavigator } from '@react-navigation/stack';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+const HomeStack = createStackNavigator();
 
+function AnalyticStack({navigation}){
+    return(
+        <SafeAreaView style={{flex: 1}}>
+        <ScrollView>
+      <View style={styles.container}>
+        <View>
+          <MyBarChart/>
+
+          <MyLineChart/>
+        </View>
+      </View>
+      </ScrollView>
+      </SafeAreaView>
+    );
+};
 const MyBarChart = () => {
     return (
       <>
@@ -86,17 +104,22 @@ const MyLineChart = () => {
 
 export default function AnalyticScreen({navigation}) {
 	return (
-        <SafeAreaView style={{flex: 1}}>
-          <ScrollView>
-        <View style={styles.container}>
-          <View>
-            <MyBarChart/>
-
-            <MyLineChart/>
-          </View>
-        </View>
-        </ScrollView>
-        </SafeAreaView>
+      <HomeStack.Navigator screenOptions={{
+        headerStyle: {
+        backgroundColor: '#CC99CC',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+        fontWeight: 'bold'
+        }
+    }}>
+        <HomeStack.Screen name="AnalyticSc" component={AnalyticStack} options={{
+        title:'Analytic',
+        headerLeft: () => (
+            <Icon.Button name="analytics" size={25} backgroundColor="#CC99CC" onPress={() => navigation.openDrawer()}></Icon.Button>
+        )
+        }} />
+    </HomeStack.Navigator>
     );
 }
 

@@ -24,7 +24,7 @@ export default function ProfileScreen({navigation}) {
 		
         <HomeStack.Navigator screenOptions={{
             headerStyle: {
-            backgroundColor: '#1f65ff',
+            backgroundColor: '#CC9999',
             },
             headerTintColor: '#fff',
             headerTitleStyle: {
@@ -34,7 +34,7 @@ export default function ProfileScreen({navigation}) {
             <HomeStack.Screen name="ProfileSc" component={ProfileStack} options={{
             title:'Profile',
             headerLeft: () => (
-                <Icon.Button name="account-circle" size={25} backgroundColor="#1f65ff" onPress={() => navigation.openDrawer()}></Icon.Button>
+                <Icon.Button name="account-circle" size={25} backgroundColor="#CC9999" onPress={() => navigation.openDrawer()}></Icon.Button>
             )
             }} />
         </HomeStack.Navigator>

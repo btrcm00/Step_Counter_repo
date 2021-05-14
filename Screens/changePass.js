@@ -71,7 +71,7 @@ export default function ChangepassScreen({navigation}) {
 	return (
 		<HomeStack.Navigator screenOptions={{
             headerStyle: {
-            backgroundColor: '#1f65ff',
+            backgroundColor: 'dodgerblue',
             },
             headerTintColor: '#fff',
             headerTitleStyle: {
@@ -81,7 +81,7 @@ export default function ChangepassScreen({navigation}) {
             <HomeStack.Screen name="ChangepassSc" component={ChangeStack} options={{
             title:'Change Password',
             headerLeft: () => (
-                <Icon.Button name="menu" size={25} backgroundColor="#1f65ff" onPress={() => navigation.openDrawer()}></Icon.Button>
+                <Icon.Button name="menu" size={25} backgroundColor="dodgerblue" onPress={() => navigation.openDrawer()}></Icon.Button>
             )
             }} />
     </HomeStack.Navigator>
@@ -91,7 +91,6 @@ const styles = StyleSheet.create({
 	container:{
 		flex:1,
 		flexDirection:'column',
-		backgroundColor: '#b0e0e6',
 	},
 	container1: {
 		alignItems:'center',
