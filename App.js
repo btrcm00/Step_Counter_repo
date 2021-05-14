@@ -34,7 +34,7 @@ function App(){
   return(
     <NavigationContainer
     >
-      <Drawer.Navigator drawerContent={props => <DrawerContent {...props} />}>
+      <Drawer.Navigator initialRouteName='Home' drawerContent={props => <DrawerContent {...props}/>}>
         <Drawer.Screen name = "Home" component={MainTabScreen}/>
         <Drawer.Screen name = "Profile" component = {ProfileScreen}/>
         <Drawer.Screen name="DashBoard" component={DashboardScreen} />
