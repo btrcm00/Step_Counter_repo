@@ -4,29 +4,18 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 const HomeStack = createStackNavigator();
-function HomeStackScreen({navigation}){
+function HomeStackScreen(){
     return(
-      <View style={{ flex: 1,backgroundColor:'#b0e0e6', alignItems: 'center', justifyContent: 'center' }}>
-          <Button
-            title="Go to ChangePassword!"
-            onPress={() => navigation.navigate('Changepass')}
-          />
-          <Button
-            title="Go to Register!"
-            onPress={() => navigation.navigate('Register')}
-          />
-          <Button
-            title="Go to Login!"
-            onPress={() => navigation.navigate('Login')}
-          />
-          <Button
-            title="Go to LeaderBoard!"
-            onPress={() => navigation.navigate('Leaderboard')}
-          />
-          <Button
-            title="Go to Analytic!"
-            onPress={() => navigation.navigate('Analytic')}
-          />
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          <View style={{flex:1}}>
+            <View style = {{flex: 1,borderBottomColor:'black', borderBottomWidth:1}}/>
+          </View>
+          <View style={{flex:1}}>
+
+          </View>
+          <View style={{flex:2}}>
+
+          </View>
         </View>
     );
 };

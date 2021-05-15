@@ -1,69 +1,78 @@
 import React, {useState} from 'react';
-import { Dimensions, StyleSheet, Text, View, Image, TextInput, Button, Header, Alert } from 'react-native';
+import {  ImageBackground,Dimensions, StyleSheet, Text, View, Image } from 'react-native';
+import { TextInput } from 'react-native-paper'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 const HomeStack = createStackNavigator();
 var width = Dimensions.get('window').width;
+const image = { uri: "https://reactjs.org/logo-og.png" }
 function ChangeStack({navigation}){
     return(
         <View style = {styles.container}>
-			<View style={{flex:9}}>
-				<View style={{flex:3,justifyContent: 'center',alignItems: 'center'}}>
-					<View style={styles.container1}>
-					<Image
-						style = {styles.image}
-						source={require('./StepCounterImg.png')}
-					/>
+			<ImageBackground source={image} style = {styles.imageBackground}>
+				<View style={{flex:9}}>
+					<View style={{flex:3,justifyContent: 'center',alignItems: 'center'}}>
+						<View style={styles.container1}>
+						<Image
+							style = {styles.image}
+							source={require('./StepCounterImg.png')}
+						/>
+						</View>
+					</View>
+					<View style={{flex:7,}}>
+						<View style={{flex:4,justifyContent:'center'}}>
+							<View style={{flex:1,justifyContent:'center'}} >
+								<TextInput
+									style = {styles.input}
+									placeholder = "Old password"
+									secureTextEntry={true}
+									mode="outlined"
+									label="Old Password"
+									mode="outlined"
+								/>
+							</View>
+							<View style={{flex:1,justifyContent:'center'}}>
+								<TextInput
+									style = {styles.input}
+									placeholder = "New password"
+									secureTextEntry={true}
+									mode="outlined"
+									label="New Password"
+									mode="outlined"
+								/>
+							</View>
+							<View style={{flex:1,justifyContent:'center'}}>
+								<TextInput
+									style = {styles.input}
+									placeholder = "Confirm Newpassword"
+									secureTextEntry={true}
+									mode="outlined"
+									label="Confirm Newpassword"
+									mode="outlined"
+								/>
+							</View>
+						</View>
+						<View style={{flex:3}}>
+							<View style={styles.buttonSection}>
+								<TouchableOpacity 
+									style={[styles.button,{color:'blue',marginLeft:20}]}
+									onPress = {()=>{ navigation.navigate('Home')}}
+								>
+									<Text>Confirm</Text>
+								</TouchableOpacity>
+								<TouchableOpacity 
+									style={[styles.button,{marginRight:20}]}
+									onPress = {()=>{ navigation.goBack()}}
+								>
+									<Text>Cancel</Text>
+								</TouchableOpacity>
+							</View>
+						</View>
 					</View>
 				</View>
-				<View style={{flex:7,}}>
-					<View style={{flex:4,justifyContent:'center'}}>
-						<View style={{flex:1,justifyContent:'center'}} >
-							<Text style = {styles.passText}>Old PassWord</Text>
-							<TextInput
-								style = {styles.input}
-								placeholder = "  Old password"
-								secureTextEntry={true}
-								textAlign ='left'
-							/>
-						</View>
-						<View style={{flex:1,justifyContent:'center'}}>
-							<Text style = {styles.passText}>New PassWord</Text>
-							<TextInput
-								style = {styles.input}
-								placeholder = "  New password"
-								secureTextEntry={true}
-							/>
-						</View>
-						<View style={{flex:1,justifyContent:'center'}}>
-							<Text style = {styles.passText}>Confirm New PassWord</Text>
-							<TextInput
-								style = {styles.input}
-								placeholder = "  Password"
-								secureTextEntry={true}
-							/>
-						</View>
-					</View>
-					<View style={{flex:2}}>
-						<View style={styles.buttonSection}>
-							<TouchableOpacity 
-								style={[styles.button,{color:'blue',marginLeft:20}]}
-								onPress = {()=>{ navigation.navigate('Home')}}
-							>
-								<Text>Confirm</Text>
-							</TouchableOpacity>
-							<TouchableOpacity 
-								style={[styles.button,{marginRight:20}]}
-								onPress = {()=>{ navigation.goBack()}}
-							>
-								<Text>Cancel</Text>
-							</TouchableOpacity>
-						</View>
-					</View>
-				</View>
-			</View>
+			</ImageBackground>
 		</View>
     );
 };
@@ -111,6 +120,11 @@ const styles = StyleSheet.create({
 		height:'100%',
 		width:'100%'
 	},
+	imageBackground: {
+		flex: 1,
+		resizeMode: "cover",
+		justifyContent: "center"
+	  },
 	imageHeader: {
 		height:'100%',
 		width:width/6,
@@ -128,7 +142,6 @@ const styles = StyleSheet.create({
 	},
 	input:{
 		height: 40,
-		borderWidth: 1,
 		marginLeft:width/6,
 		marginRight:width/6,
 	},
