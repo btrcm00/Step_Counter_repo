@@ -21,7 +21,11 @@ function App() {
   );
 }
 export default App;*/
-import React, {useEffect} from 'react'
+
+
+
+
+/*import React, {useEffect} from 'react'
 import {View, StyleSheet, Text, Button} from 'react-native'
 import MQTTConnection from './src/MQTT_Connect'
 import { Buffer } from 'buffer';
@@ -43,9 +47,8 @@ export default function App() {
         console.log('App onMQTTConnect')
         this.mqttConnect.subscribeChannel('test')
     }
-
-    onMQTTLost = () => {
-        console.log('App onMQTTLost')
+    onMQTTLost = () =>{
+        console.log('App onMQTTFail')
     }
 
     onMQTTMessageArrived = (message) => {
@@ -75,6 +78,82 @@ export default function App() {
 
 }
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
+})*/
+
+
+
+
+
+
+import React, { useState, useEffect } from 'react';
+import { View, Text, Alert, RefreshControl, StyleSheet, Button } from 'react-native';
+import Paho from './src/paho-mqtt'
+
+/**
+ * Watcher displays current washroom data
+ * @author Andrew Baker (andrewJamesBaker)
+ * @param {any} navigation
+ * @return {Stack} 
+ */
+
+export default function App() {
+
+
+    client = new Paho.Client(host = "io.adafruit.com", port = 443, clientId =  "web_" + parseInt(Math.random() * 100, 10));
+    var options = {     
+        useSSL: true,
+        userName: "Kien1120",
+        password: "aio_heNu56NaI8yoBXbqf6FlPCSlBOLl",
+        keepAliveInterval: 60,
+        onSuccess: onConnect,
+        onFailure: onFail
+    };
+    client.connect(options);
+
+    function onConnect() {
+        console.log("Connected!");
+        client.subscribe('Kien1120/feeds/test');  
+    }
+
+    function onFail(context) {
+        console.log(context);
+        console.log("Connection failed!");
+        Alert.alert('Failure to Connect',
+            "Unable to connect to host. Try again later.",
+            [
+                { text: "OK" }
+            ],
+        )
+    }
+
+    function onMessageArrived(message) {
+        console.log("Message Arrived:" + message.payloadString);
+    }
+
+    function onConnectionLost(responseObject) {
+        if (responseObject.errorCode !== 0) {
+            console.log("onConnectionLost:" +  responseObject.errorMessage);
+        }
+    }   
+
+    client.onMessageArrived = onMessageArrived;     
+    client.onConnectionLost = onConnectionLost; 
+
+    return (
+      <View style={styles.container}>
+        <Text>react_native_mqtt</Text>
+        <Button
+          title="Press me"
+        />
+      </View>
+    )
+}
 const styles = StyleSheet.create({
   container: {
     flex: 1,
