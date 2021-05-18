@@ -51,7 +51,6 @@ function LeaderboardStack(){
                         data = {state.data}
                         sortBy = "highScore"
                         labelBy = "userName"
-                        
                     />
                 </ImageBackground>
                 

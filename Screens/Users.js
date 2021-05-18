@@ -20,13 +20,13 @@ export default Users = [
     {
         id: 4, 
         email: 'testuser@email.com',
-        username: 'chibuu', 
-        password: 'chibuu', 
+        username: 'thanhphat', 
+        password: 'thanhphat', 
     },
     {
         id: 5, 
         email: 'testuser@email.com',
-        username: 'chibuu', 
-        password: 'chibuu', 
+        username: 'duythong', 
+        password: 'duythong', 
     },
 ];

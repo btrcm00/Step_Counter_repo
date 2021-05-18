@@ -14,8 +14,8 @@ export default function LoginScreen({navigation}) {
         isValidUser: true,
         isValidPassword: true,
     });
-    const [email,setEmail] = React.useState('')
-    const [password, setPassword] = React.useState('')
+    //const [email,setEmail] = React.useState('')
+    //const [password, setPassword] = React.useState('')
     const {signIn} = React.useContext(AuthContext);
     const textInputChange = (val) => {
         if( val.trim().length >= 4 ) {
@@ -103,6 +103,7 @@ export default function LoginScreen({navigation}) {
                     <TextInput 
                         mode="outlined"
                         label="Email"
+                        clearButtonMode="always"
                         style = {styles.input}
                         onChangeText={(val) => textInputChange(val)}
                         onEndEditing={(e)=>handleValidUser(e.nativeEvent.text)}
@@ -113,6 +114,7 @@ export default function LoginScreen({navigation}) {
                     <TextInput 
                         mode="outlined"
                         secureTextEntry={true}
+                        clearButtonMode = 'always'
                         style = {styles.input}
                         label="Password"
                         onChangeText={(val) => handlePasswordChange(val)}
