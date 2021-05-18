@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { View, StyleSheet } from 'react-native';
 import {
     Avatar,
@@ -10,8 +10,9 @@ import {
     DrawerItem
 } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-
+import { AuthContext } from '../components/context'
 export function DrawerContent(props) {
+    const { signOut } = React.useContext(AuthContext)
     return(
         <View style={{flex:1}}>
             <DrawerContentScrollView {...props}>

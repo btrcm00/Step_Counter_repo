@@ -1,11 +1,15 @@
 import React, {useState} from 'react';
-import { Dimensions, StyleSheet, Text, View, Image, TextInput, Button, Header, Alert } from 'react-native';
+import {  ImageBackground,Dimensions, StyleSheet, Text, View, Image } from 'react-native';
+import { TextInput } from 'react-native-paper'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { createStackNavigator } from '@react-navigation/stack';
-
+import * as firebase from 'firebase'
 import Icon from 'react-native-vector-icons/MaterialIcons';
 const HomeStack = createStackNavigator();
+
+
 var width = Dimensions.get('window').width;
+const image = { uri: "https://reactjs.org/logo-og.png" }
 function ChangeStack({navigation}){
     return(
         <View style = {styles.container}>
@@ -21,32 +25,41 @@ function ChangeStack({navigation}){
 				<View style={{flex:7,}}>
 					<View style={{flex:4,justifyContent:'center'}}>
 						<View style={{flex:1,justifyContent:'center'}} >
-							<Text style = {styles.passText}>Old PassWord</Text>
+							
 							<TextInput
 								style = {styles.input}
-								placeholder = "  Old password"
+								placeholder = "Old password"
+								clearButtonMode = 'always'
 								secureTextEntry={true}
-								textAlign ='left'
+								mode="outlined"
+								label="Old Password"
+								mode="outlined"
 							/>
 						</View>
 						<View style={{flex:1,justifyContent:'center'}}>
-							<Text style = {styles.passText}>New PassWord</Text>
 							<TextInput
 								style = {styles.input}
-								placeholder = "  New password"
+								placeholder = "New password"
+								clearButtonMode = 'always'
 								secureTextEntry={true}
+								mode="outlined"
+								label="New Password"
+								mode="outlined"
 							/>
 						</View>
 						<View style={{flex:1,justifyContent:'center'}}>
-							<Text style = {styles.passText}>Confirm New PassWord</Text>
 							<TextInput
 								style = {styles.input}
-								placeholder = "  Password"
+								placeholder = "Confirm Newpassword"
+								clearButtonMode = 'always'
 								secureTextEntry={true}
+								mode="outlined"
+								label="Confirm Newpassword"
+								mode="outlined"
 							/>
 						</View>
 					</View>
-					<View style={{flex:2}}>
+					<View style={{flex:3}}>
 						<View style={styles.buttonSection}>
 							<TouchableOpacity 
 								style={[styles.button,{color:'blue',marginLeft:20}]}
@@ -111,6 +124,11 @@ const styles = StyleSheet.create({
 		height:'100%',
 		width:'100%'
 	},
+	imageBackground: {
+		flex: 1,
+		resizeMode: "cover",
+		justifyContent: "center",
+	  },
 	imageHeader: {
 		height:'100%',
 		width:width/6,
@@ -128,7 +146,6 @@ const styles = StyleSheet.create({
 	},
 	input:{
 		height: 40,
-		borderWidth: 1,
 		marginLeft:width/6,
 		marginRight:width/6,
 	},
