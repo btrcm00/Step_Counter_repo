@@ -23,6 +23,7 @@ export default function RegisterScreen({navigation}) {
                         mode="outlined"
                         label="Email"
                         style = {styles.input}
+                        clearButtonMode = 'always'
                         value={email}
                         onChangeText={text => setEmail(text)}
                         placeholder="Email"
@@ -34,6 +35,7 @@ export default function RegisterScreen({navigation}) {
                         label="Password"
                         secureTextEntry={true}
                         style = {styles.input}
+                        clearButtonMode = 'always'
                         value={password}
                         onChangeText={text => setPassword(text)}
                         placeholder="Password"
@@ -43,6 +45,7 @@ export default function RegisterScreen({navigation}) {
                     <TextInput
                         mode="outlined"
                         label="Confirm password"
+                        clearButtonMode = 'always'
                         secureTextEntry={true}
                         style = {styles.input}
                         value={cpassword}
@@ -60,14 +63,10 @@ export default function RegisterScreen({navigation}) {
                 </Button>
             </View>
             <View style = {{flex:1, flexDirection:'row', justifyContent:'center'}}>
-                <View style={{flex:1}}>
-                    <Text>Already Registered ?</Text>
-                </View>
-                <View style={{flex:1}}>
-                    <Button onPress ={() => navigation.navigate('Login')} color ='#3498DB'>
-                        <Text>Login</Text>
-                    </Button>
-                </View>
+                <Text>Already Registered ?</Text>
+                <Button onPress ={() => navigation.navigate('Login')} color ='#3498DB'>
+                    <Text>Login</Text>
+                </Button>
                 
             </View>
             
