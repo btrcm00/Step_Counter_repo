@@ -4,58 +4,21 @@ import { createStackNavigator } from '@react-navigation/stack';
 import LeaderBoard from 'react-native-leaderboard';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 const HomeStack = createStackNavigator();
-
-const image = { uri: "https://reactjs.org/logo-og.png" }
-state = {
-    data: [
-        {userName: 'Joe', highScore: 52},
-        {userName: 'Jenny', highScore: 120},
-        {userName: 'Joe', highScore: 52},
-        {userName: 'Jenny', highScore: 120},
-        {userName: 'Joe', highScore: 52},
-        {userName: 'Jenny', highScore: 120},
-        {userName: 'Joe', highScore: 52},
-        {userName: 'Jenny', highScore: 120},
-        {userName: 'Joe', highScore: 52},
-        {userName: 'Jenny', highScore: 120},
-        {userName: 'Joe', highScore: 52},
-        {userName: 'Jenny', highScore: 120},
-        {userName: 'Joe', highScore: 52},
-        {userName: 'Jenny', highScore: 120},
-        {userName: 'Joe', highScore: 52},
-        {userName: 'Jenny', highScore: 120},
-
-    ]
-}
-function LeaderboardStack(){
+function LeaderboardStack({navigation}){
+    this.state = {
+        data: [
+            {userName: 'Joe', highScore: 52},
+            {userName: 'Jenny', highScore: 120},
+            {userName: 'Thong', highScore: 33},
+            {userName: 'TH', highScore: 333},
+            //...
+        ] //can also be an object of objects!: data: {a:{}, b:{}}
+    }
     return(
-        <View style = {styles.container}>
-            <View style={{flex:3}}>
-                <View style={{
-                    flex:1, justifyContent: 'center', alignItems: 'center',
-                    marginBottom: 15, marginTop: 20
-                }}>
-                    <Text style={{fontSize: 25, flex: 1, textAlign: 'right'}}>
-                        {ordinal_suffix_of(1)}
-                    </Text>
-                    <Image style={{ flex: .66, height: 60, width: 60, borderRadius: 60 / 2 }}
-                        source={require('./StepCounterImg.png')} />
-                    <Text style={{ fontSize: 25, flex: 1}}>
-                        {69}pts
-                    </Text>
-                </View>
-            </View>
-            <View style = {{flex:7}}>
-                <ImageBackground source = {require('./StepCounterImg.png')} style = {styles.imageBackground}>
-                    <LeaderBoard
-                        data = {state.data}
-                        sortBy = "highScore"
-                        labelBy = "userName"
-                    />
-                </ImageBackground>
-                
-            </View>
-        </View>
+        <Leaderboard 
+        data={this.state.data} 
+        sortBy='highScore' 
+        labelBy='userName'/>
     );
 };
 
