@@ -1,10 +1,9 @@
 import React from 'react';
-import {StyleSheet,View,Button,Text } from 'react-native';
+import {StyleSheet,View,Image,Text, ImageBackground } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
-
+import LeaderBoard from 'react-native-leaderboard';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 const HomeStack = createStackNavigator();
-
 function LeaderboardStack({navigation}){
     this.state = {
         data: [
@@ -49,4 +48,23 @@ const styles = StyleSheet.create({
         alignItems: 'center', 
         justifyContent: 'center'
     },
+    imageBackground: {
+		flex: 1,
+		resizeMode: "cover",
+		justifyContent: "center"
+	  },
 })
+const ordinal_suffix_of = (i) => {
+    var j = i % 10,
+        k = i % 100;
+    if (j == 1 && k != 11) {
+        return i + "st";
+    }
+    if (j == 2 && k != 12) {
+        return i + "nd";
+    }
+    if (j == 3 && k != 13) {
+        return i + "rd";
+    }
+    return i + "th";
+}
