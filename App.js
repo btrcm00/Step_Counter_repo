@@ -1,7 +1,16 @@
 import  React, {useEffect} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import {createDrawerNavigator} from '@react-navigation/drawer'
-import { ChangepassScreen, HomeScreen, LeaderboardScreen, MainTabScreen, ProfileScreen,AnalyticScreen} from './Screens';
+import 
+  { 
+    ChangepassScreen, 
+    LeaderboardScreen, 
+    MainTabScreen, 
+    ProfileScreen,
+    AnalyticScreen_calo,
+    AnalyticScreen_steps,
+    AnalyticScreen_km,
+  } from './Screens';
 import { View, ActivityIndicator } from 'react-native';
 import {DrawerContent} from './Screens/DrawerContent';
 import { AuthContext } from './components/context';
