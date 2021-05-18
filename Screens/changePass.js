@@ -1,29 +1,14 @@
-import { StatusBar } from 'expo-status-bar';
 import React, {useState} from 'react';
 import { Dimensions, StyleSheet, Text, View, Image, TextInput, Button, Header, Alert } from 'react-native';
-import { TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { createStackNavigator } from '@react-navigation/stack';
+
+import Icon from 'react-native-vector-icons/MaterialIcons';
+const HomeStack = createStackNavigator();
 var width = Dimensions.get('window').width;
-var height = Dimensions.get('window').height;
-export default function ChangepassScreen({navigation}) {
-	return (
-		<View style = {styles.container}>
-			<View style={{flex:1}}> 
-				<View
-					style={{
-						borderBottomColor: 'gray',
-						borderBottomWidth: 1,
-						flex:1,
-						justifyContent:'center',
-						flexDirection:'row'
-					}}
-				>
-					<Image
-						style = {styles.imageHeader}
-						source={require('./StepCounterImg.png')}
-					/>
-					<Text style={styles.titleText}> Change Password </Text>
-				</View>
-			</View>
+function ChangeStack({navigation}){
+    return(
+        <View style = {styles.container}>
 			<View style={{flex:9}}>
 				<View style={{flex:3,justifyContent: 'center',alignItems: 'center'}}>
 					<View style={styles.container1}>
@@ -65,7 +50,7 @@ export default function ChangepassScreen({navigation}) {
 						<View style={styles.buttonSection}>
 							<TouchableOpacity 
 								style={[styles.button,{color:'blue',marginLeft:20}]}
-								onPress = {()=>{ navigation.navigate('HomeScreen')}}
+								onPress = {()=>{ navigation.navigate('Home')}}
 							>
 								<Text>Confirm</Text>
 							</TouchableOpacity>
@@ -79,15 +64,33 @@ export default function ChangepassScreen({navigation}) {
 					</View>
 				</View>
 			</View>
-			
 		</View>
+    );
+};
+export default function ChangepassScreen({navigation}) {
+	return (
+		<HomeStack.Navigator screenOptions={{
+            headerStyle: {
+            backgroundColor: 'dodgerblue',
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+            fontWeight: 'bold'
+            }
+        }}>
+            <HomeStack.Screen name="ChangepassSc" component={ChangeStack} options={{
+            title:'Change Password',
+            headerLeft: () => (
+                <Icon.Button name="menu" size={25} backgroundColor="dodgerblue" onPress={() => navigation.openDrawer()}></Icon.Button>
+            )
+            }} />
+    </HomeStack.Navigator>
 	);
 }
 const styles = StyleSheet.create({
 	container:{
 		flex:1,
 		flexDirection:'column',
-		backgroundColor: '#b0e0e6',
 	},
 	container1: {
 		alignItems:'center',
@@ -96,7 +99,7 @@ const styles = StyleSheet.create({
 		shadowOffset: {
 		width: -5,
 		height: 10,
-	},
+		},
 		shadowOpacity: 0.23,
 		elevation: 4,
 		height:108,
