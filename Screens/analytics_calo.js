@@ -1,17 +1,17 @@
 import React from 'react';
-import {SafeAreaView,Text,View,StyleSheet,Dimensions,ScrollView,ImageBackground, Button} from 'react-native';
+import {SafeAreaView,Text,View,StyleSheet,Dimensions,ScrollView,ImageBackground} from 'react-native';
 import {LineChart,BarChart} from 'react-native-chart-kit';
 import { createStackNavigator } from '@react-navigation/stack';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 const HomeStack = createStackNavigator();
 
-function AnalyticStack_steps({navigation}){
+function AnalyticStack_calo({navigation}){
     return(
         <SafeAreaView style={{flex: 1}}>
         <ScrollView>
       <View style={styles.container}>
-        <View style={styles.container2}>
+      <View style={styles.container2}>
         <TouchableOpacity 
         style={[styles.button,{marginRight:10}]}
         onPress={() => navigation.navigate('Analytic_steps')}
@@ -88,7 +88,7 @@ const MyLineChart = () => {
     return (
       <>
         <ImageBackground style={styles.Background2}>
-        <Text style={styles.header}>Steps</Text>
+        <Text style={styles.header}>Calo</Text>
         <ScrollView horizontal={true}>
         <LineChart
           data={{
@@ -124,7 +124,7 @@ const MyLineChart = () => {
     );
   };
 
-export default function AnalyticScreen_steps({navigation}) {
+export default function AnalyticScreen_calo({navigation}) {
 	return (
       <HomeStack.Navigator screenOptions={{
         headerStyle: {
@@ -135,7 +135,7 @@ export default function AnalyticScreen_steps({navigation}) {
         fontWeight: 'bold'
         }
     }}>
-        <HomeStack.Screen name="AnalyticSc" component={AnalyticStack_steps} options={{
+        <HomeStack.Screen name="AnalyticSc" component={AnalyticStack_calo} options={{
         title:'Analytic',
         headerLeft: () => (
             <Icon.Button name="analytics" size={25} backgroundColor="#CC99CC" onPress={() => navigation.openDrawer()}></Icon.Button>
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
       marginBottom: 0,
       padding: 10,
     },
-
+    
     container2: {
       flex: 1,
       flexDirection: 'row',
@@ -174,7 +174,6 @@ const styles = StyleSheet.create({
       marginTop: 10,
       marginBottom: 20
     },
-
     header: {
       textAlign: 'center',
       fontSize: 18,
