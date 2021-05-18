@@ -6,10 +6,20 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 const HomeStack = createStackNavigator();
 
 function LeaderboardStack({navigation}){
+    this.state = {
+        data: [
+            {userName: 'Joe', highScore: 52},
+            {userName: 'Jenny', highScore: 120},
+            {userName: 'Thong', highScore: 33},
+            {userName: 'TH', highScore: 333},
+            //...
+        ] //can also be an object of objects!: data: {a:{}, b:{}}
+    }
     return(
-        <View style = {styles.container}>
-            <Text>Leader Board</Text>
-        </View>
+        <Leaderboard 
+        data={this.state.data} 
+        sortBy='highScore' 
+        labelBy='userName'/>
     );
 };
 
