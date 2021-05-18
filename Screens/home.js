@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Text,StyleSheet,View,Button,Dimensions, Slider} from 'react-native';
+import {Text,StyleSheet,View,ScrollView,Dimensions, Slider} from 'react-native';
 import {Divider} from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -11,7 +11,7 @@ var box_height = height / box_count;
 
 function HomeStackScreen({navigation}){
   return(
-    <View style={{ flex: 1,backgroundColor:'#b0e0e6'}}>
+    <ScrollView style={{ flex: 1,backgroundColor:'#b0e0e6'}}>
       <View style={{ flex: 0.3, backgroundColor: '#f2f2f2'}}>
         <Text h1 style={styles.bigBlack}>Today</Text>
         <View style={styles.todayBox}>
@@ -109,7 +109,7 @@ function HomeStackScreen({navigation}){
             title="Go to Analytic!"
             onPress={() => navigation.navigate('Analytic')}
           /> */}
-    </View>
+    </ScrollView>
       
   );
 };
