@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Component  } from 'react';
-import { View, Text, Alert, StyleSheet, Button } from 'react-native';
+import { View, Text, Alert, StyleSheet, Button, ImageBackground } from 'react-native';
 import Paho from './src/paho-mqtt'
 
 
@@ -76,15 +76,15 @@ export default function Display(){
 
 
   return (
-    <View style={styles.container}>
+    <ImageBackground source={require('./assets/run_bg.png')} style={styles.container}>
     { runApp 
-      ? <Text>{Step}</Text>
-      : <Button title="Connect" onPress={() => {
+      ? <Text style={styles.stepFormat}>{Step}<Text style={styles.stepsFormat}> Steps</Text></Text>
+      : <Text style={styles.buttonFormat}> <Button title="Connect" onPress={() => {
         App();
         runApp = true;
-        }}/>
+        }}/> </Text>
     }
-    </View>
+    </ImageBackground>
   );
 
 }
@@ -121,5 +121,18 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  stepFormat: {
+    fontSize: 80,
+    fontWeight: 'bold',
+    top: 200,
+    color: 'white'
+  },
+  buttonFormat:{
+    bottom: -200
+  },
+  stepsFormat:{
+    fontSize: 30,
+    color: 'white'
   }
 })
