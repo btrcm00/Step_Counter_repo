@@ -1,11 +1,10 @@
 import React from 'react';
 import {StyleSheet,View,Image,Text, ImageBackground } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
-import LeaderBoard from 'leaderboard';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 const HomeStack = createStackNavigator();
 function LeaderboardStack({navigation}){
-    state = {
+    const state = {
         data: [
             {userName: 'Joe', highScore: 52},
             {userName: 'Jenny', highScore: 120},
