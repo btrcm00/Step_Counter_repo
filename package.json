@@ -10,6 +10,7 @@
   "dependencies": {
     "@react-native-community/async-storage": "^1.12.1",
     "@react-native-community/masked-view": "^0.1.10",
+    "@react-native-community/slider": "^3.0.3",
     "@react-navigation/bottom-tabs": "^5.11.10",
     "@react-navigation/drawer": "^5.12.5",
     "@react-navigation/material-bottom-tabs": "^5.3.15",
@@ -19,6 +20,7 @@
     "expo": "~41.0.1",
     "expo-status-bar": "~1.0.4",
     "firebase": "^8.6.1",
+    "leaderboard": "^0.0.9",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-41.0.0.tar.gz",

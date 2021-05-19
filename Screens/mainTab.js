@@ -19,7 +19,7 @@ export default function MainTabScreen(){
         component={HomeScreen}
         options={{
           tabBarLabel: 'Home',
-          tabBarColor: '#6699FF',
+          tabBarColor: '#ff6600',
           tabBarIcon: ({ color }) => (
             <Icon name="home" color={color} size={26} />
           ),
