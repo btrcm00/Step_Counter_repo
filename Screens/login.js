@@ -3,7 +3,7 @@ import { Dimensions, Image, StyleSheet, View, Text, Alert} from 'react-native';
 import { Button ,TextInput } from 'react-native-paper';
 import {AuthContext} from '../components/context';
 var width = Dimensions.get('window').width;
-import Users from '../Screens/Users'
+import {User} from '../Screens/Users'
 
 export default function LoginScreen({navigation}) {
     const [data, setData] = React.useState({
@@ -71,15 +71,15 @@ export default function LoginScreen({navigation}) {
         }
     }
     const loginHandle = (userName, password) => {
-        if ( data.username.length == 0 || data.password.length == 0 ) {
+        const foundUser = Users.filter( item => {
+            return userName == item.username && password == item.password;
+        } );
+        if ( data.username.length == 1 || data.password.length == 1 ) {
             Alert.alert('Wrong Input!', 'Username or password field cannot be empty.', [
                 {text: 'Okay'}
             ]);
             return;
         }
-        const foundUser = Users.filter( item => {
-            return userName == item.username && password == item.password;
-        } );
         if ( foundUser.length == 0 ) {
             Alert.alert('Invalid User!', 'Username or password is incorrect.', [
                 {text: 'Okay'}
