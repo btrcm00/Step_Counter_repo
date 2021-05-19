@@ -1,19 +1,17 @@
 
-import React, { Component, useState, useRef, useEffect } from 'react';
+import React from 'react';
 import {Text,StyleSheet,View,ScrollView,Dimensions, Animated} from 'react-native';
-import Slider from '@react-native-community/slider'
 import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 const HomeStack = createStackNavigator();
-var { height } = Dimensions.get('window');
 var height = Dimensions.get('window').height;
-
 function HomeStackScreen({props}){
-  const step =600;
+  const step =980;
   const target = 1200;
-  const width = ((step/target)*100).toString(10) + '%';
+  const kcal = step * 0.04;
+  const m = step * 0.762;
+  const width = (step<=target)?(((step/target)*100).toFixed(2).toString(10) + '%'):'100%';
   return(
-    
     <View style={{flex:1}}>
         <View style={{ flex: 1.2,alignItems:'center',borderBottomColor: 'gray',borderBottomWidth: 1}}>
           <Text h1 style={styles.bigBlack}>Today</Text>
@@ -32,11 +30,11 @@ function HomeStackScreen({props}){
               <Text h2 style={styles.bigBlack}>Process</Text>
               <View style={styles.progressBar}>
                 <Animated.View style={[styles.absoluteFill,{width}]}/>
+                <Icon name="run-circle" color='black' size={height/13} />
               </View>
               <Text>{width}</Text>
             </View>
         </View>
-
         <View style={{flex:2, alignItems:'center',}}>
           <Text h3 style={styles.bigBlack}>More</Text>
           <View style={styles.todayBox}>
@@ -44,7 +42,7 @@ function HomeStackScreen({props}){
               <Text style={styles.todayTitleText}>Walking + Running Distance</Text>
             </View>
             <View>
-              <Text style={styles.todayBodyText}>5.5 km</Text>
+              <Text style={styles.todayBodyText}>{m} m</Text>
             </View>
           </View>
           <Text> </Text>
@@ -53,7 +51,7 @@ function HomeStackScreen({props}){
               <Text style={styles.todayTitleText}>Active Energy</Text>
             </View>
             <View>
-              <Text style={styles.todayBodyText}>4000 kcal</Text>
+              <Text style={styles.todayBodyText}>{kcal} kcal</Text>
             </View>
           </View>
         </View>
@@ -121,7 +119,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#D7D7D7',
     borderColor: 'white',
     borderWidth: 2,
-    borderRadius: 15
+    borderRadius: 15,
+    alignItems:'center'
   },
   absoluteFill:
   {
