@@ -6,35 +6,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 const HomeStack = createStackNavigator();
 var { height } = Dimensions.get('window');
-
-var box_count = 3;
-
 var height = Dimensions.get('window').height;
-function useInterval(callback, delay) {
-  const savedCallback = useRef();
-  
-  // Remember the latest callback.
-  useEffect(() => {
-    savedCallback.current = callback;
-  }, [callback]);
-  // Set up the interval.
-  useEffect(() => {
-    function tick() {
-      savedCallback.current();
-    }
-    if (delay !== null) {
-      let id = setInterval(tick, delay);
-      return () => clearInterval(id);
-    }
-  }, [delay]);
-}
+
 function HomeStackScreen({props}){
-  const [progress, setProgress] = useState(0);
-  useInterval(() => {
-    if(progress < 100) {
-      setProgress(progress + 5);
-    }
-  }, 1000);
   const step =600;
   const target = 1200;
   const width = ((step/target)*100).toString(10) + '%';
@@ -61,46 +35,6 @@ function HomeStackScreen({props}){
               </View>
               <Text>{width}</Text>
             </View>
-          
-
-          {/* <Slider
-            animateTransitions
-            animationType="timing"
-            maximumTrackTintColor="#ccc"
-            maximumValue={100}
-            minimumTrackTintColor="#222"
-            minimumValue={0}
-            onSlidingComplete={() =>
-              console.log("onSlidingComplete()")
-            }
-            onSlidingStart={() =>
-              console.log("onSlidingStart()")
-            }
-            onValueChange={value =>
-              console.log("onValueChange()", value)
-            }
-            orientation="horizontal"
-            step={1}
-            style={{ width: "80%", height: 200 }}
-            thumbStyle={{ height: 20, width: 20 }}
-            thumbProps={{
-          children: (
-            <Icon
-              name="heartbeat"
-              type="font-awesome"
-              size={20}
-              reverse
-              containerStyle={{ bottom: 20, right: 20 }}
-              color="#f50"
-            />
-          )
-        }}
-        thumbTintColor="#0c0"
-        thumbTouchSize={{ width: 40, height: 40 }}
-        trackStyle={{ height: 10, borderRadius: 20 }}
-        value={50}
-      /> */}
-
         </View>
 
         <View style={{flex:2, alignItems:'center',}}>
