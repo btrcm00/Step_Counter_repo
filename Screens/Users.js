@@ -1,4 +1,4 @@
-export default Users = [
+Users = [
     {
         id: 1, 
         email: 'user1@email.com',
@@ -8,8 +8,8 @@ export default Users = [
     {
         id: 2, 
         email: 'user2@email.com',
-        username: 'congminh', 
-        password: 'congminh', 
+        username: '', 
+        password: '', 
     },
     {
         id: 3, 
