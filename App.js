@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
-import { View, Text, Alert, StyleSheet } from 'react-native';
+import React, { useState, useEffect, Component  } from 'react';
+import { View, Text, Alert, StyleSheet, Button } from 'react-native';
 import Paho from './src/paho-mqtt'
 
 
-var data;
-export default function App() {
+var data = '0';
+var dataChange = false;
+var runApp = false;
+function App() {
 
   client = new Paho.Client(host = "io.adafruit.com", port = 443, clientId =  "web_" + parseInt(Math.random() * 100, 10));
   var options = {     
@@ -16,9 +18,10 @@ export default function App() {
     onFailure: onFail
   };
   client.connect(options);
-//
-  const [Step, setStep] = useState('0'); 
 
+  //const [Step, setStep] = useState('0'); 
+
+  
   function onConnect() {
     console.log("Connected!");
     client.subscribe('Kien1120/feeds/test');  
@@ -37,7 +40,10 @@ export default function App() {
   
   function onMessageArrived(message) {
     console.log("Message Arrived:" + message.payloadString);
-    setStep(message.payloadString);    //setStep_Count(message.payloadString);
+    //setStep(message.payloadString);    //setStep_Count(message.payloadString);
+    data = message.payloadString;
+    dataChange = true;
+
   } 
 
   function onConnectionLost(responseObject) {
@@ -49,12 +55,38 @@ export default function App() {
   client.onMessageArrived = onMessageArrived;     
   client.onConnectionLost = onConnectionLost; 
 
+
+
+  return (
+    <Text>react_native_mqtt:</Text>
+  )
+}
+
+export default function Display(){
+  const [Step, setStep] = useState('0'); 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if(dataChange){
+        dataChange = false
+        setStep(data);
+      }
+    }, 10);
+    return () => clearInterval(interval);
+  }, []);
+
+
   return (
     <View style={styles.container}>
-    <Text>react_native_mqtt:{Step}</Text>
-
+    { runApp 
+      ? <Text>{Step}</Text>
+      : <Button title="Connect" onPress={() => {
+        App();
+        runApp = true;
+        }}/>
+    }
     </View>
-  )
+  );
+
 }
 
 
@@ -66,8 +98,18 @@ export default function App() {
 
 
 
+/*
+return (
+  <View style={styles.container}>
+  <Button
+    title="Press me"
+    onPress={() => this.connect()}
+  />
 
-
+    
+  <Text>react_native_mqtt:{this.state.count}</Text>
+  </View>
+)*/
 
 
 
