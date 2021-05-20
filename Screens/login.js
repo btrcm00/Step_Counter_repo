@@ -3,8 +3,39 @@ import { Dimensions, Image, StyleSheet, View, Text, Alert} from 'react-native';
 import { Button ,TextInput } from 'react-native-paper';
 import {AuthContext} from '../components/context';
 var width = Dimensions.get('window').width;
-import {User} from '../Screens/Users'
-
+//import {Users} from '../Screens/Users'
+const Users = [
+    {
+        id: 1, 
+        email: 'user1@email.com',
+        username: 'duykien', 
+        password: 'duykien', 
+    },
+    {
+        id: 2, 
+        email: 'user2@email.com',
+        username: '', 
+        password: '', 
+    },
+    {
+        id: 3, 
+        email: 'testuser@email.com',
+        username: 'chibuu', 
+        password: 'chibuu', 
+    },
+    {
+        id: 4, 
+        email: 'testuser@email.com',
+        username: 'thanhphat', 
+        password: 'thanhphat', 
+    },
+    {
+        id: 5, 
+        email: 'testuser@email.com',
+        username: 'duythong', 
+        password: 'duythong', 
+    },
+];
 export default function LoginScreen({navigation}) {
     const [data, setData] = React.useState({
         username: '',

@@ -5,8 +5,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 const HomeStack = createStackNavigator();
 var height = Dimensions.get('window').height;
-function HomeStackScreen({props}){
-  const step =980;
+function HomeStackScreen({navigation,route}){
+  const step =route.params?.steps;
   const target = 1200;
   const kcal = step * 0.04;
   const m = step * 0.762;
