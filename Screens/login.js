@@ -6,7 +6,7 @@ var width = Dimensions.get('window').width;
 
 import * as firebase from 'firebase';
 
-export default class SignInScreen extends React.Component{
+export default class LoginScreen extends React.Component{
 
     constructor(props){
       super(props)
