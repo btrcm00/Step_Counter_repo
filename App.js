@@ -1,51 +1,145 @@
-/* import * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { ChangepassScreen, HomeScreen, RegisterScreen, LoginScreen, DashboardScreen, LeaderboardScreen, StartScreen, AnalyticScreen} from './Screens'
-const Stack = createStackNavigator();
-function App() {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName = "StartScreen"
-        headerMode
-      >
-        <Stack.Screen name = "StartScreen" component = {StartScreen}/>
-        <Stack.Screen name="LoginScreen" component={LoginScreen}  />
-        <Stack.Screen name="HomeScreen" component={HomeScreen}  />
-        <Stack.Screen name="ChangepassScreen" component={ChangepassScreen}  />
-        <Stack.Screen name="RegisterScreen" component={RegisterScreen}  />
-        <Stack.Screen name="DashboardScreen" component={DashboardScreen}  />
-        <Stack.Screen name="LeaderboardScreen" component={LeaderboardScreen}  />
-        <Stack.Screen name="AnalyticScreen" component={AnalyticScreen}  />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-}
-export default App;
- */
-import * as React from 'react';
+import  React, {useEffect} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import {createDrawerNavigator} from '@react-navigation/drawer'
-import { ChangepassScreen, HomeScreen, RegisterScreen, LoginScreen, DashboardScreen, LeaderboardScreen, StartScreen, MainTabScreen, ProfileScreen} from './Screens'
-import { createStackNavigator } from '@react-navigation/stack';
-import {DrawerContent} from './Screens/DrawerContent'
+import 
+  { 
+    ChangepassScreen, 
+    LeaderboardScreen, 
+    MainTabScreen, 
+    ProfileScreen,
+    AnalyticScreen_calo,
+    AnalyticScreen_steps,
+    AnalyticScreen_km,
+  } from './Screens';
+import { View, ActivityIndicator } from 'react-native';
+import {DrawerContent} from './Screens/DrawerContent';
+import { AuthContext } from './components/context';
+import RootStackScreen from './Screens/RootStackScreen';
+import * as firebase from 'firebase'
+
+var firebaseConfig = {
+  apiKey: "AIzaSyCIsIX3VuHVmUW1HJ7WlG6MElZtSOVFiDI",
+  authDomain: "stepcounter-32332.firebaseapp.com",
+  projectId: "stepcounter-32332",
+  storageBucket: "stepcounter-32332.appspot.com",
+  messagingSenderId: "1050968353032",
+  appId: "1:1050968353032:web:82bdbdc0448e42029aa4bd",
+  measurementId: "G-NWQP410C9E"
+}
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
 const Drawer = createDrawerNavigator();
-function App(){
+const App=()=>{
+  //const [isLoading, setIsLoading] = React.useState(true);
+  //const [userToken, setUserToken] = React.useState(null);
+
+  const initialLoginState = {
+    isLoading: true,
+    userName: null,
+    userToken: null,
+  };
+  const loginReducer = (prevState, action) => {
+    switch( action.type ) {
+      case 'RETRIEVE_TOKEN': 
+        return {
+          ...prevState,
+          userToken: action.token,
+          isLoading: false,
+        };
+      case 'LOGIN': 
+        return {
+          ...prevState,
+          userName: action.id,
+          userToken: action.token,
+          isLoading: false,
+        };
+      case 'LOGOUT': 
+        return {
+          ...prevState,
+          userName: null,
+          userToken: null,
+          isLoading: false,
+        };
+      case 'REGISTER': 
+        return {
+          ...prevState,
+          userName: action.id,
+          userToken: action.token,
+          isLoading: false,
+        };
+    }
+  };
+  const [loginState, dispatch] = React.useReducer(loginReducer, initialLoginState);
+  const authContext = React.useMemo(() => ({
+    signIn: async(foundUser) => {
+      /* setUserToken('congminh');
+      setIsLoading(false); */
+      const userToken = String(foundUser[0].userToken);
+      const userName = foundUser[0].username;
+      
+      try {
+        await AsyncStorage.setItem('userToken', userToken);
+      } catch(e) {
+        console.log(e);
+      }
+      // console.log('user token: ', userToken);
+      dispatch({ type: 'LOGIN', id: userName, token: userToken });
+    },
+    signOut: async() => {
+      /* setUserToken(null);
+      setIsLoading(false); */
+      try {
+        await AsyncStorage.removeItem('userToken');
+      } catch(e) {
+        console.log(e);
+      }
+      dispatch({ type: 'LOGOUT' });
+    },
+    signUp: () => {
+      //setUserToken('congminh');
+      //setIsLoading(false);
+    }
+  }));
+  useEffect(() => {
+    setTimeout(async() => {
+      //setIsLoading(false);
+      let userToken;
+      userToken = null;
+      try {
+        userToken = await AsyncStorage.getItem('userToken');
+      } catch(e) {
+        console.log(e);
+      }
+      // console.log('user token: ', userToken);
+      dispatch({ type: 'RETRIEVE_TOKEN', token: userToken });
+    }, 1000);
+  }, []);
+
+  if(loginState.isLoading ) {
+    return(
+      <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+        <ActivityIndicator size="large"/>
+      </View>
+    );
+  }
   return(
-    <NavigationContainer
-    >
-      <Drawer.Navigator drawerContent={props => <DrawerContent {...props} />}>
-        <Drawer.Screen name = "Home" component={MainTabScreen}/>
-        <Drawer.Screen name = "Profile" component = {ProfileScreen}/>
-        <Drawer.Screen name="DashBoard" component={DashboardScreen} />
-        <Drawer.Screen name="LeaderBoard" component={LeaderboardScreen}/>
-        <Drawer.Screen name="Register" component={RegisterScreen} />
-        <Drawer.Screen name="Login" component={LoginScreen}/>
-        <Drawer.Screen name="Changepass" component={ChangepassScreen}/>
-        <Drawer.Screen name="MainTab" component={MainTabScreen}/>
-      </Drawer.Navigator>
-    </NavigationContainer>
+    <AuthContext.Provider value = {authContext}>
+      <NavigationContainer>
+        { loginState.userToken !== null ? (
+          <Drawer.Navigator initialRouteName="Home" drawerContent={props => <DrawerContent {...props}/>}>
+            <Drawer.Screen name = "Home" component={MainTabScreen}/>
+            <Drawer.Screen name = "Profile" component = {ProfileScreen}/>
+            <Drawer.Screen name="Leaderboard" component={LeaderboardScreen}/>
+            <Drawer.Screen name="Changepass" component={ChangepassScreen}/>
+            <Drawer.Screen name="MainTab" component={MainTabScreen}/>
+            <Drawer.Screen name="Analytic_steps" component={AnalyticScreen_steps}/>
+            <Drawer.Screen name="Analytic_km" component={AnalyticScreen_km}/>
+            <Drawer.Screen name="Analytic_calo" component={AnalyticScreen_calo}/>
+          </Drawer.Navigator>
+        ):<RootStackScreen/>}
+      </NavigationContainer>
+    </AuthContext.Provider>
   );
 }
 export default App;
