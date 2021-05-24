@@ -22,7 +22,7 @@ export default class SignInScreen extends React.Component{
     }
   
     createNewAccount = () => {
-        this.props.navigation.navigate('SignUp')
+        this.props.navigation.navigate('')
       }
   
     signInUser = (email, password) => {
