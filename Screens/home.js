@@ -1,12 +1,12 @@
 
 import React from 'react';
-import {Text,StyleSheet,View,ScrollView,Dimensions, Animated} from 'react-native';
+import {Text,StyleSheet,View,Dimensions, Animated} from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 const HomeStack = createStackNavigator();
 var height = Dimensions.get('window').height;
 function HomeStackScreen({navigation,route}){
-  const step =route.params?.steps;
+  const step = 0;
   const target = 1200;
   const kcal = step * 0.04;
   const m = step * 0.762;
@@ -24,7 +24,6 @@ function HomeStackScreen({navigation,route}){
             </View>
           </View>
         </View>
-
         <View style={{flex: 1,borderBottomColor: 'gray',borderBottomWidth: 1}}>
             <View style = {{flex:1,alignItems:'center'}}>
               <Text h2 style={styles.bigBlack}>Process</Text>
@@ -45,7 +44,6 @@ function HomeStackScreen({navigation,route}){
               <Text style={styles.todayBodyText}>{m} m</Text>
             </View>
           </View>
-          <Text> </Text>
           <View style={styles.todayBox}>
             <View>
               <Text style={styles.todayTitleText}>Active Energy</Text>
