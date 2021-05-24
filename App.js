@@ -21,68 +21,6 @@ import RootStackScreen from './Screens/RootStackScreen';
 
 const Drawer = createDrawerNavigator();
 
-var data = '0';
-var dataChange = false;
-function Mqtt() {
-  client = new Paho.Client(host = "io.adafruit.com", port = 443, clientId =  "web_" + parseInt(Math.random() * 100, 10));
-  var options = {     
-    useSSL: true,
-    userName: "Kien1120",
-    password: "aio_heNu56NaI8yoBXbqf6FlPCSlBOLl",
-    keepAliveInterval: 60,
-    onSuccess: onConnect,
-    onFailure: onFail
-  };
-  client.connect(options);
-
-  //const [Step, setStep] = useState('0'); 
-  function onConnect() {
-    console.log("Connected!");
-    client.subscribe('Kien1120/feeds/test');  
-  }
-
-  function onFail(context) {
-    console.log(context);
-    console.log("Connection failed!");
-    Alert.alert('Failure to Connect', 
-      "Unable to connect to host. Try again later.",
-      [
-        { text: "OK" }
-      ],
-    )
-  }
-  
-  function onMessageArrived(message) {
-    console.log("Message Arrived:" + message.payloadString);
-    navigation.navigate('Home11', {
-      steps: message.payloadString,
-    });
-    //setStep(message.payloadString);    //setStep_Count(message.payloadString);
-    data = message.payloadString;
-    dataChange = true;
-
-  } 
-
-  function onConnectionLost(responseObject) {
-    if (responseObject.errorCode !== 0) {
-      console.log("onConnectionLost:" +  responseObject.errorMessage);
-    }
-  }   
-
-  client.onMessageArrived = onMessageArrived;     
-  client.onConnectionLost = onConnectionLost; 
-
-
-
-  return (
-    <Text>react_native_mqtt:</Text>
-  )
-}
-
-
-
-
-
 
 const App=()=>{
   //const [isLoading, setIsLoading] = React.useState(true);
@@ -125,24 +63,12 @@ const App=()=>{
     }
   };
   const [loginState, dispatch] = React.useReducer(loginReducer, initialLoginState);
-  const [Step, setStep] = useState('0'); 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if(dataChange){
-        dataChange = false
-        setStep(data);
-      }
-    }, 10);
-    return () => clearInterval(interval);
-  }, []);
   const authContext = React.useMemo(() => ({
     signIn: async(foundUser) => {
       /* setUserToken('congminh');
       setIsLoading(false); */
-      Mqtt()
       const userToken = String(foundUser[0].userToken);
       const userName = foundUser[0].username;
-      
       try {
         await AsyncStorage.setItem('userToken', userToken);
       } catch(e) {
