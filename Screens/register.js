@@ -1,21 +1,46 @@
 import React, {useState} from 'react'
-import { Dimensions, Image,StyleSheet,View ,Text} from 'react-native'
+import { Dimensions, Image,StyleSheet,View ,Text, Alert} from 'react-native'
 import { Button,TextInput} from 'react-native-paper'
-import   firebase   from '../components/FirebaseConfig';
+import   firebase  from '../components/FirebaseConfig';
 var width = Dimensions.get('window').width;
 
 export default function RegisterScreen({navigation}) {
-    const [email,setEmail] = React.useState('')
-    const [password,setPassword]= React.useState('')
-    const [cpassword,setConfirmPassword]= React.useState('')
-    const [error, setError] = useState('');
+    const [data, setData] = useState({
+        email: '',
+        password: '',
+        cpassword:''
+    });
     const signUp = async () => {
-        try {
-            const response = await firebase.auth().createUserWithEmailAndPassword(email, password);
-            navigation.navigate('Login');
-        } catch (err) {
-            setError(err.message);
+        if(data.password != data.cpassword){
+            Alert.alert(
+                'Alert!','Password confirm not match with password!!!',
+                [
+                    {text: 'Again'}
+                ]
+            )
         }
+        else{
+            firebase.auth().createUserWithEmailAndPassword(data.email, data.password)
+            .then(()=>{
+                Alert.alert(
+                    'Alert!!!','Successfully',
+                    [
+                        {text: 'OK',onPress:()=>{navigation.navigate('Login')}}
+                    ],
+                    {cancelable:false}
+                )
+            })
+            .catch((error)=>{
+                console.log(error.message)
+                Alert.alert(
+                    "Alert",'Failed!!!',
+                    [
+                        {text: 'OK'}
+                    ],
+                )
+            })
+        }
+        
 
     }
     return (
@@ -36,8 +61,7 @@ export default function RegisterScreen({navigation}) {
                         label="Email"
                         style = {styles.input}
                         clearButtonMode = 'always'
-                        value={email}
-                        onChangeText={setEmail}
+                        onChangeText={(val)=>setData({...data,email:val})}
                         placeholder="Email"
                     />
                 </View>
@@ -48,8 +72,7 @@ export default function RegisterScreen({navigation}) {
                         secureTextEntry={true}
                         style = {styles.input}
                         clearButtonMode = 'always'
-                        value={password}
-                        onChangeText={setPassword}
+                        onChangeText={(val)=>setData({...data,password:val})}
                         placeholder="Password"
                     />
                 </View>
@@ -60,18 +83,12 @@ export default function RegisterScreen({navigation}) {
                         clearButtonMode = 'always'
                         secureTextEntry={true}
                         style = {styles.input}
-                        value={cpassword}
-                        onChangeText={setConfirmPassword}
+                        onChangeText={(val)=>setData({...data,cpassword:val})}
                         placeholder="Confirm password"
                     />
 
                 </View>
             </View>
-            {
-            error ?
-                <Text style={{ color: 'red' }}>{error}</Text>
-                : null
-            }
         </View>
         
         <View style ={{ flex:4,flexDirection:'coloumn',alignItems:'center', justifyContent:'space-around'}}>
