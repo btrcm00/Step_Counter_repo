@@ -3,14 +3,20 @@ import {  ImageBackground,Dimensions, StyleSheet, Text, View, Image } from 'reac
 import { TextInput } from 'react-native-paper'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { createStackNavigator } from '@react-navigation/stack';
-import * as firebase from 'firebase'
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import firebase from '../components/FirebaseConfig'
 const HomeStack = createStackNavigator();
-
-
 var width = Dimensions.get('window').width;
-const image = { uri: "https://reactjs.org/logo-og.png" }
 function ChangeStack({navigation}){
+	const [data, setData] = useState({
+        email: '',
+        currpassword: '',
+		newpassword:'',
+		confirmpassword:'',
+    });
+	const onHandleResetPass = () => {
+		
+	}
     return(
         <View style = {styles.container}>
 			<View style={{flex:9}}>
@@ -31,6 +37,7 @@ function ChangeStack({navigation}){
 								placeholder = "Old password"
 								clearButtonMode = 'always'
 								secureTextEntry={true}
+								onChangeText={(val) => setData({...data,currpassword:val})}
 								mode="outlined"
 								label="Old Password"
 								mode="outlined"
@@ -42,6 +49,7 @@ function ChangeStack({navigation}){
 								placeholder = "New password"
 								clearButtonMode = 'always'
 								secureTextEntry={true}
+								onChangeText={(val) => setData({...data,newpassword:val})}
 								mode="outlined"
 								label="New Password"
 								mode="outlined"
@@ -53,6 +61,7 @@ function ChangeStack({navigation}){
 								placeholder = "Confirm Newpassword"
 								clearButtonMode = 'always'
 								secureTextEntry={true}
+								onChangeText={(val) => setData({...data,confirmpassword:val})}
 								mode="outlined"
 								label="Confirm Newpassword"
 								mode="outlined"
