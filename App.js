@@ -1,23 +1,37 @@
-import * as React from 'react';
+import  React, {useEffect} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { ChangepassScreen, HomeScreen, RegisterScreen, LoginScreen, DashboardScreen, LeaderboardScreen, StartScreen} from './Screens'
-const Stack = createStackNavigator();
-function App() {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName = "StartScreen"
-      >
-        <Stack.Screen name = "StartScreen" component = {StartScreen}/>
-        <Stack.Screen name="LoginScreen" component={LoginScreen}  />
-        <Stack.Screen name="HomeScreen" component={HomeScreen}  />
-        <Stack.Screen name="ChangepassScreen" component={ChangepassScreen}  />
-        <Stack.Screen name="RegisterScreen" component={RegisterScreen}  />
-        <Stack.Screen name="DashboardScreen" component={DashboardScreen}  />
-        <Stack.Screen name="LeaderboardScreen" component={LeaderboardScreen}  />
-      </Stack.Navigator>
-    </NavigationContainer>
+import {createDrawerNavigator} from '@react-navigation/drawer'
+import 
+  { 
+    ChangepassScreen, 
+    LeaderboardScreen, 
+    MainTabScreen, 
+    ProfileScreen,
+    AnalyticScreen_calo,
+    AnalyticScreen_steps,
+    AnalyticScreen_km,
+    LoginScreen,RegisterScreen
+  } from './Screens';
+import {DrawerContent} from './Screens/DrawerContent';
+const Drawer = createDrawerNavigator();
+const App=()=>{
+  //const [isLoading, setIsLoading] = React.useState(true);
+  //const [userToken, setUserToken] = React.useState(null);
+  return(
+      <NavigationContainer>
+          <Drawer.Navigator initialRouteName="Login" drawerContent={props => <DrawerContent {...props}/>}>
+            <Drawer.Screen name = "Home" component={MainTabScreen}/>
+            <Drawer.Screen name = "Profile" component = {ProfileScreen}/>
+            <Drawer.Screen name="Leaderboard" component={LeaderboardScreen}/>
+            <Drawer.Screen name="Changepass" component={ChangepassScreen}/>
+            <Drawer.Screen name="MainTab" component={MainTabScreen}/>
+            <Drawer.Screen name="Analytic_steps" component={AnalyticScreen_steps}/>
+            <Drawer.Screen name="Analytic_km" component={AnalyticScreen_km}/>
+            <Drawer.Screen name="Analytic_calo" component={AnalyticScreen_calo}/>
+            <Drawer.Screen name="Login" component={LoginScreen}/>
+            <Drawer.Screen name="Register" component={RegisterScreen}/>
+          </Drawer.Navigator>
+      </NavigationContainer>
   );
 }
 export default App;
