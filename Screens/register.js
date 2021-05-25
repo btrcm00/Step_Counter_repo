@@ -8,6 +8,7 @@ export default function RegisterScreen({navigation}) {
     const [email,setEmail] = React.useState('')
     const [password,setPassword]= React.useState('')
     const [cpassword,setConfirmPassword]= React.useState('')
+    const [error, setError] = useState('');
     const signUp = async () => {
         try {
             const response = await firebase.auth().createUserWithEmailAndPassword(email, password);
