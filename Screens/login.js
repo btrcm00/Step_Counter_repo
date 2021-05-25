@@ -12,16 +12,16 @@ export default function LoginScreen({navigation}) {
         firebase.auth().signInWithEmailAndPassword(data.email, data.password)
         .then(()=>{
             Alert.alert(
-                'Alert!!!','Successfully',
+                'Successfully!','',
                 [
-                    {text: 'OK',onPress:()=>{navigation.navigate('Home')}}
+                    {text: 'Go to Home',onPress:()=>{navigation.navigate('Home')}}
                 ],
                 {cancelable:false}
             )
         })
-        .catch((message) => {
+        .catch((error) => {
             Alert.alert(
-                "Alert",'Failed!!!',
+                "Opps!",error.message,
                 [
                     {text: 'OK', onPress: () => {navigation.navigate('Login')}}
                 ],
