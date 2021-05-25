@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { Dimensions, Image,StyleSheet,View ,Text} from 'react-native'
 import { Button,TextInput} from 'react-native-paper'
 import   firebase   from '../components/FirebaseConfig';
