@@ -10,8 +10,16 @@ import {
     DrawerItem
 } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-export function DrawerContent(props) {
-    const { signOut } = 1
+import firebase from '../components/FirebaseConfig'
+export function DrawerContent({navigation,props}) {
+    const signOutUser = async () => {
+        try {
+            await firebase.auth().signOut();
+           navigation.navigate('Login');
+        } catch (e) {
+            console.log(e);
+        }
+    }
     return(
         <View style={{flex:1}}>
             <DrawerContentScrollView {...props}>
@@ -85,7 +93,7 @@ export function DrawerContent(props) {
                         />
                     )}
                     label="Sign Out"
-                    onPress={() => {signOut()}}
+                    onPress={() => signOutUser()}
                 />
             </Drawer.Section>
         </View>

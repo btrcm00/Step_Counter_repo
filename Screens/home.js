@@ -12,8 +12,8 @@ function HomeStackScreen({navigation,route}){
   const m = step * 0.762;
   const width = (step<=target)?(((step/target)*100).toFixed(2).toString(10) + '%'):'100%';
   return(
-    <View style={{flex:1}}>
-        <View style={{ flex: 1.2,alignItems:'center',borderBottomColor: 'gray',borderBottomWidth: 1}}>
+    <View style={{flex:1, backgroundColor: '#fff1e1',}}>
+        <View style={{ flex: 1.2,alignItems:'center',}}>
           <Text h1 style={styles.bigBlack}>Today</Text>
           <View style={styles.todayBox}>
             <View>
@@ -24,7 +24,7 @@ function HomeStackScreen({navigation,route}){
             </View>
           </View>
         </View>
-        <View style={{flex: 1,borderBottomColor: 'gray',borderBottomWidth: 1}}>
+        <View style={{flex: 1,}}>
             <View style = {{flex:1,alignItems:'center'}}>
               <Text h2 style={styles.bigBlack}>Process</Text>
               <View style={styles.progressBar}>
@@ -34,7 +34,7 @@ function HomeStackScreen({navigation,route}){
               <Text>{width}</Text>
             </View>
         </View>
-        <View style={{flex:2, alignItems:'center',}}>
+        <View style={{flex:2.5, alignItems:'center',}}>
           <Text h3 style={styles.bigBlack}>More</Text>
           <View style={styles.todayBox}>
             <View>
@@ -92,13 +92,20 @@ const styles = StyleSheet.create({
     fontSize: 30,
   },
   todayBox: {
-    backgroundColor: '#D7D7D7',
+    flex:1,
+    marginBottom:5,
     alignItems:'center',
+    backgroundColor:'white',
     justifyContent:'center',
     width: '95%',
-    paddingTop: 20,
-    paddingBottom: 20,
-    borderRadius: 10
+    borderRadius: 10,
+    shadowColor: "#000",
+		shadowOffset: {
+		width: -5,
+		height: 6,
+		},
+		shadowOpacity: 0.23,
+		elevation: 4,
   },
   todayTitleText: {
     fontWeight: 'bold',
@@ -114,11 +121,18 @@ const styles = StyleSheet.create({
   progressBar: {
     height: height/12,
     width: '85%',
-    backgroundColor: '#D7D7D7',
+    backgroundColor: 'white',
     borderColor: 'white',
     borderWidth: 2,
     borderRadius: 15,
-    alignItems:'center'
+    alignItems:'center',
+    shadowColor: "#000",
+		shadowOffset: {
+		width: -5,
+		height: 6,
+		},
+		shadowOpacity: 0.23,
+		elevation: 4,
   },
   absoluteFill:
   {
