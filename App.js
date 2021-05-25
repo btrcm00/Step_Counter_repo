@@ -18,7 +18,7 @@ import Paho from './src/paho-mqtt'
 import {DrawerContent} from './Screens/DrawerContent';
 import { AuthContext } from './components/context';
 import RootStackScreen from './Screens/RootStackScreen';
-
+import {firebaseApp} from './Screens/firebaseconfig'
 const Drawer = createDrawerNavigator();
 
 
