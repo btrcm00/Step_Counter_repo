@@ -1,58 +1,25 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Dimensions, Image, StyleSheet, View, Text, Alert} from 'react-native';
 import { Button ,TextInput } from 'react-native-paper';
-
+import {AuthContext} from '../components/context';
 var width = Dimensions.get('window').width;
 
-import * as firebase from 'firebase';
+import firebase from '../components/FirebaseConfig'
+import RegisterScreen from './register';
+export default function LoginScreen({navigation}) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
-export default class LoginScreen extends React.Component{
+  const signIn = async () => {
+      try {
+          const response = await firebase.auth().signInWithEmailAndPassword(email, password);
+          navigation.navigate('Home');
+      } catch (err) {
+          setError(err.message);
+      }
 
-    constructor(props){
-      super(props)
-      this.state={
-        email: '',
-        password: ''
-      }
-    }
-  
-    static navigationOptions = {
-        title: 'Sign in',
-        header: null
-    }
-  
-    createNewAccount = () => {
-        this.props.navigation.navigate('')
-      }
-  
-    signInUser = (email, password) => {
-      console.log(this.state)
-      
-      if(email === '' && password === ''){
-        Alert.alert('Please enter your email and password!')
-      }
-      else if(email === '' || password === ''){
-        if(email==='') { Alert.alert('Please enter your email!') }
-        else { Alert.alert('Please enter your password!') }
-      }
-      else{
-        firebase.auth()
-        .signInWithEmailAndPassword(email,password)
-        .then(()=>{this.props.navigation.nevigate('Home')} )
-        .catch(error => {
-          Alert.alert(
-            'Account with this email does not exist!',
-            'Register now!',
-            [
-              {
-                text: 'Ok', onPress: () => {console.log('Ok tapped')} 
-              }
-            ]
-          )
-        })
-      }
-    }
-    render(){
+  }
     return (
       <View style={styles.container}>
             <View style={{flex:2,justifyContent: 'center',alignItems: 'center'}}>
@@ -64,53 +31,49 @@ export default class LoginScreen extends React.Component{
                 </View>
             </View>
             <View style = {{flex:1, justifyContent:'center'}}>
-                <View style = {{flex:1,justifyContent:'center'}} >
+                <View style={{flex:1,justifyContent:'center'}} >
                     <TextInput 
-                        mode = "outlined"
-                        label = "Email"
-                        clearButtonMode = "always"
+                        mode="outlined"
+                        label="Email"
+                        clearButtonMode="always"
                         style = {styles.input}
-                        onChangeText = {
-                            email => this.setState({email})
-                        }
-                        value = {this.state.email}
-                        placeholder = "Email"
+                        onChangeText={setEmail}
+                        placeholder="Email"
                     />
                 </View>
                 <View style={{flex:1,justifyContent:'center'}} >
                     <TextInput 
-                        mode = "outlined"
-                        secureTextEntry = {true}
+                        mode="outlined"
+                        secureTextEntry={true}
                         clearButtonMode = 'always'
                         style = {styles.input}
-                        label = "Password"
-                        onChangeText = {
-                            password => this.setState({password})
-                        }
-                        value = {this.state.password}
-                        placeholder = "Password"
+                        label="Password"
+                        onChangeText={setPassword}
+                        placeholder="Password"
                     />
                 </View>
                 
             </View>
-        
+            {
+            error ?
+                <Text style={{ color: 'red' }}>{error}</Text>
+                : null
+            }
             <View style ={{flex:2,flexDirection: 'column',alignItems:'center',justifyContent:'space-around'}}>
-                <Button  onPress={ ()=>{this.signInUser(this.state.email, this.state.password)} } width = '50%' color ='#3498DB' mode = "contained">
+                <Button  onPress={() => signIn()} width = '50%' color ='#3498DB' mode = "contained">
                     <Text style={{color:"white"}}>Login</Text>
                 </Button>
                 <View style={{flexDirection:'row'}}>
                     <Text style={{fontSize:16}}>Not Registered yet ?</Text>
-                    <Button  onPress={()=>{this.createNewAccount()}} color ='#3498DB' >
+                    <Button onPress ={() => navigation.navigate('Register')} color ='#3498DB' >
                         <Text style={{color:"black"}}>sign up</Text>
                     </Button>
                 </View>
             </View>
     
         </View>
-    );
+);
 }
-}
-
 
 const styles = StyleSheet.create({
     container:{
