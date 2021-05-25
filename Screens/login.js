@@ -1,25 +1,60 @@
 import React, {useState} from 'react';
 import { Dimensions, Image, StyleSheet, View, Text, Alert} from 'react-native';
 import { Button ,TextInput } from 'react-native-paper';
-import {AuthContext} from '../components/context';
 var width = Dimensions.get('window').width;
-
 import firebase from '../components/FirebaseConfig'
-import RegisterScreen from './register';
+import {AuthContext} from '../components/context';
 export default function LoginScreen({navigation}) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-
-  const signIn = async () => {
-      try {
-          const response = await firebase.auth().signInUserWithEmailAndPassword(email, password);
-          navigation.navigate('Home');
-      } catch (err) {
-          setError(err.message);
-      }
-
-  }
+    const [data, setData] = useState({
+        email: '',
+        password: '',
+    });
+    const signIn = async () => {
+        firebase.auth().signInWithEmailAndPassword(data.email, data.password)
+        .then(()=>{
+            Alert.alert(
+                'Alert!!!','Successfully',
+                [
+                    {text: 'OK',onPress:()=>{navigation.navigate('Home')}}
+                ],
+                {cancelable:false}
+            )
+        })
+        .catch((message) => {
+            Alert.alert(
+                "Alert",'Failed!!!',
+                [
+                    {text: 'OK', onPress: () => {navigation.navigate('Login')}}
+                ],
+            )
+        })
+    }
+    const textInputChange = (val) => {
+        if( val.trim().length >= 4 ) {
+            setData({
+                ...data,
+                email: val,
+            });
+        } else {
+            setData({
+                ...data,
+                email: val,
+            });
+        }
+    }
+    const handlePasswordChange = (val) => {
+        if( val.trim().length >= 8 ) {
+            setData({
+                ...data,
+                password: val,
+            });
+        } else {
+            setData({
+                ...data,
+                password: val,
+            });
+        }
+    }
     return (
       <View style={styles.container}>
             <View style={{flex:2,justifyContent: 'center',alignItems: 'center'}}>
@@ -37,7 +72,7 @@ export default function LoginScreen({navigation}) {
                         label="Email"
                         clearButtonMode="always"
                         style = {styles.input}
-                        onChangeText={setEmail}
+                        onChangeText={(val) => textInputChange(val)}
                         placeholder="Email"
                     />
                 </View>
@@ -48,17 +83,12 @@ export default function LoginScreen({navigation}) {
                         clearButtonMode = 'always'
                         style = {styles.input}
                         label="Password"
-                        onChangeText={setPassword}
+                        onChangeText={(val) => handlePasswordChange(val)}
                         placeholder="Password"
                     />
                 </View>
                 
             </View>
-            {
-            error ?
-                <Text style={{ color: 'red' }}>{error}</Text>
-                : null
-            }
             <View style ={{flex:2,flexDirection: 'column',alignItems:'center',justifyContent:'space-around'}}>
                 <Button  onPress={() => signIn()} width = '50%' color ='#3498DB' mode = "contained">
                     <Text style={{color:"white"}}>Login</Text>
@@ -66,7 +96,7 @@ export default function LoginScreen({navigation}) {
                 <View style={{flexDirection:'row'}}>
                     <Text style={{fontSize:16}}>Not Registered yet ?</Text>
                     <Button onPress ={() => navigation.navigate('Register')} color ='#3498DB' >
-                        <Text style={{color:"black"}}>sign up</Text>
+                        <Text style={{color:"black"}}>Sign up</Text>
                     </Button>
                 </View>
             </View>
