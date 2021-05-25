@@ -2,7 +2,7 @@ import React from 'react'
 import { Dimensions, Image,StyleSheet,View ,Text} from 'react-native'
 import { Button,TextInput} from 'react-native-paper'
 var width = Dimensions.get('window').width;
-import {firebaseApp} from './firebaseconfig'
+import {firebase} from '../components/FirebaseConfig'
 export default function RegisterScreen({navigation}) {
     const [email,setEmail] = React.useState('')
     const [password,setPassword]= React.useState('')

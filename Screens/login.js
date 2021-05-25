@@ -3,7 +3,6 @@ import { Dimensions, Image, StyleSheet, View, Text, Alert} from 'react-native';
 import { Button ,TextInput } from 'react-native-paper';
 var width = Dimensions.get('window').width;
 import firebase from '../components/FirebaseConfig'
-import {AuthContext} from '../components/context';
 export default function LoginScreen({navigation}) {
     const [data, setData] = useState({
         email: '',
