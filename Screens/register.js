@@ -1,7 +1,7 @@
 import React from 'react'
 import { Dimensions, Image,StyleSheet,View ,Text} from 'react-native'
 import { Button,TextInput} from 'react-native-paper'
-import   { firebaseApp }  from '../components/FirebaseConfig';
+import   firebase   from '../components/FirebaseConfig';
 var width = Dimensions.get('window').width;
 
 export default function RegisterScreen({navigation}) {
@@ -36,7 +36,7 @@ export default function RegisterScreen({navigation}) {
                         style = {styles.input}
                         clearButtonMode = 'always'
                         value={email}
-                        onChangeText={text => setEmail}
+                        onChangeText={setEmail}
                         placeholder="Email"
                     />
                 </View>
@@ -48,7 +48,7 @@ export default function RegisterScreen({navigation}) {
                         style = {styles.input}
                         clearButtonMode = 'always'
                         value={password}
-                        onChangeText={text => setPassword}
+                        onChangeText={setPassword}
                         placeholder="Password"
                     />
                 </View>
@@ -60,13 +60,19 @@ export default function RegisterScreen({navigation}) {
                         secureTextEntry={true}
                         style = {styles.input}
                         value={cpassword}
-                        onChangeText={text => setConfirmPassword}
+                        onChangeText={setConfirmPassword}
                         placeholder="Confirm password"
                     />
+
                 </View>
             </View>
+            {
+            error ?
+                <Text style={{ color: 'red' }}>{error}</Text>
+                : null
+            }
         </View>
-    
+        
         <View style ={{ flex:4,flexDirection:'coloumn',alignItems:'center', justifyContent:'space-around'}}>
             <View style = {{flex:2, alignItems:'center', justifyContent:'center'}}>
                 <Button onPress = {() => signUp()} color ='#3498DB' mode = "contained" style = {styles.button}>

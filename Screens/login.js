@@ -13,7 +13,7 @@ export default function LoginScreen({navigation}) {
 
   const signIn = async () => {
       try {
-          const response = await firebase.auth().signInWithEmailAndPassword(email, password);
+          const response = await firebase.auth().signInUserWithEmailAndPassword(email, password);
           navigation.navigate('Home');
       } catch (err) {
           setError(err.message);
