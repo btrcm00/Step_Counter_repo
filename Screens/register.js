@@ -1,60 +1,127 @@
-import React ,{useContext} from 'react'
-import { ScrollView,StyleSheet,View ,Text} from 'react-native'
-
+import React from 'react'
+import { Dimensions, Image,StyleSheet,View ,Text} from 'react-native'
 import { Button,TextInput} from 'react-native-paper'
-
+import   { firebaseApp }  from '../components/FirebaseConfig';
+var width = Dimensions.get('window').width;
 
 export default function RegisterScreen({navigation}) {
     const [email,setEmail] = React.useState('')
     const [password,setPassword]= React.useState('')
     const [cpassword,setConfirmPassword]= React.useState('')
-    
+    const signUp = async () => {
+        try {
+            const response = await firebase.auth().createUserWithEmailAndPassword(email, password);
+            navigation.navigate('Login');
+        } catch (err) {
+            setError(err.message);
+        }
 
+    }
     return (
-  <ScrollView style={styles.screen}>
-
-        <TextInput
-            mode="outlined"
-            label="Email"
-            style = {{marginTop:80, marginBottom: 30}}
-            value={email}
-            onChangeText={text => setEmail(text)}
-            placeholder="Email"
+    <View style={styles.container}>
+        <View style={{flex:6,justifyContent: 'center',alignItems: 'center'}}>
+            <View style={styles.container1}>
+            <Image
+                style = {styles.image}
+                source={require('./StepCounterImg.png')}
             />
-
-        <TextInput
-            mode="outlined"
-            label="Password"
-            secureTextEntry={true}
-            style = {{marginBottom: 30}}
-            value={password}
-            onChangeText={text => setPassword(text)}
-            placeholder="Password"
-            />
-
-        <TextInput
-            mode="outlined"
-            label="Confirm password"
-            secureTextEntry={true}
-            style = {{marginBottom: 30}}
-            value={cpassword}
-            onChangeText={text => setConfirmPassword(text)}
-            placeholder="Confirm password"
-            />
-    
-        <Button onPress = {() =>navigation.navigate('LoginScreen')} width = '60%' color ='#3498DB' mode = "contained" style = {{marginLeft: 70,marginRight: 50,marginTop:30, marginBottom: 10}}><Text style={{color:"white"}}>Register Now!</Text></Button>
-        <View style ={{flexDirection:'row',alignItems:'center', justifyContent:'space-around'}}>
-            <Text>Already Registered ?</Text>
-            <Button onPress ={() => navigation.navigate('LoginScreen')} color ='#3498DB'><Text style={{color:"black"}}>Login</Text></Button>
+            </View>
         </View>
-        
-
-    </ScrollView>
+        <View style={{flex:6,}}>
+            <View style={{flex:4,justifyContent:'center'}}>
+                <View style={{flex:1,justifyContent:'center'}} >
+                    <TextInput
+                        mode="outlined"
+                        label="Email"
+                        style = {styles.input}
+                        clearButtonMode = 'always'
+                        value={email}
+                        onChangeText={text => setEmail}
+                        placeholder="Email"
+                    />
+                </View>
+                <View style={{flex:1,justifyContent:'center'}}>
+                    <TextInput
+                        mode="outlined"
+                        label="Password"
+                        secureTextEntry={true}
+                        style = {styles.input}
+                        clearButtonMode = 'always'
+                        value={password}
+                        onChangeText={text => setPassword}
+                        placeholder="Password"
+                    />
+                </View>
+                <View style={{flex:1,justifyContent:'center'}}>
+                    <TextInput
+                        mode="outlined"
+                        label="Confirm password"
+                        clearButtonMode = 'always'
+                        secureTextEntry={true}
+                        style = {styles.input}
+                        value={cpassword}
+                        onChangeText={text => setConfirmPassword}
+                        placeholder="Confirm password"
+                    />
+                </View>
+            </View>
+        </View>
+    
+        <View style ={{ flex:4,flexDirection:'coloumn',alignItems:'center', justifyContent:'space-around'}}>
+            <View style = {{flex:2, alignItems:'center', justifyContent:'center'}}>
+                <Button onPress = {() => signUp()} color ='#3498DB' mode = "contained" style = {styles.button}>
+                    <Text style={{color:"white"}}>Register Now!</Text>
+                </Button>
+            </View>
+            <View style = {{flex:1, flexDirection:'row', justifyContent:'center'}}>
+                <Text>Already Registered ?</Text>
+                <Button onPress ={() => navigation.navigate('Login')} color ='#3498DB'>
+                    <Text>Login</Text>
+                </Button>
+                
+            </View>
+            
+        </View>
+    </View>
 );
 }
 
 const styles = StyleSheet.create({
-    screen:{
-        padding:20
-    }
+    container:{
+		flex:1,
+		flexDirection:'column',
+	},
+	container1: {
+		alignItems:'center',
+		justifyContent:'center',
+		shadowColor: "#000",
+		shadowOffset: {
+		width: -5,
+		height: 10,
+		},
+		shadowOpacity: 0.23,
+		elevation: 4,
+		height:108,
+		borderRadius:20,
+		width:108,
+	},
+	image: {
+		resizeMode: 'center',
+		height:'100%',
+		width:'100%'
+	},
+    input:{
+		height: 40,
+		marginLeft:width/6,
+		marginRight:width/6,
+	},
+    passText:{
+		fontSize: 20,
+		marginLeft: width/6,
+	},
+    button: {
+		alignItems: "center",
+		justifyContent:'center',
+		backgroundColor:'dodgerblue',
+	},
 })
