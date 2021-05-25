@@ -1,36 +1,44 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Dimensions, Image, StyleSheet, View, Text, Alert} from 'react-native';
 import { Button ,TextInput } from 'react-native-paper';
-import {AuthContext} from '../components/context';
 var width = Dimensions.get('window').width;
-import {User} from '../Screens/Users'
-
+import firebase from '../components/FirebaseConfig'
+import {AuthContext} from '../components/context';
 export default function LoginScreen({navigation}) {
-    const [data, setData] = React.useState({
-        username: '',
+    const [data, setData] = useState({
+        email: '',
         password: '',
-        check_textInputChange: false,
-        secureTextEntry: true,
-        isValidUser: true,
-        isValidPassword: true,
     });
-    //const [email,setEmail] = React.useState('')
-    //const [password, setPassword] = React.useState('')
-    const {signIn} = React.useContext(AuthContext);
+    const signIn = async () => {
+        firebase.auth().signInWithEmailAndPassword(data.email, data.password)
+        .then(()=>{
+            Alert.alert(
+                'Alert!!!','Successfully',
+                [
+                    {text: 'OK',onPress:()=>{navigation.navigate('Home')}}
+                ],
+                {cancelable:false}
+            )
+        })
+        .catch((message) => {
+            Alert.alert(
+                "Alert",'Failed!!!',
+                [
+                    {text: 'OK', onPress: () => {navigation.navigate('Login')}}
+                ],
+            )
+        })
+    }
     const textInputChange = (val) => {
         if( val.trim().length >= 4 ) {
             setData({
                 ...data,
-                username: val,
-                check_textInputChange: true,
-                isValidUser: true
+                email: val,
             });
         } else {
             setData({
                 ...data,
-                username: val,
-                check_textInputChange: false,
-                isValidUser: false
+                email: val,
             });
         }
     }
@@ -39,54 +47,13 @@ export default function LoginScreen({navigation}) {
             setData({
                 ...data,
                 password: val,
-                isValidPassword: true
             });
         } else {
             setData({
                 ...data,
                 password: val,
-                isValidPassword: false
             });
         }
-    }
-
-    const updateSecureTextEntry = () => {
-        setData({
-            ...data,
-            secureTextEntry: !data.secureTextEntry
-        });
-    }
-
-    const handleValidUser = (val) => {
-        if( val.trim().length >= 4 ) {
-            setData({
-                ...data,
-                isValidUser: true
-            });
-        } else {
-            setData({
-                ...data,
-                isValidUser: false
-            });
-        }
-    }
-    const loginHandle = (userName, password) => {
-        const foundUser = Users.filter( item => {
-            return userName == item.username && password == item.password;
-        } );
-        if ( data.username.length == 1 || data.password.length == 1 ) {
-            Alert.alert('Wrong Input!', 'Username or password field cannot be empty.', [
-                {text: 'Okay'}
-            ]);
-            return;
-        }
-        if ( foundUser.length == 0 ) {
-            Alert.alert('Invalid User!', 'Username or password is incorrect.', [
-                {text: 'Okay'}
-            ]);
-            return;
-        }
-        signIn(foundUser);
     }
     return (
       <View style={styles.container}>
@@ -106,7 +73,6 @@ export default function LoginScreen({navigation}) {
                         clearButtonMode="always"
                         style = {styles.input}
                         onChangeText={(val) => textInputChange(val)}
-                        onEndEditing={(e)=>handleValidUser(e.nativeEvent.text)}
                         placeholder="Email"
                     />
                 </View>
@@ -123,15 +89,14 @@ export default function LoginScreen({navigation}) {
                 </View>
                 
             </View>
-        
             <View style ={{flex:2,flexDirection: 'column',alignItems:'center',justifyContent:'space-around'}}>
-                <Button  onPress={() => {loginHandle( data.username, data.password )}} width = '50%' color ='#3498DB' mode = "contained">
+                <Button  onPress={() => signIn()} width = '50%' color ='#3498DB' mode = "contained">
                     <Text style={{color:"white"}}>Login</Text>
                 </Button>
                 <View style={{flexDirection:'row'}}>
                     <Text style={{fontSize:16}}>Not Registered yet ?</Text>
                     <Button onPress ={() => navigation.navigate('Register')} color ='#3498DB' >
-                        <Text style={{color:"black"}}>sign up</Text>
+                        <Text style={{color:"black"}}>Sign up</Text>
                     </Button>
                 </View>
             </View>
