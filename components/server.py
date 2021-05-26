@@ -64,7 +64,11 @@ client.loop_background()
 print('Publishing a new message every 10 seconds (press Ctrl-C to quit)...')
 value = 0
 while True:
-    value += 1
+    value = {"id":"3",
+            "name":"SPEAKER",
+            "data":"X",
+            "unit":""}
+    json_string = json.dumps(value)
     print('Publishing {0} to DemoFeed.'.format(value))
-    client.publish('test', value)
+    client.publish('test', json_string)
     time.sleep(2)
