@@ -1,16 +1,57 @@
 import React, {useState} from 'react';
-import {  ImageBackground,Dimensions, StyleSheet, Text, View, Image } from 'react-native';
+import {  Alert,Dimensions, StyleSheet, Text, View, Image } from 'react-native';
 import { TextInput } from 'react-native-paper'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { createStackNavigator } from '@react-navigation/stack';
-import * as firebase from 'firebase'
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import firebase from '../components/FirebaseConfig'
 const HomeStack = createStackNavigator();
-
-
 var width = Dimensions.get('window').width;
-const image = { uri: "https://reactjs.org/logo-og.png" }
 function ChangeStack({navigation}){
+	const [data, setData] = useState({
+        currpassword: '',
+		newpassword:'',
+		confirmpassword:'',
+    });
+	const reauthenticate = (currentPassword) => {
+		var user = firebase.auth().currentUser;
+		var cred = firebase.auth.EmailAuthProvider.credential(
+			user.email, currentPassword);
+		return user.reauthenticateWithCredential(cred);
+	}
+	const onHandleChangePassword = (currentPassword, newPassword) => {
+		reauthenticate(currentPassword)
+		.then(() => {
+			var user = firebase.auth().currentUser;
+			user.updatePassword(newPassword)
+			.then(() => {
+				Alert.alert(
+					'Password updated!','',
+					[
+						{text:'OK'}
+					]
+				),
+				navigation.goBack();
+			})
+			.catch((error) => { 
+				Alert.alert(
+					'Opps!','The password is invalid!',
+					[
+						{text:'OK'}
+					]
+				)
+			 });
+		})
+		.catch((error) => { 
+			Alert.alert(
+				'Opps!','Password and confirm password does not match!',
+				[
+					{text:'OK'}
+				]
+			)
+		 });
+	  }
+	
     return(
         <View style = {styles.container}>
 			<View style={{flex:9}}>
@@ -31,6 +72,7 @@ function ChangeStack({navigation}){
 								placeholder = "Old password"
 								clearButtonMode = 'always'
 								secureTextEntry={true}
+								onChangeText={(val) => setData({...data,currpassword:val})}
 								mode="outlined"
 								label="Old Password"
 								mode="outlined"
@@ -42,6 +84,7 @@ function ChangeStack({navigation}){
 								placeholder = "New password"
 								clearButtonMode = 'always'
 								secureTextEntry={true}
+								onChangeText={(val) => setData({...data,newpassword:val})}
 								mode="outlined"
 								label="New Password"
 								mode="outlined"
@@ -53,6 +96,7 @@ function ChangeStack({navigation}){
 								placeholder = "Confirm Newpassword"
 								clearButtonMode = 'always'
 								secureTextEntry={true}
+								onChangeText={(val) => setData({...data,confirmpassword:val})}
 								mode="outlined"
 								label="Confirm Newpassword"
 								mode="outlined"
@@ -63,7 +107,7 @@ function ChangeStack({navigation}){
 						<View style={styles.buttonSection}>
 							<TouchableOpacity 
 								style={[styles.button,{color:'blue',marginLeft:20}]}
-								onPress = {()=>{ navigation.navigate('Home')}}
+								onPress = {()=>onHandleChangePassword(data.currpassword,data.newpassword)}
 							>
 								<Text>Confirm</Text>
 							</TouchableOpacity>

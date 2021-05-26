@@ -3,9 +3,9 @@ import { Dimensions, Image,StyleSheet,View ,Text, Alert} from 'react-native'
 import { Button,TextInput} from 'react-native-paper'
 import   firebase  from '../components/FirebaseConfig';
 var width = Dimensions.get('window').width;
-
 export default function RegisterScreen({navigation}) {
     const [data, setData] = useState({
+        displayName:'',
         email: '',
         password: '',
         cpassword:''
@@ -13,7 +13,7 @@ export default function RegisterScreen({navigation}) {
     const signUp = async () => {
         if(data.password != data.cpassword){
             Alert.alert(
-                'Alert!','Password confirm not match with password!!!',
+                'Opps!','Password and confirm password does not match!',
                 [
                     {text: 'Again'}
                 ]
@@ -22,18 +22,19 @@ export default function RegisterScreen({navigation}) {
         else{
             firebase.auth().createUserWithEmailAndPassword(data.email, data.password)
             .then(()=>{
+                const user = firebase.auth().currentUser;
+                user.updateProfile({displayName:data.displayName})
                 Alert.alert(
-                    'Alert!!!','Successfully',
+                    'Successfully!','',
                     [
-                        {text: 'OK',onPress:()=>{navigation.navigate('Login')}}
+                        {text: 'Go to Login!',onPress:()=>{navigation.navigate('Login')}}
                     ],
                     {cancelable:false}
                 )
             })
             .catch((error)=>{
-                console.log(error.message)
                 Alert.alert(
-                    "Alert",'Failed!!!',
+                    "Opps!",error.message,
                     [
                         {text: 'OK'}
                     ],
@@ -45,7 +46,7 @@ export default function RegisterScreen({navigation}) {
     }
     return (
     <View style={styles.container}>
-        <View style={{flex:6,justifyContent: 'center',alignItems: 'center'}}>
+        <View style={{flex:5,justifyContent: 'center',alignItems: 'center'}}>
             <View style={styles.container1}>
             <Image
                 style = {styles.image}
@@ -58,8 +59,19 @@ export default function RegisterScreen({navigation}) {
                 <View style={{flex:1,justifyContent:'center'}} >
                     <TextInput
                         mode="outlined"
+                        label="Name"
+                        style = {styles.input}
+                        clearButtonMode = 'always'
+                        onChangeText={(val)=>setData({...data,displayName:val})}
+                        placeholder="Name"
+                    />
+                </View>
+                <View style={{flex:1,justifyContent:'center'}} >
+                    <TextInput
+                        mode="outlined"
                         label="Email"
                         style = {styles.input}
+                        secureTextEntry={false}
                         clearButtonMode = 'always'
                         onChangeText={(val)=>setData({...data,email:val})}
                         placeholder="Email"
@@ -97,7 +109,7 @@ export default function RegisterScreen({navigation}) {
                     <Text style={{color:"white"}}>Register Now!</Text>
                 </Button>
             </View>
-            <View style = {{flex:1, flexDirection:'row', justifyContent:'center'}}>
+            <View style = {{flex:2, flexDirection:'row',alignItems:'center'}}>
                 <Text>Already Registered ?</Text>
                 <Button onPress ={() => navigation.navigate('Login')} color ='#3498DB'>
                     <Text>Login</Text>

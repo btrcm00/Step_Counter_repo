@@ -10,13 +10,10 @@ import
     AnalyticScreen_calo,
     AnalyticScreen_steps,
     AnalyticScreen_km,
-    LoginScreen,RegisterScreen
+    LoginScreen,RegisterScreen,
+    UpdateProfileScreen
   } from './Screens';
-import { View, ActivityIndicator } from 'react-native';
 import {DrawerContent} from './Screens/DrawerContent';
-import { AuthContext } from './components/context';
-import RootStackScreen from './Screens/RootStackScreen';
-import AsyncStorage from '@react-native-async-storage/async-storage'
 const Drawer = createDrawerNavigator();
 const App=()=>{
   //const [isLoading, setIsLoading] = React.useState(true);
@@ -34,10 +31,10 @@ const App=()=>{
             <Drawer.Screen name="Analytic_calo" component={AnalyticScreen_calo}/>
             <Drawer.Screen name="Login" component={LoginScreen}/>
             <Drawer.Screen name="Register" component={RegisterScreen}/>
+            <Drawer.Screen name="Updateprofile" component={UpdateProfileScreen}/>
+
           </Drawer.Navigator>
       </NavigationContainer>
   );
 }
 export default App;
-
-
