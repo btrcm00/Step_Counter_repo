@@ -92,10 +92,10 @@ export default function LoginScreen({navigation}) {
                 <Button  onPress={() => signIn()} width = '50%' color ='#3498DB' mode = "contained">
                     <Text style={{color:"white"}}>Login</Text>
                 </Button>
-                <View style={{flexDirection:'row'}}>
+                <View style={{flexDirection:'row',alignItems:'center'}}>
                     <Text style={{fontSize:16}}>Not Registered yet ?</Text>
                     <Button onPress ={() => navigation.navigate('Register')} color ='#3498DB' >
-                        <Text style={{color:"black"}}>Sign up</Text>
+                        <Text style={{color:"#3498DB"}}>Sign up</Text>
                     </Button>
                 </View>
             </View>
@@ -135,8 +135,8 @@ const styles = StyleSheet.create({
 		width:'100%'
 	},
     input:{
-		height: 40,
-		marginLeft:width/6,
-		marginRight:width/6,
+		height: 50,
+		marginLeft:width/7,
+		marginRight:width/7,
 	},
 })
