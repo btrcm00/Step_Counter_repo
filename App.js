@@ -10,7 +10,8 @@ import
     AnalyticScreen_calo,
     AnalyticScreen_steps,
     AnalyticScreen_km,
-    LoginScreen,RegisterScreen
+    LoginScreen,RegisterScreen,
+    UpdateProfileScreen
   } from './Screens';
 import {DrawerContent} from './Screens/DrawerContent';
 const Drawer = createDrawerNavigator();
@@ -30,6 +31,8 @@ const App=()=>{
             <Drawer.Screen name="Analytic_calo" component={AnalyticScreen_calo}/>
             <Drawer.Screen name="Login" component={LoginScreen}/>
             <Drawer.Screen name="Register" component={RegisterScreen}/>
+            <Drawer.Screen name="Updateprofile" component={UpdateProfileScreen}/>
+
           </Drawer.Navigator>
       </NavigationContainer>
   );

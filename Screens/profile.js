@@ -2,83 +2,66 @@ import React from 'react';
 import {StyleSheet,View,Button,ScrollView,Image,SafeAreaView } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-//import Icon from 'react-native-vector-icons'
+import {IconButton} from 'react-native-paper';
 import {
     Avatar,
     Title,
-    Caption,
     Text,
-    TouchableRipple,
   } from 'react-native-paper';
 const HomeStack = createStackNavigator();
+import firebase from '../components/FirebaseConfig'
 function ProfileStack({navigation}){
+    const user = firebase.auth().currentUser;
+    const [target, setTarget] = React.useState('1200');
+    const onHandleChangeTarget = () =>{
+        setTarget(2000),
+        navigation.navigate('Home',{step:target})
+    }
     return(
-        <SafeAreaView style={styles.container}>
-
-            <View style={styles.userInfoSection}>
-                <View style={{flexDirection: 'row', marginTop: 15}}>
-                    <Avatar.Image 
-                        source={{ 
-                            uri: 'https://api.adorable.io/avatars/80/abott@adorable.png', 
-                        }}
-                            size={80}
+        <View style = {{flex:1, alignItems:'center',backgroundColor:'#FAF0E6'}}>
+            <View style={[styles.tag,{flex:1.3,flexDirection:'row',alignItems:'center'}]}>
+                <Avatar.Image 
+                    source={{ 
+                        uri: 'https://api.adorable.io/avatars/80/abott@adorable.png', 
+                    }}
+                    size={70}
+                    style={{marginLeft:10}}
+                />
+                <Title style={styles.title}>{user.displayName}</Title>
+            </View>
+            <View style={[styles.tag,{flex:4}]}>
+                <View style = {{flex:3, marginLeft:30,marginTop:40}}>
+                    <View style={styles.row}>
+                        <Icon name="phone" color="#777777" size={30} />
+                        <Text style={{color:"#777777", marginLeft: 20, fontSize: 20}}>{user.phoneNumber?user.phoneNumber:"Add phone number?"}</Text>
+                    </View>
+                    <View style={styles.row}>
+                        <Icon name="email" color="#777777" size={30}/>
+                        <Text style={{color:"#777777", marginLeft: 20, fontSize: 20}}>{user.email}</Text>
+                    </View>
+                    <View style={styles.row}>
+                        <Icon name="trophy-outline" color="#777777" size={30}/>
+                        <Text style={{color:"#777777",marginLeft: 20, fontSize: 20}}>Your Goal  -  {target}</Text>
+                    </View>
+                </View>
+                <View style = {{flex:1, marginLeft:30,marginTop:40, flexDirection:'row'}}>
+                    <Button
+                        title="Edit Profile"
+                        onPress={async() => navigation.navigate('Updateprofile')}
+                    />
+                    <Button
+                        title = "Change Password"
+                        color='red'
+                        mode="outlined"
+                        onPress={() => navigation.navigate('Changepass')}
                     />
                 </View>
-                <View>
-                    <Title style={styles.title}>TT P</Title>
-                    <Title style={styles.caption}>@th.P</Title>
-                </View>
             </View>
-
-            <View style={styles.userInfoSpec}>
-                <View style={styles.row}>
-                    <Icon name="map-marker-radius" color="#777777" size={30}/>
-                    <Text style={{color:"#777777", marginLeft: 20, fontSize: 20}}>Ho Chi Minh City</Text>
-                </View>
-                <View style={styles.row}>
-                    <Icon name="phone" color="#777777" size={30} />
-                    <Text style={{color:"#777777", marginLeft: 20, fontSize: 20}}>0123456789</Text>
-                </View>
-                <View style={styles.row}>
-                    <Icon name="email" color="#777777" size={30}/>
-                    <Text style={{color:"#777777", marginLeft: 20, fontSize: 20}}>hello_@email.com</Text>
-                </View>
-            </View>
-
-            <View style={styles.menuWrapper}>
-                <Icon name="trophy-outline" size={25}/>
-                <Text style={{marginLeft: 10, fontSize: 20}}>Your Goal</Text>
-            </View>
-
-            <View style={styles.menuWrapper}>
-                <Button
-                    title="Edit Profile"
-                    onPress={() => navigation.navigate('Profile')}
-                />
-                <Button
-                    title = "Change Password"
-                    color='red'
-                    mode="outlined"
-                    onPress={() => navigation.navigate('Changepass')}
-                />
-
-            </View>
-        </SafeAreaView>
-            
-        
-        
-
-        // <View style={styles.container}>
-        // <Button
-        //     title = "Change Password"
-        //     mode="outlined"
-        //     onPress={() => navigation.navigate('Changepass')}
-        // />
-        // </View>
+        </View>
     );
 };
 
-export default function ProfileScreen({navigation}) {
+export default function ProfileScreen({navigation,route}) {
 	return (
 		
         <HomeStack.Navigator screenOptions={{
@@ -105,6 +88,19 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
+    tag:{
+        margin:8,
+        backgroundColor:'white',
+        width: '95%',
+        borderRadius: 10,
+        shadowColor: "black",
+        shadowOffset: {
+            width: -5,
+            height: 6,
+        },
+        shadowOpacity: 0.23,
+        elevation: 4,
+    },
     userInfoSection: {
         paddingHorizontal: 30,
         marginBottom: 25,
@@ -115,8 +111,9 @@ const styles = StyleSheet.create({
         marginBottom: 25,
     },
     title: {
-        fontSize: 24,
+        fontSize: 22,
         fontWeight: 'bold',
+        marginLeft:10
     },
     caption: {
         fontSize: 14,
@@ -126,6 +123,8 @@ const styles = StyleSheet.create({
     row: {
       flexDirection: 'row',
       marginBottom: 20,
+      flex:1,
+      alignItems:'center'
     },
     infoBoxWrapper: {
       borderBottomColor: '#dddddd',
@@ -139,11 +138,6 @@ const styles = StyleSheet.create({
       width: '50%',
       alignItems: 'center',
       justifyContent: 'center',
-    },
-    menuWrapper: {
-      marginTop: 10,
-      flexDirection: 'row',
-      marginLeft: 30,
     },
     menuItem: {
       flexDirection: 'row',

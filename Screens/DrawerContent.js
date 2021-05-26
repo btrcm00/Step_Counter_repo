@@ -11,11 +11,11 @@ import {
 } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import firebase from '../components/FirebaseConfig'
-export function DrawerContent({navigation,props}) {
+export function DrawerContent(props) {
     const signOutUser = async () => {
         try {
             await firebase.auth().signOut();
-           navigation.navigate('Login');
+            props.navigation.navigate('Login');
         } catch (e) {
             console.log(e);
         }
