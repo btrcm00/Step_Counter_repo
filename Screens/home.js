@@ -2,8 +2,9 @@ import React from 'react';
 import {Text,StyleSheet,View,Dimensions, Animated, Button, Alert} from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import {IconButton} from 'react-native-paper';
 import Paho from '../src/paho-mqtt'
-
+import firebase from '../components/FirebaseConfig'
 var data = '0';
 var dataChange = false;
 var runApp = false;
@@ -12,8 +13,10 @@ function mqtt_connect() {
   client = new Paho.Client('io.adafruit.com', 443, 'web_' + parseInt(Math.random() * 100, 10));
   var options = {     
     useSSL: true,
-    userName: 'Kien1120',
-    password: 'aio_heNu56NaI8yoBXbqf6FlPCSlBOLl',
+    /* userName: 'Kien1120',
+    password: 'aio_heNu56NaI8yoBXbqf6FlPCSlBOLl', */
+    userName: 'CSE_BBC',
+    password: 'CSE@2021',
     keepAliveInterval: 60,
     onSuccess: onConnect,
     onFailure: onFail
@@ -24,7 +27,7 @@ function mqtt_connect() {
 
   function onConnect() {
     console.log("Connected!");
-    client.subscribe('Kien1120/feeds/test');  
+    client.subscribe('CSE_BCC/feeds/accelerometer');  
   }
 
   function onFail(context) {
@@ -41,9 +44,10 @@ function mqtt_connect() {
   function onMessageArrived(message) {
     console.log("Message Arrived:" + message.payloadString);
     //setStep(message.payloadString);    //setStep_Count(message.payloadString);
-    data = message.payloadString;
+    //data = message.payloadString;
+    data = JSON.parse(message.payloadString);
+    data = data.id;
     dataChange = true;
-
   } 
 
   function onConnectionLost(responseObject) {
@@ -59,19 +63,29 @@ function mqtt_connect() {
   )
 }
 
-
-
-
-
-
 const HomeStack = createStackNavigator();
 var height = Dimensions.get('window').height;
 function HomeStackScreen({navigation,route}){
-  const [Step, setStep] = React.useState('0'); 
-  const target = 2000;
+  const [Step, setStep] = React.useState('1000'); 
+  const user = firebase.auth().currentUser;
+  const db = firebase.firestore();
+  var target = 1200;
+  db.collection('User').doc(user.uid).get().then((doc)=>{
+    if (doc.exists) {
+      target = doc.data().target;
+      console.log(target);
+    } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+    }
+  }).catch((error) => {
+    console.log("Error getting document:", error);
+  });
   const kcal = (Step * 0.04).toFixed(2);
   const m = (Step * 0.762).toFixed(2);
-  const width = (Step<=target)?(((Step/target)*100).toFixed(2).toString(10) + '%'):'100%';
+  console.log(Step)
+  console.log(target)
+  var width = (Step<=target)?(((Step/target)*100).toFixed(2).toString(10) + '%'):'100%';
   if(Step==target){
     Alert.alert(
       'Congratulation!!!','Your target is completed',
@@ -82,7 +96,7 @@ function HomeStackScreen({navigation,route}){
     )
   }
   const onHandleTargetCompleted = () =>{
-    navigation.navigate('Profile')
+    navigation.navigate('Home')
   }
   React.useEffect(() => {
     const interval = setInterval(() => {
@@ -100,11 +114,7 @@ function HomeStackScreen({navigation,route}){
           <Text h1 style={styles.bigBlack}>Today</Text>
           <View style={styles.todayBox}>
             <View>
-              {/* <Text style={styles.todayTitleText}>Steps</Text> */}
-              <Button title="Steps" style={styles.todayTitleText} onPress={() => {
-                  mqtt_connect();
-                  runApp = true;
-                  }}/>
+              <Text style={styles.todayTitleText}>Steps</Text>
             </View>
             <View>
               <Text style={styles.todayBodyText}>{Step} steps</Text>
@@ -116,7 +126,15 @@ function HomeStackScreen({navigation,route}){
               <Text h2 style={styles.bigBlack}>Process</Text>
               <View style={styles.progressBar}>
                 <Animated.View style={[styles.absoluteFill,{width}]}/>
-                <Icon name="run-circle" color='black' size={height/13} />
+                <IconButton
+                  icon="run"
+                  color={'black'}
+                  size={height/13}
+                  onPress={() => {
+                    mqtt_connect();
+                    runApp = true;
+                  }}
+                />
               </View>
               <Text>{width}</Text>
             </View>
@@ -213,6 +231,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 15,
     alignItems:'center',
+    justifyContent:'center',
     shadowColor: "black",
 		shadowOffset: {
 		width: -5,

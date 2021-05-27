@@ -12,6 +12,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import firebase from '../components/FirebaseConfig'
 export function DrawerContent(props) {
+    const user = firebase.auth().currentUser;
     const signOutUser = async () => {
         try {
             await firebase.auth().signOut();
@@ -31,7 +32,7 @@ export function DrawerContent(props) {
                                 size={50}
                             />
                             <View style={{marginLeft:15, flexDirection:'column'}}>
-                                <Title style={styles.title}>Username</Title>
+                                <Title style={styles.title}>{''}</Title>
                             </View>
                         </View>
                     </View>

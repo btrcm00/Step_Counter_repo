@@ -10,6 +10,20 @@ export default function RegisterScreen({navigation}) {
         password: '',
         cpassword:''
     });
+    const updateFirestore = (uid,name,email,pass) =>{
+        const db = firebase.firestore();
+        db.collection('User').doc(uid).set({
+            name: name,
+            email:email,
+            password: pass,
+            stepsOfday: 0,
+            target: 1200
+        }).then((snapshot) =>{
+            console.log('ok')
+        }).catch((error)=>{
+            console.log(error.message)
+        });
+    }
     const signUp = async () => {
         if(data.password != data.cpassword){
             Alert.alert(
@@ -19,11 +33,20 @@ export default function RegisterScreen({navigation}) {
                 ]
             )
         }
+        else if(data.displayName==''){
+            Alert.alert(
+                'Opps!','Please input',
+                [
+                    {text: 'Add name'}
+                ]
+            )
+        }
         else{
             firebase.auth().createUserWithEmailAndPassword(data.email, data.password)
             .then(()=>{
                 const user = firebase.auth().currentUser;
-                user.updateProfile({displayName:data.displayName})
+                user.updateProfile({displayName:data.displayName});
+                updateFirestore(user.uid,data.displayName,data.email,data.password);
                 Alert.alert(
                     'Successfully!','',
                     [
