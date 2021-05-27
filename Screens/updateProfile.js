@@ -22,14 +22,24 @@ function UpdateProfileStack({navigation}){
             console.log(e);
         }
     }
-    const user = firebase.auth().currentUser;
-    const [target, setTarget] = React.useState('1200');
-    const [data, setData] = React.useState({
+    var user = firebase.auth().currentUser;
+    var [target, setTarget] = React.useState('1200');
+    var [data, setData] = React.useState({
         name:'',
         phone: '',
         email:'',
         goal:''
     })
+    const onHandleChangeTarget = () =>{
+        const db = firebase.firestore();
+        db.collection('User').doc(user.uid).update({
+            target: data.goal,
+        }).then(snapshot =>{
+            console.log('ok')
+        }).catch((error)=>{
+            console.log(error.message)
+        });
+    }
     const onHandleUpdateProfile = () =>{
         if(data.email.toLowerCase()==user.email.toLowerCase()){
             Alert.alert(
@@ -40,32 +50,44 @@ function UpdateProfileStack({navigation}){
             )
         }
         else{
-            user.updateEmail(data.email.toLowerCase()).then(() => {
-                // Update successful.
+            if(data.email){
+                user.updateEmail(data.email.toLowerCase()).then(() => {
+                    // Update successful.
+                    onHandleChangeTarget();
+                    Alert.alert(
+                        'Successfull!','',
+                        [
+                            {text:'Go to Profile', onPress:()=>{navigation.navigate('Profile')}}
+                        ]
+                    )
+                }).catch((error) => {
+                    // An error happened.
+                    if(error.message == "This operation is sensitive and requires recent authentication. Log in again before retrying this request."){
+                        Alert.alert(
+                            'Opps!',error.message,
+                            [
+                                {text:'Ok',onPress:()=>signOutUser()}
+                            ]
+                        )
+                    }
+                    else{
+                        Alert.alert(
+                            'Opps!',error.message,
+                            {text:'Ok'}
+                        )
+                    }
+                    
+                });
+            }
+            else{
+                onHandleChangeTarget();
                 Alert.alert(
                     'Successfull!','',
                     [
                         {text:'Go to Profile', onPress:()=>{navigation.navigate('Profile')}}
                     ]
                 )
-            }).catch((error) => {
-                // An error happened.
-                if(error.message == "This operation is sensitive and requires recent authentication. Log in again before retrying this request."){
-                    Alert.alert(
-                        'Opps!',error.message,
-                        [
-                            {text:'Ok',onPress:()=>signOutUser()}
-                        ]
-                    )
-                }
-                else{
-                    Alert.alert(
-                        'Opps!',error.message,
-                        {text:'Ok'}
-                    )
-                }
-                
-            });
+            }
         }
         
     }
