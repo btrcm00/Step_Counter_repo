@@ -14,7 +14,7 @@ function AnalyticStack_km({navigation}){
         <View style={styles.container2}>
         <TouchableOpacity 
         style={[styles.button,{marginRight:10}]}
-        onPress={() => navigation.navigate('Analytic_steps')}
+        onPress={() => navigation.navigate('Analytic_steps')} 
         >
           <Text>Steps</Text>
         </TouchableOpacity>
