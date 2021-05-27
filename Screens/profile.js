@@ -2,7 +2,6 @@ import React from 'react';
 import {StyleSheet,View,Button,ScrollView,Image,SafeAreaView } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {IconButton} from 'react-native-paper';
 import {
     Avatar,
     Title,
@@ -11,12 +10,23 @@ import {
 const HomeStack = createStackNavigator();
 import firebase from '../components/FirebaseConfig'
 function ProfileStack({navigation}){
-    const user = firebase.auth().currentUser;
-    const [target, setTarget] = React.useState('1200');
+    var user = firebase.auth().currentUser;
+    var [target, setTarget] = React.useState('1200');
     const onHandleChangeTarget = () =>{
         setTarget(2000),
         navigation.navigate('Home',{step:target})
     }
+    const db = firebase.firestore();
+    db.collection('User').doc(user.uid).get().then((doc)=>{
+        if (doc.exists) {
+          target = doc.data().target;
+        } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+        }
+      }).catch((error) => {
+        console.log("Error getting document:", error);
+      });
     return(
         <View style = {{flex:1, alignItems:'center',backgroundColor:'#FAF0E6'}}>
             <View style={[styles.tag,{flex:1.3,flexDirection:'row',alignItems:'center'}]}>
