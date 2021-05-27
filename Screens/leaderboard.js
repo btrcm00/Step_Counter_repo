@@ -2,6 +2,7 @@ import React from 'react';
 import {StyleSheet,View,Image,Text, ImageBackground } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import Leaderboard from 'react-native-leaderboard';
 const HomeStack = createStackNavigator();
 function LeaderboardStack({navigation}){
     const state = {

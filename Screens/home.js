@@ -13,16 +13,16 @@ function mqtt_connect() {
   client = new Paho.Client('io.adafruit.com', 443, 'web_' + parseInt(Math.random() * 100, 10));
   var options = {     
     useSSL: true,
-    /* userName: 'Kien1120',
-    password: 'aio_heNu56NaI8yoBXbqf6FlPCSlBOLl', */
+    // userName: 'Kien1120',
+    // password: 'aio_heNu56NaI8yoBXbqf6FlPCSlBOLl',
     userName: 'CSE_BBC',
-    password: 'CSE@2021',
+    password: 'aio_KXfp47zegx3CthMAEj6pB0ZeKoEm',
     keepAliveInterval: 60,
     onSuccess: onConnect,
     onFailure: onFail
   };
   client.connect(options);
-
+``
   //const [Step, setStep] = useState('0'); 
 
   function onConnect() {
