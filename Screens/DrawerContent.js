@@ -13,6 +13,18 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import firebase from '../components/FirebaseConfig'
 export function DrawerContent(props) {
     const user = firebase.auth().currentUser;
+    var [name, setName] = React.useState(user.displayName);
+    const db = firebase.firestore();
+    db.collection('User').doc(user.uid).get().then((doc)=>{
+        if (doc.exists) {
+            setName(doc.data().name);
+        } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+        }
+      }).catch((error) => {
+        console.log("Error getting document:", error);
+      });
     const signOutUser = async () => {
         try {
             await firebase.auth().signOut();
@@ -32,7 +44,7 @@ export function DrawerContent(props) {
                                 size={50}
                             />
                             <View style={{marginLeft:15, flexDirection:'column'}}>
-                                <Title style={styles.title}>{''}</Title>
+                                <Title style={styles.title}>{name}</Title>
                             </View>
                         </View>
                     </View>
