@@ -11,7 +11,7 @@ const HomeStack = createStackNavigator();
 import firebase from '../components/FirebaseConfig'
 function ProfileStack({navigation}){
     var user = firebase.auth().currentUser;
-    var [target, setTarget] = React.useState('1200');
+    var [target, setTarget] = React.useState('0');
     const onHandleChangeTarget = () =>{
         setTarget(2000),
         navigation.navigate('Home',{step:target})
