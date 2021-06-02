@@ -57,7 +57,7 @@ function mqtt_connect() {
       dataChange = true;
     }
   } 
-
+  //count --> stepofday
   function onConnectionLost(responseObject) {
     if (responseObject.errorCode !== 0) {
       console.log("onConnectionLost:" +  responseObject.errorMessage);
@@ -180,6 +180,11 @@ function HomeStackScreen({navigation,route}){
                   size={height/13}
                   onPress={() => {
                     mqtt_connect();
+                    //function tao bang ngay(Step)
+                      //ham ktra ngay
+                      //if (today=ngay) => false
+                        //tao bang ngay: step
+                        //bang ngay, bien chua ngay dat ten bang
                     runApp = true;
                   }}
                 />
@@ -202,7 +207,7 @@ function HomeStackScreen({navigation,route}){
               <Text style={styles.todayTitleText}>Active Energy</Text>
             </View>
             <View>
-              <Text style={styles.todayBodyText}>{kcal} kcal</Text>
+              <Text style={styles.todayBodyText}>{kcal} cal</Text>
             </View>
           </View>
         </View>

@@ -51,7 +51,7 @@ function ProfileStack({navigation}){
                     </View>
                     <View style={styles.row}>
                         <Icon name="trophy-outline" color="#777777" size={30}/>
-                        <Text style={{color:"#777777",marginLeft: 20, fontSize: 20}}>Your Goal  -  {target}</Text>
+                        <Text style={{color:"#777777",marginLeft: 20, fontSize: 20}}>Your Goal:  {target}</Text>
                     </View>
                 </View>
                 <View style = {{flex:1, marginLeft:30,marginTop:40, flexDirection:'row'}}>
