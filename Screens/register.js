@@ -132,6 +132,9 @@ export default function RegisterScreen({navigation}) {
                 <Button onPress = {() => signUp()} color ='#3498DB' mode = "contained" style = {styles.button}>
                     <Text style={{color:"white"}}>Register Now!</Text>
                 </Button>
+
+                {/*tao ham tao bang Step trong user*/}
+            
             </View>
             <View style = {{flex:2, flexDirection:'row',alignItems:'center'}}>
                 <Text>Already Registered ?</Text>
