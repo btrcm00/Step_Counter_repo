@@ -60,7 +60,7 @@ function UpdateProfileStack({navigation}){
         });
     }
     const onHandleUpdateProfile = () =>{
-        if(data.email.toLowerCase()==user.email.toLowerCase()){
+        if(data.email.toLowerCase()==user.email.toLowerCase() || data.email==''){
             Alert.alert(
                 'Opps!','Email is same as your current email!',
                 [
@@ -69,39 +69,41 @@ function UpdateProfileStack({navigation}){
             )
         }
         else{
-            user.updateProfile({
-                displayName: (data.name=='')?user.displayName:data.name,
-                email:data.email==''?user.email:data.email.toLowerCase()
-            }).then(() => {
-                // Update successful
-                if(data.goal!='')onHandleChangeTarget();
-                if(data.email!='')onHandleChangeEmail();
-                if(data.name!='')onHandleChangeName();
-                if(data.goal!=''){onHandleChangeTarget();}
-                Alert.alert(
-                    'Successfull!','',
-                    [
-                        {text:'Go to Profile', onPress:()=>{navigation.navigate('Profile')}}
-                    ]
-                )
-            }).catch((error) => {
-                // An error happened.
-                if(error.message == "This operation is sensitive and requires recent authentication. Log in again before retrying this request."){
+            user.updateEmail(data.email.toLowerCase()).then(()=>{
+                user.updateProfile({
+                    displayName: (data.name=='')?user.displayName:data.name,
+                }).then(() => {
+                    // Update successful
+                    if(data.goal!='')onHandleChangeTarget();
+                    if(data.email!='')onHandleChangeEmail();
+                    if(data.name!='')onHandleChangeName();
+                    if(data.goal!=''){onHandleChangeTarget();}
                     Alert.alert(
-                        'Opps!',error.message,
+                        'Successfull!','',
                         [
-                            {text:'Ok',onPress:()=>signOutUser()}
+                            {text:'Go to Profile', onPress:()=>{navigation.navigate('Profile')}}
                         ]
                     )
-                }
-                else{
-                    Alert.alert(
-                        'Opps!',error.message,
-                        {text:'Ok'}
-                    )
-                }
-                
-            });
+                }).catch((error) => {
+                    // An error happened.
+                    if(error.message == "This operation is sensitive and requires recent authentication. Log in again before retrying this request."){
+                        Alert.alert(
+                            'Opps!',error.message,
+                            [
+                                {text:'Ok',onPress:()=>signOutUser()}
+                            ]
+                        )
+                    }
+                    else{
+                        Alert.alert(
+                            'Opps!',error.message,
+                            {text:'Ok'}
+                        )
+                    }
+                    
+                });
+            })
+            
         }
         
     }
