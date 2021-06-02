@@ -17,16 +17,26 @@ export default function RegisterScreen({navigation}) {
             email:email,
             password: pass,
             stepsOfday: 0,
-            target: 0
+            target: 0,
         }).then((snapshot) =>{
             console.log('ok')
         }).catch((error)=>{
             console.log(error.message)
         });
+        db.collection('User').doc(uid).collection('Step').add({
+            Step: ""
+        }).then(()=>{
+            console.log('check')
+        }).catch((error)=>{
+            console.log(error.message)
+        })
     }
+    
+    
 
     const signUp = async () => {
         if(data.password != data.cpassword){
+
             Alert.alert(
                 'Opps!','Password and confirm password does not match!',
                 [
@@ -132,6 +142,9 @@ export default function RegisterScreen({navigation}) {
                 <Button onPress = {() => signUp()} color ='#3498DB' mode = "contained" style = {styles.button}>
                     <Text style={{color:"white"}}>Register Now!</Text>
                 </Button>
+
+                {/*tao ham tao bang Step trong user*/}
+            
             </View>
             <View style = {{flex:2, flexDirection:'row',alignItems:'center'}}>
                 <Text>Already Registered ?</Text>

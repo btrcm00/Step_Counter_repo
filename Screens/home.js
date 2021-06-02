@@ -57,7 +57,7 @@ function mqtt_connect() {
       dataChange = true;
     }
   } 
-
+  //count --> stepofday
   function onConnectionLost(responseObject) {
     if (responseObject.errorCode !== 0) {
       console.log("onConnectionLost:" +  responseObject.errorMessage);
@@ -70,6 +70,22 @@ function mqtt_connect() {
     <Text>react_native_mqtt:</Text>
   )
 }
+
+function getTime(uid,Step1){
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = today.getFullYear();
+
+  today = dd + '-' + mm + '-' + yyyy;
+  String(today);
+  console.log(today);
+  const user = firebase.auth().currentUser;
+  firebase.firestore().collection('User').doc(uid).collection('Step').doc(today).set({
+    Step: Step1,
+  })
+}
+
 
 const HomeStack = createStackNavigator();
 var height = Dimensions.get('window').height;
@@ -157,6 +173,14 @@ function HomeStackScreen({navigation,route}){
           <View style={styles.todayBox}>
             <View>
               <Text style={styles.todayTitleText}>Steps</Text>
+              <Button
+                title = "Finish"
+                onPress = {() =>{
+                  getTime(user.uid,Step)
+                } }
+              />
+
+              
             </View>
             <View>
               <Text style={styles.todayBodyText}>{Step} steps</Text>
@@ -174,6 +198,8 @@ function HomeStackScreen({navigation,route}){
                   size={height/13}
                   onPress={() => {
                     mqtt_connect();
+                    getTime();
+                        //bang ngay, bien chua ngay dat ten bang
                     runApp = true;
                   }}
                 />
@@ -196,7 +222,7 @@ function HomeStackScreen({navigation,route}){
               <Text style={styles.todayTitleText}>Active Energy</Text>
             </View>
             <View>
-              <Text style={styles.todayBodyText}>{kcal} kcal</Text>
+              <Text style={styles.todayBodyText}>{kcal} cal</Text>
             </View>
           </View>
         </View>
