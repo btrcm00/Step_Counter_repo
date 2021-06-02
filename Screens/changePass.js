@@ -19,12 +19,20 @@ function ChangeStack({navigation}){
 			user.email, currentPassword);
 		return user.reauthenticateWithCredential(cred);
 	}
-	const onHandleChangePassword = (currentPassword, newPassword) => {
-		reauthenticate(currentPassword)
+	const onHandleChangePassword = () => {
+		reauthenticate(data.currpassword)
 		.then(() => {
 			var user = firebase.auth().currentUser;
-			user.updatePassword(newPassword)
+			user.updatePassword(data.newpassword)
 			.then(() => {
+				const db = firebase.firestore();
+				db.collection('User').doc(user.uid).update({
+					password: data.newpassword,
+				}).then(snapshot =>{
+					console.log('ok')
+				}).catch((error)=>{
+					console.log(error.message)
+				});
 				Alert.alert(
 					'Password updated!','',
 					[
@@ -35,7 +43,7 @@ function ChangeStack({navigation}){
 			})
 			.catch((error) => { 
 				Alert.alert(
-					'Opps!','The password is invalid!',
+					'Opps!',error.message,
 					[
 						{text:'OK'}
 					]
@@ -44,7 +52,7 @@ function ChangeStack({navigation}){
 		})
 		.catch((error) => { 
 			Alert.alert(
-				'Opps!','Password and confirm password does not match!',
+				'Opps!',error.message,
 				[
 					{text:'OK'}
 				]
@@ -107,7 +115,7 @@ function ChangeStack({navigation}){
 						<View style={styles.buttonSection}>
 							<TouchableOpacity 
 								style={[styles.button,{color:'blue',marginLeft:20}]}
-								onPress = {()=>onHandleChangePassword(data.currpassword,data.newpassword)}
+								onPress = {()=>onHandleChangePassword()}
 							>
 								<Text>Confirm</Text>
 							</TouchableOpacity>

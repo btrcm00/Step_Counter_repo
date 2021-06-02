@@ -77,22 +77,17 @@ function HomeStackScreen({navigation,route}){
   const [Step, setStep] = React.useState('0'); 
   const user = firebase.auth().currentUser;
   const db = firebase.firestore();
-  var target = 10;
-  db.collection('User').doc(user.uid).get().then((doc)=>{
+  var [target, setTarget] = React.useState('100');
+  db.collection('User').doc(user.uid).onSnapshot((doc)=>{
     if (doc.exists) {
-      target = doc.data().target;
-      console.log(target);
+      setTarget(doc.data().target);
     } else {
         // doc.data() will be undefined in this case
         console.log("No such document!");
     }
-  }).catch((error) => {
-    console.log("Error getting document:", error);
-  });
+  })
   const kcal = (Step * 0.04).toFixed(2);
   const m = (Step * 0.762).toFixed(2);
-  console.log(Step)
-  console.log(target)
   var width = (Step<=target)?(((Step/target)*100).toFixed(2).toString(10) + '%'):'100%';
   if(Step==target){
 
@@ -115,7 +110,7 @@ function HomeStackScreen({navigation,route}){
       function onConnect1() {
         console.log("Connected Speaker!");
         var speaker={
-          "id":"2",
+          "id":"3",
           "name":"SPEAKER",
           "data":"400",
           "unit":""
@@ -124,7 +119,6 @@ function HomeStackScreen({navigation,route}){
           client2.publish('CSE_BBC/feeds/bk-iot-speaker',json_string)
       }
       function onFail1(context) {
-        console.log(context);
         console.log("Connection failed!");
         Alert.alert('Failure to Connect',
           "Unable to connect to host. Try again later.",
