@@ -10,7 +10,16 @@ export default function RegisterScreen({navigation}) {
         password: '',
         cpassword:''
     });
+    var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+      
+        today = dd + '-' + mm + '-' + yyyy;
+        String(today);
+
     const updateFirestore = (uid,name,email,pass) =>{
+
         const db = firebase.firestore();
         db.collection('User').doc(uid).set({
             name: name,
@@ -23,8 +32,8 @@ export default function RegisterScreen({navigation}) {
         }).catch((error)=>{
             console.log(error.message)
         });
-        db.collection('User').doc(uid).collection('Step').add({
-            Step: ""
+        db.collection('User').doc(uid).collection('Step').doc(today).set({
+            Step: 0
         }).then(()=>{
             console.log('check')
         }).catch((error)=>{
