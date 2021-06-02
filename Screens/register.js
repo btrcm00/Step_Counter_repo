@@ -17,16 +17,26 @@ export default function RegisterScreen({navigation}) {
             email:email,
             password: pass,
             stepsOfday: 0,
-            target: 0
+            target: 0,
         }).then((snapshot) =>{
             console.log('ok')
         }).catch((error)=>{
             console.log(error.message)
         });
+        db.collection('User').doc(uid).collection('Step').add({
+            Step: ""
+        }).then(()=>{
+            console.log('check')
+        }).catch((error)=>{
+            console.log(error.message)
+        })
     }
+    
+    
 
     const signUp = async () => {
         if(data.password != data.cpassword){
+
             Alert.alert(
                 'Opps!','Password and confirm password does not match!',
                 [
