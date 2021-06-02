@@ -17,13 +17,14 @@ export default function RegisterScreen({navigation}) {
             email:email,
             password: pass,
             stepsOfday: 0,
-            target: 1200
+            target: 0
         }).then((snapshot) =>{
             console.log('ok')
         }).catch((error)=>{
             console.log(error.message)
         });
     }
+
     const signUp = async () => {
         if(data.password != data.cpassword){
             Alert.alert(
