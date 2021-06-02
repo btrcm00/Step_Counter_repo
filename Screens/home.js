@@ -93,10 +93,11 @@ function HomeStackScreen({navigation,route}){
   const [Step, setStep] = React.useState('5'); 
   const user = firebase.auth().currentUser;
   const db = firebase.firestore();
-  var [target, setTarget] = React.useState('100');
+  var [target, setTarget] = React.useState('10');
   db.collection('User').doc(user.uid).onSnapshot((doc)=>{
     if (doc.exists) {
       setTarget(doc.data().target);
+      console.log(target);
     } else {
         // doc.data() will be undefined in this case
         console.log("No such document!");
@@ -104,7 +105,7 @@ function HomeStackScreen({navigation,route}){
   })
   const kcal = (Step * 0.04).toFixed(2);
   const m = (Step * 0.762).toFixed(2);
-  var width = (Step<=target)?(((Step/target)*100).toFixed(2).toString(10) + '%'):'100%';
+  var width = (Number(Step)<=Number(target))?(((Number(Step)/Number(target))*100).toFixed(2).toString(10) + '%'):'100%';
   if(Step==target){
 
       var client2;
