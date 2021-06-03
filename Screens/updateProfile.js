@@ -60,7 +60,7 @@ function UpdateProfileStack({navigation}){
         });
     }
     const onHandleUpdateProfile = () =>{
-        if(data.email.toLowerCase()==user.email.toLowerCase() || data.email==''){
+        if(data.email.toLowerCase()==user.email.toLowerCase()){
             Alert.alert(
                 'Opps!','Email is same as your current email!',
                 [
@@ -68,8 +68,33 @@ function UpdateProfileStack({navigation}){
                 ]
             )
         }
+        else if(data.email==''){
+            user.updateProfile({
+                displayName: (data.name=='')?user.displayName:data.name,
+            }).then(() => {
+                // Update successful
+                if(data.goal!='')onHandleChangeTarget();
+                if(data.email!='')onHandleChangeEmail();
+                if(data.name!='')onHandleChangeName();
+                if(data.goal!=''){onHandleChangeTarget();}
+                Alert.alert(
+                    'Successfull!','',
+                    [
+                        {text:'Go to Profile', onPress:()=>{navigation.navigate('Profile')}}
+                    ]
+                )
+            }).catch((error) => {
+                // An error happened.
+                Alert.alert(
+                    'Opps!',error.message,
+                    {text:'Ok'}
+                )
+                
+            });
+        }
         else{
-            user.updateEmail(data.email.toLowerCase()).then(()=>{
+            user.updateEmail(data.email.toLowerCase())
+            .then(()=>{
                 user.updateProfile({
                     displayName: (data.name=='')?user.displayName:data.name,
                 }).then(() => {
@@ -86,22 +111,17 @@ function UpdateProfileStack({navigation}){
                     )
                 }).catch((error) => {
                     // An error happened.
-                    if(error.message == "This operation is sensitive and requires recent authentication. Log in again before retrying this request."){
-                        Alert.alert(
-                            'Opps!',error.message,
-                            [
-                                {text:'Ok',onPress:()=>signOutUser()}
-                            ]
-                        )
-                    }
-                    else{
-                        Alert.alert(
-                            'Opps!',error.message,
-                            {text:'Ok'}
-                        )
-                    }
+                    Alert.alert(
+                        'Opps!',error.message,
+                        {text:'Ok'}
+                    )
                     
                 });
+            }).catch((error)=>{
+                Alert.alert(
+                    'Opps!',error.message,
+                    {text:'Ok'}
+                )
             })
             
         }
