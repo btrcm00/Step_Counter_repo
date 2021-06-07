@@ -74,8 +74,9 @@ function getTime(uid,Step1){
   var dd = String(today.getDate()).padStart(2, '0');
   var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
   var yyyy = today.getFullYear();
+  var time = today.toLocaleTimeString();
 
-  today = dd + '-' + mm + '-' + yyyy;
+  today = time + " " + dd + '-' + mm + '-' + yyyy;
   String(today);
   console.log(today);
   const user = firebase.auth().currentUser;
@@ -169,7 +170,6 @@ function HomeStackScreen({navigation}){
           <View style={styles.todayBox}>
             <View>
               <Text style={styles.todayTitleText}>Steps</Text>
-              
             </View>
             <View>
               <Text style={styles.todayBodyText}>{Step} steps</Text>

@@ -6,6 +6,7 @@ import HomeScreen from './home';
 import ProfileScreen from './profile';
 import LeaderboardScreen from './leaderboard';
 import AnalyticScreen from './analytics_step';
+import HistoryScreen from './history'
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -55,6 +56,17 @@ export default function MainTabScreen(){
           tabBarColor: '#CC3366',
           tabBarIcon: ({ color }) => (
             <Icon name="leaderboard" color={color} size={26} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="History"
+        component={HistoryScreen}
+        options={{
+          tabBarLabel: 'History',
+          tabBarColor: '#CDC9A5',
+          tabBarIcon: ({ color }) => (
+            <Icon name="history" color={color} size={26} />
           ),
         }}
       />
