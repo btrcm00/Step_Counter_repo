@@ -75,6 +75,17 @@ export function DrawerContent(props) {
                         <DrawerItem 
                             icon={({color, size}) => (
                                 <Icon 
+                                name="history" 
+                                color={color}
+                                size={size}
+                                />
+                            )}
+                            label="History"
+                            onPress={() => {props.navigation.navigate('History')}}
+                        />
+                        <DrawerItem 
+                            icon={({color, size}) => (
+                                <Icon 
                                 name="leaderboard" 
                                 color={color}
                                 size={size}

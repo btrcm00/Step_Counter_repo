@@ -11,7 +11,8 @@ import
     AnalyticScreen_steps,
     AnalyticScreen_km,
     LoginScreen,RegisterScreen,
-    UpdateProfileScreen
+    UpdateProfileScreen,
+    HistoryScreen
   } from './Screens';
 import {DrawerContent} from './Screens/DrawerContent';
 const Drawer = createDrawerNavigator();
@@ -32,7 +33,7 @@ const App=()=>{
             <Drawer.Screen name="Login" component={LoginScreen}/>
             <Drawer.Screen name="Register" component={RegisterScreen}/>
             <Drawer.Screen name="Updateprofile" component={UpdateProfileScreen}/>
-
+            <Drawer.Screen name = "History" component={HistoryScreen}/>
           </Drawer.Navigator>
       </NavigationContainer>
   );
