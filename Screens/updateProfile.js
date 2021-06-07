@@ -68,10 +68,9 @@ function UpdateProfileStack({navigation}){
                 ]
             )
         }
-        else{
+        else if(data.email==''){
             user.updateProfile({
                 displayName: (data.name=='')?user.displayName:data.name,
-                email:data.email==''?user.email:data.email.toLowerCase()
             }).then(() => {
                 // Update successful
                 if(data.goal!='')onHandleChangeTarget();
@@ -86,22 +85,45 @@ function UpdateProfileStack({navigation}){
                 )
             }).catch((error) => {
                 // An error happened.
-                if(error.message == "This operation is sensitive and requires recent authentication. Log in again before retrying this request."){
+                Alert.alert(
+                    'Opps!',error.message,
+                    {text:'Ok'}
+                )
+                
+            });
+        }
+        else{
+            user.updateEmail(data.email.toLowerCase())
+            .then(()=>{
+                user.updateProfile({
+                    displayName: (data.name=='')?user.displayName:data.name,
+                }).then(() => {
+                    // Update successful
+                    if(data.goal!='')onHandleChangeTarget();
+                    if(data.email!='')onHandleChangeEmail();
+                    if(data.name!='')onHandleChangeName();
+                    if(data.goal!=''){onHandleChangeTarget();}
                     Alert.alert(
-                        'Opps!',error.message,
+                        'Successfull!','',
                         [
-                            {text:'Ok',onPress:()=>signOutUser()}
+                            {text:'Go to Profile', onPress:()=>{navigation.navigate('Profile')}}
                         ]
                     )
-                }
-                else{
+                }).catch((error) => {
+                    // An error happened.
                     Alert.alert(
                         'Opps!',error.message,
                         {text:'Ok'}
                     )
-                }
-                
-            });
+                    
+                });
+            }).catch((error)=>{
+                Alert.alert(
+                    'Opps!',error.message,
+                    {text:'Ok'}
+                )
+            })
+            
         }
         
     }
