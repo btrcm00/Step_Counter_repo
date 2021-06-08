@@ -14,10 +14,10 @@ function mqtt_connect() {
   client = new Paho.Client('io.adafruit.com', 443, 'web_' + parseInt(Math.random() * 100, 10));
   var options = {     
     useSSL: true,
-    // userName: 'Kien1120',
-    // password: 'aio_heNu56NaI8yoBXbqf6FlPCSlBOLl',
-    userName: 'CSE_BBC1',
-    password: 'aio_lubo29QRBLOP6OoDkQ5RDsmUSukr',
+    userName: 'Kien1120',
+    password: 'aio_heNu56NaI8yoBXbqf6FlPCSlBOLl',
+    // userName: 'CSE_BBC1',
+    // password: 'aio_lubo29QRBLOP6OoDkQ5RDsmUSukr',
     keepAliveInterval: 60,
     onSuccess: onConnect,
     onFailure: onFail
@@ -26,8 +26,9 @@ function mqtt_connect() {
 
   function onConnect() {
     console.log("Connected!");
-    client.subscribe('CSE_BBC1/feeds/bk-iot-accelerometer');  
-  }
+    // client.subscribe('CSE_BBC1/feeds/bk-iot-accelerometer');  
+    client.subscribe('Kien1120/feeds/test');
+    }
 
   function onFail(context) {
     console.log(context);
@@ -42,6 +43,7 @@ function mqtt_connect() {
   
   function onMessageArrived(message) {
     console.log("Message Arrived:" + message.payloadString);
+
     //setStep(message.payloadString);    //setStep_Count(message.payloadString);
     //data = message.payloadString;
     // data = JSON.parse(message.payloadString);
@@ -54,6 +56,20 @@ function mqtt_connect() {
       messageArrived = "on_shake";
       dataChange = true;
     }
+    const user = firebase.auth().currentUser;
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+    var time = today.toLocaleTimeString();
+
+    today = dd + '-' + mm + '-' + yyyy;
+    String(today);
+    firebase.firestore().collection('User').doc(user.uid).collection('Step').doc(today).collection('Log').doc(time).set({
+      Time: time + ' ' + today,
+      Message: messageArrived, 
+      Step: count
+    })
   } 
   //count --> stepofday
   function onConnectionLost(responseObject) {
@@ -78,10 +94,14 @@ function getTime(uid,Step1){
   today = dd + '-' + mm + '-' + yyyy;
   String(today);
   console.log(today);
-  const user = firebase.auth().currentUser;
   firebase.firestore().collection('User').doc(uid).collection('Step').doc(today).set({
     Step: Step1,
   })
+
+  //set stepOfday
+  firebase.firestore().collection('User').doc(uid).update({
+    stepsOfday: Step1,
+  });
 }
 
 
@@ -99,7 +119,10 @@ function HomeStackScreen({navigation}){
         // doc.data() will be undefined in this case
         console.log("No such document!");
     }
-  })
+  }).catch((error) => {
+    console.log("Error getting document:", error);
+  });
+
   const kcal = (Step * 0.04).toFixed(2);
   const m = (Step * 0.762).toFixed(2);
   var width = (Number(Step)<Number(target))?(((Number(Step)/Number(target))*100).toFixed(2).toString(10) + '%'):'100%';
