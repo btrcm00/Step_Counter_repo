@@ -70,7 +70,18 @@ export function DrawerContent(props) {
                                 />
                             )}
                             label="Analytic"
-                            onPress={() => {props.navigation.navigate('Analytic')}}
+                            onPress={() => {props.navigation.navigate('Analytic_steps')}}
+                        />
+                        <DrawerItem 
+                            icon={({color, size}) => (
+                                <Icon 
+                                name="history" 
+                                color={color}
+                                size={size}
+                                />
+                            )}
+                            label="History"
+                            onPress={() => {props.navigation.navigate('History')}}
                         />
                         <DrawerItem 
                             icon={({color, size}) => (

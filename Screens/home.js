@@ -90,12 +90,14 @@ function getTime(uid,Step1){
   var dd = String(today.getDate()).padStart(2, '0');
   var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
   var yyyy = today.getFullYear();
+  var time = today.toLocaleTimeString();
 
-  today = dd + '-' + mm + '-' + yyyy;
+  today = time + " " + dd + '-' + mm + '-' + yyyy;
   String(today);
   console.log(today);
   firebase.firestore().collection('User').doc(uid).collection('Step').doc(today).set({
     Step: Step1,
+    Time: today,
   })
 
   //set stepOfday
@@ -108,7 +110,7 @@ function getTime(uid,Step1){
 const HomeStack = createStackNavigator();
 var height = Dimensions.get('window').height;
 function HomeStackScreen({navigation}){
-  const [Step, setStep] = React.useState('50'); 
+  const [Step, setStep] = React.useState('44'); 
   const user = firebase.auth().currentUser;
   const db = firebase.firestore();
   var [target, setTarget] = React.useState('20000');
@@ -116,12 +118,9 @@ function HomeStackScreen({navigation}){
     if (doc.exists) {
       setTarget(doc.data().target);
     } else {
-        // doc.data() will be undefined in this case
         console.log("No such document!");
     }
-  }).catch((error) => {
-    console.log("Error getting document:", error);
-  });
+  })
 
   const kcal = (Step * 0.04).toFixed(2);
   const m = (Step * 0.762).toFixed(2);
@@ -168,9 +167,6 @@ function HomeStackScreen({navigation}){
           ],
         ) */
       }
-      
-
-    
   }
   const onHandleTargetCompleted = () =>{
     navigation.navigate('Home')
@@ -182,7 +178,7 @@ function HomeStackScreen({navigation}){
         setStep(count);
       }
     }, 10);
-    return () => clearInterval(interval);
+    return () => clearInterval({});
   }, []);
 
   return(
@@ -192,7 +188,6 @@ function HomeStackScreen({navigation}){
           <View style={styles.todayBox}>
             <View>
               <Text style={styles.todayTitleText}>Steps</Text>
-              
             </View>
             <View>
               <Text style={styles.todayBodyText}>{Step} steps</Text>
