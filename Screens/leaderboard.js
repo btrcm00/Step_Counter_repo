@@ -3,22 +3,38 @@ import {StyleSheet,View,Image,Text, ImageBackground } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Leaderboard from 'react-native-leaderboard';
+import firebase from '../components/FirebaseConfig';
+
 const HomeStack = createStackNavigator();
 function LeaderboardStack({navigation}){
-    const state = {
-        data: [
-            {userName: 'Joe', highScore: 52},
-            {userName: 'Jenny', highScore: 120},
-            {userName: 'Thong', highScore: 33},
-            {userName: 'TH', highScore: 333},
-            //...
-        ] //can also be an object of objects!: data: {a:{}, b:{}}
-    }
+    const user = firebase.auth().currentUser;
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+    var time = today.toLocaleTimeString();
+
+    today = dd + '-' + mm + '-' + yyyy;
+    String(today);
+    const db = firebase.firestore();
+    var [data1, setData] = React.useState([]);
+    /* db.collection("User").get().then((snap) =>{
+        const datas = [];
+        console.log("vgbhjn");
+        snap.forEach((doc) =>{
+            datas.push({userName: doc.data().name, highScore: doc.data().stepsOfday})
+        })
+        setData(datas);
+    
+     }) */
+
     return(
         <Leaderboard 
-        data={state.data} 
+        data={data1} 
         sortBy='highScore' 
-        labelBy='userName'/>
+        labelBy='userName'
+        
+        />
     );
 };
 
@@ -52,5 +68,20 @@ const styles = StyleSheet.create({
 		flex: 1,
 		resizeMode: "cover",
 		justifyContent: "center"
-	  },
+    },
+    item: {
+    alignItems:'center',
+    backgroundColor:'white',
+    justifyContent:'space-between',
+    margin:5,
+    borderRadius: 10,
+    shadowColor: "black",
+    padding:40,
+    shadowOffset: {
+    width: -5,
+    height: 6,
+    },
+    shadowOpacity: 0.23,
+    elevation: 4,
+    },
 })

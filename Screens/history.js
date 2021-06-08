@@ -4,32 +4,26 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import firebase from '../components/FirebaseConfig'
 const HomeStack = createStackNavigator();
-function HistoryStack({navigation}){
+function HistoryStack(){
     const db = firebase.firestore();
-    const state = {
-        data: [
-            {'name': 'Ben', 'id': 1},
-            {'name': 'Susan', 'id': 2},
-            {'name': 'Robert', 'id': 3},
-            {'name': 'Mary', 'id': 4},
-            {'name': 'Daniel', 'id': 5},
-            {'name': 'Laura', 'id': 6},
-            {'name': 'John', 'id': 7},
-            {'name': 'Debra', 'id': 8},
-            {'name': 'Aron', 'id': 9},
-            {'name': 'Ann', 'id': 10},
-            {'name': 'Steve', 'id': 11},
-            {'name': 'Olivia', 'id': 12}
-            //...
-        ] //can also be an object of objects!: data: {a:{}, b:{}}
-    }
+    const user = firebase.auth().currentUser;
+    var [data1, setData] = React.useState([]);
+    db.collection("User").doc(user.uid).collection("Step").onSnapshot((snap) =>{
+        const datas = [];
+        snap.forEach((doc) =>{
+            console.log(doc.data())
+            datas.push({step: doc.data().Step, time: doc.data().Time})
+        })
+        setData(datas);
+     })
     return(
         <View>
             <ScrollView>
                 {
-                    state.data.map((item, index) => (
-                     <View key = {item.id} style = {styles.item}>
-                        <Text>{item.name}</Text>
+                    data1.map((item, index) => (
+                     <View key = {item.time} style = {styles.item}>
+                        <Text>{item.step}</Text>
+                        <Text>{item.time}</Text>
                      </View>
                   ))
                }
@@ -69,19 +63,19 @@ const styles = StyleSheet.create({
 		resizeMode: "cover",
 		justifyContent: "center"
 	  },
-      item: {
-        alignItems:'center',
-        backgroundColor:'white',
-        justifyContent:'space-between',
-        margin:5,
-        borderRadius: 10,
-        shadowColor: "black",
-        padding:40,
-		shadowOffset: {
-		width: -5,
-		height: 6,
-		},
-		shadowOpacity: 0.23,
-		elevation: 4,
-     },
+    item: {
+    alignItems:'center',
+    backgroundColor:'white',
+    justifyContent:'space-between',
+    margin:5,
+    borderRadius: 10,
+    shadowColor: "black",
+    padding:40,
+    shadowOffset: {
+    width: -5,
+    height: 6,
+    },
+    shadowOpacity: 0.23,
+    elevation: 4,
+    },
 })
