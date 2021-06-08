@@ -96,21 +96,21 @@ function getTime(uid,Step1){
   today = dd + '-' + mm + '-' + yyyy;
   String(today);
   console.log(today);
-  const user = firebase.auth().currentUser;
   firebase.firestore().collection('User').doc(uid).collection('Step').doc(today).set({
     Step: Step1,
   })
-  // firebase.firestore().collection('User').doc(uid).collection('Step').doc(today).collection('Log').doc().set({
-  //   Time: time + ' ' + today, 
-  //   Step: Step1
-  // })
+
+  //set stepOfday
+  firebase.firestore().collection('User').doc(uid).update({
+    stepsOfday: Step1,
+  });
 }
 
 
 const HomeStack = createStackNavigator();
 var height = Dimensions.get('window').height;
 function HomeStackScreen({navigation,route}){
-  const [Step, setStep] = React.useState('0'); 
+  const [Step, setStep] = React.useState('40'); 
   const user = firebase.auth().currentUser;
   const db = firebase.firestore();
   var target = 10;
@@ -125,6 +125,7 @@ function HomeStackScreen({navigation,route}){
   }).catch((error) => {
     console.log("Error getting document:", error);
   });
+
   const kcal = (Step * 0.04).toFixed(2);
   const m = (Step * 0.762).toFixed(2);
   console.log(Step)
