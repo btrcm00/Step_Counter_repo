@@ -53,7 +53,7 @@ function mqtt_connect() {
     messageArrived = mes.data;
     if(messageArrived != "on_shake"){
       count+=1;
-      messageArrived = "on_shake";
+      // messageArrived = "on_shake";
       dataChange = true;
     }
     const user = firebase.auth().currentUser;
@@ -70,6 +70,7 @@ function mqtt_connect() {
       Message: messageArrived, 
       Step: count
     })
+    messageArrived = "on_shake";
   } 
   //count --> stepofday
   function onConnectionLost(responseObject) {
@@ -109,7 +110,7 @@ function getTime(uid,Step1){
 const HomeStack = createStackNavigator();
 var height = Dimensions.get('window').height;
 function HomeStackScreen({navigation}){
-  const [Step, setStep] = React.useState('50'); 
+  const [Step, setStep] = React.useState('0'); 
   const user = firebase.auth().currentUser;
   const db = firebase.firestore();
   var [target, setTarget] = React.useState('20000');

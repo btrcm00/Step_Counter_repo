@@ -5,17 +5,26 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import firebase from '../components/FirebaseConfig'
 const HomeStack = createStackNavigator();
 function HistoryStack(){
+
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+    var time = today.toLocaleTimeString();
+
+    today = dd + '-' + mm + '-' + yyyy;
+    String(today);
+
     const db = firebase.firestore();
     const user = firebase.auth().currentUser;
     var [data1, setData] = React.useState([]);
-    db.collection("User").doc(user.uid).collection("Step").onSnapshot((snap) =>{
-        const datas = [];
-        snap.forEach((doc) =>{
-            console.log(doc.data())
-            datas.push({step: doc.data().Step, time: doc.data().Time})
-        })
-        setData(datas);
-     })
+    // db.collection("User").doc(user.uid).collection("Step").doc(today).collection('Log').onSnapshot((snap) =>{
+    //     const datas = []
+    //     snap.forEach((doc) =>{
+    //         datas.push({step: doc.data().Step, time: doc.data().Time})
+    //     })
+    //     setData(datas);
+    //  })
     return(
         <View>
             <ScrollView>
