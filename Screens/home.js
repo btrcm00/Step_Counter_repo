@@ -92,7 +92,7 @@ function getTime(uid,Step1){
   var yyyy = today.getFullYear();
   var time = today.toLocaleTimeString();
 
-  today = time + " " + dd + '-' + mm + '-' + yyyy;
+  today = dd + '-' + mm + '-' + yyyy;
   String(today);
   console.log(today);
   firebase.firestore().collection('User').doc(uid).collection('Step').doc(today).set({
