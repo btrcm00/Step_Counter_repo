@@ -110,7 +110,7 @@ function getTime(uid,Step1){
 const HomeStack = createStackNavigator();
 var height = Dimensions.get('window').height;
 function HomeStackScreen({navigation}){
-  const [Step, setStep] = React.useState('44'); 
+  const [Step, setStep] = React.useState('0'); 
   const user = firebase.auth().currentUser;
   const db = firebase.firestore();
   var [target, setTarget] = React.useState('20000');
