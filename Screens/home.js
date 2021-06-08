@@ -97,7 +97,6 @@ function getTime(uid,Step1){
   console.log(today);
   firebase.firestore().collection('User').doc(uid).collection('Step').doc(today).set({
     Step: Step1,
-    Time: today,
   })
 
   //set stepOfday
@@ -110,7 +109,7 @@ function getTime(uid,Step1){
 const HomeStack = createStackNavigator();
 var height = Dimensions.get('window').height;
 function HomeStackScreen({navigation}){
-  const [Step, setStep] = React.useState('0'); 
+  const [Step, setStep] = React.useState('50'); 
   const user = firebase.auth().currentUser;
   const db = firebase.firestore();
   var [target, setTarget] = React.useState('20000');
