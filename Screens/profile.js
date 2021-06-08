@@ -12,21 +12,19 @@ import firebase from '../components/FirebaseConfig'
 function ProfileStack({navigation}){
     var user = firebase.auth().currentUser;
     var [target, setTarget] = React.useState('0');
-    const onHandleChangeTarget = () =>{
-        setTarget(2000),
-        navigation.navigate('Home',{step:target})
-    }
+    var [email, setEmail] = React.useState(user.email);
+    var [name, setName] = React.useState(user.displayName);
     const db = firebase.firestore();
-    db.collection('User').doc(user.uid).get().then((doc)=>{
+    db.collection('User').doc(user.uid).onSnapshot((doc)=>{
         if (doc.exists) {
-          target = doc.data().target;
+            setTarget(doc.data().target);
+            setEmail(doc.data().email.toLowerCase());
+            setName(doc.data().name);
         } else {
             // doc.data() will be undefined in this case
             console.log("No such document!");
         }
-      }).catch((error) => {
-        console.log("Error getting document:", error);
-      });
+      })
     return(
         <View style = {{flex:1, alignItems:'center',backgroundColor:'#FAF0E6'}}>
             <View style={[styles.tag,{flex:1.3,flexDirection:'row',alignItems:'center'}]}>
@@ -37,7 +35,7 @@ function ProfileStack({navigation}){
                     size={70}
                     style={{marginLeft:10}}
                 />
-                <Title style={styles.title}>{user.displayName}</Title>
+                <Title style={styles.title}>{name}</Title>
             </View>
             <View style={[styles.tag,{flex:4}]}>
                 <View style = {{flex:3, marginLeft:30,marginTop:40}}>
@@ -47,7 +45,7 @@ function ProfileStack({navigation}){
                     </View>
                     <View style={styles.row}>
                         <Icon name="email" color="#777777" size={30}/>
-                        <Text style={{color:"#777777", marginLeft: 20, fontSize: 20}}>{user.email}</Text>
+                        <Text style={{color:"#777777", marginLeft: 20, fontSize: 20}}>{email}</Text>
                     </View>
                     <View style={styles.row}>
                         <Icon name="trophy-outline" color="#777777" size={30}/>
