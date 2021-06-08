@@ -21,7 +21,7 @@ const App=()=>{
   //const [userToken, setUserToken] = React.useState(null);
   return(
       <NavigationContainer>
-          <Drawer.Navigator initialRouteName="Login" drawerContent={props => <DrawerContent {...props}/>}>
+          <Drawer.Navigator initialRouteName="Login" screenOptions={MainTabScreen} drawerContent={props => <DrawerContent {...props}/>}>
             <Drawer.Screen name = "Home" component={MainTabScreen}/>
             <Drawer.Screen name = "Profile" component = {ProfileScreen}/>
             <Drawer.Screen name="Leaderboard" component={LeaderboardScreen}/>
