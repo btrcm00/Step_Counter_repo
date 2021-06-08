@@ -17,43 +17,24 @@ function LeaderboardStack({navigation}){
     today = dd + '-' + mm + '-' + yyyy;
     String(today);
     const db = firebase.firestore();
-    // var [Step, setStep] = React.useState('');
-    // var [Name, setName] = React.useState('');
-    // db.collection('User').doc(user.uid).collection('Step').doc('07-06-2021').onSnapshot((doc)=>{
-    //     if (doc.exists) {
-    //         //setStep(doc.data().Step);
-    //         setName(doc.data().name);
-    //         console.log(Name);
-    //     } else {
-    //         // doc.data() will be undefined in this case
-    //         console.log("No such document!");
-    //     }
-    // })
-
-    // const state = {
-    //     data: [
-    //         {userName: 'Joe', highScore: 52},
-    //         {userName: 'Jenny', highScore: 120},
-    //         {userName: 'Thong', highScore: 33},
-    //         {userName: 'TH', highScore: 333},
-    //         //...
-    //     ] //can also be an object of objects!: data: {a:{}, b:{}}
-    // }
     var [data1, setData] = React.useState([]);
-    const unsubscribe = firebase.firestore().collection("User").get().then((snap) =>{
+    /* db.collection("User").get().then((snap) =>{
         const datas = [];
+        console.log("vgbhjn");
         snap.forEach((doc) =>{
             datas.push({userName: doc.data().name, highScore: doc.data().stepsOfday})
         })
         setData(datas);
     
-     })
+     }) */
 
     return(
         <Leaderboard 
         data={data1} 
         sortBy='highScore' 
-        labelBy='userName'/>
+        labelBy='userName'
+        
+        />
     );
 };
 
@@ -87,5 +68,20 @@ const styles = StyleSheet.create({
 		flex: 1,
 		resizeMode: "cover",
 		justifyContent: "center"
-	  },
+    },
+    item: {
+    alignItems:'center',
+    backgroundColor:'white',
+    justifyContent:'space-between',
+    margin:5,
+    borderRadius: 10,
+    shadowColor: "black",
+    padding:40,
+    shadowOffset: {
+    width: -5,
+    height: 6,
+    },
+    shadowOpacity: 0.23,
+    elevation: 4,
+    },
 })
