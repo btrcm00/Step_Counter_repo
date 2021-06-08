@@ -5,48 +5,86 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 const HomeStack = createStackNavigator();
+import firebase from '../components/FirebaseConfig'
+//import { get } from 'core-js/fn/reflect';
 
 function AnalyticStack_steps({navigation}){
-    return(
-        <SafeAreaView style={{flex: 1}}>
-        <ScrollView>
-      <View style={styles.container}>
-        <View style={styles.container2}>
-        <TouchableOpacity 
-        style={[styles.button,{marginRight:10}]}
-        onPress={() => navigation.navigate('Analytic_steps')}
-        >
-          <Text>Steps</Text>
-        </TouchableOpacity>
-        
-        <TouchableOpacity 
-        style={[styles.button,{marginRight:10}]}
-        onPress={() => navigation.navigate('Analytic_km')}
-        >
-          <Text>Km</Text>
-        </TouchableOpacity>
-        <TouchableOpacity 
-        style={[styles.button,{marginRight:10}]}
-        onPress={() => navigation.navigate('Analytic_calo')}
-        >
-          <Text>Calo</Text>
-        </TouchableOpacity>
-        </View>
-        <View>
-          <MyBarChart/>
+  function Checkday(s) {
+    var date = new Date();
+    var day = date.getDay();
+    switch (day) {
+      case 0:       //chủ nhật
+          const Step_cn = s;
+          km_cn = (Step_cn * 0.762).toFixed(2);
+          cal_cn = (Step_cn * 0.04).toFixed(2);  break;
+      case 1:       //thứ 2
+          const Step_t2 = s; 
+          km_t2 = (Step_t2 * 0.762).toFixed(2);
+          cal_t2 = (Step_t2 * 0.04).toFixed(2);  break;
+      case 2:       //thứ 3
+          const Step_t3 = s;
+          km_t3 = (Step_t3 * 0.762).toFixed(2);
+          cal_t3 = (Step_t3 * 0.04).toFixed(2);  break;
+      case 3:     //thứ 4
+          const Step_t4 = s;
+          km_t4 = (Step_t4 * 0.762).toFixed(2);
+          cal_t4 = (Step_t4 * 0.04).toFixed(2);  break;
+      case 4:   //thứ 5
+          const Step_t5 = s;
+          km_t5 = (Step_t5 * 0.762).toFixed(2);
+          cal_t5 = (Step_t5 * 0.04).toFixed(2);  break;
+      case 5:   //thứ 6
+          const Step_t6 = s;
+          km_t6 = (Step_t6 * 0.762).toFixed(2);
+          cal_t6 = (Step_t6 * 0.04).toFixed(2);  break;
+      case 6:   //thứ 7
+          const Step_t7 = s;
+          km_t7 = (Step_t7 * 0.762).toFixed(2);
+          cal_t7 = (Step_t7 * 0.04).toFixed(2);
+    }
+  }
+String(Step_t2);
+String(Step_t3);
+String(Step_t4);
+String(Step_t5);
+String(Step_t6);
+String(Step_t7);
+String(Step_cn);
 
-          <MyLineChart/>
-        </View>
-      </View>
-      </ScrollView>
-      </SafeAreaView>
-    );
-};
-const MyBarChart = () => {
+
+  var curr = new Date;
+  var firstday = new Date(curr.setDate(curr.getDate() - curr.getDay()));
+  var lastday = new Date(curr.setDate(curr.getDate() - curr.getDay()+6));
+  
+  var user = firebase.auth().currentUser;
+
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = today.getFullYear();
+  // var time = today.toLocaleTimeString();
+
+  today = dd + '-' + mm + '-' + yyyy;
+  String(today);
+
+  const db = firebase.firestore();
+  const local_step = db.collection('User').doc(user.uid).collection('Step').doc(today).then((snapshot) =>{
+      const STEP = 0;
+      snapshot.forEach((doc) =>{
+      STEP.where(doc(today), '==', firstday).get()(
+          Checkday(STEP)
+        )  
+      })
+  })
+  var [step, setSTEP] = React.useState();
+  //const snapshot = local_step.where(doc, '==', firstday).get();
+  
+ 
+  const MyBarChart_step = () => {
     return (
       <>
       <ImageBackground style={styles.Background1}>
-        <Text style={styles.header}>This week (22/3 - 28/3 )</Text>
+        <Text style={styles.header}>Steps ({firstday} - {lastday}) </Text>
         <ScrollView horizontal={true}>
         <BarChart
           data={{
@@ -54,7 +92,14 @@ const MyBarChart = () => {
               ['Monday', 'Tuesday', 'Wednesday', 'Thusday', 'Friday', 'Sartuday','Sunday'],
             datasets: [
               {
-                data: [5000, 6000, 7000 , 8000, 7500, 7700, 5000],
+                data: [ Step_t2, 
+                        Step_t3, 
+                        Step_t4, 
+                        Step_t5, 
+                        Step_t6, 
+                        Step_t7, 
+                        Step_cn
+                      ],
               },
             ],
           }}
@@ -84,46 +129,144 @@ const MyBarChart = () => {
     );
   };
   
-const MyLineChart = () => {
+ 
+
+  const MyBarChart_km = () => {
+    //const kcal = (Step * 0.04).toFixed(2);
+    //const m = (Step * 0.762).toFixed(2);
+
     return (
       <>
-        <ImageBackground style={styles.Background2}>
-        <Text style={styles.header}>Steps</Text>
+      <ImageBackground style={styles.Background1}>
+        <Text style={styles.header}>Km ({firstday} - {lastday})</Text>
         <ScrollView horizontal={true}>
-        <LineChart
+        <BarChart
           data={{
-            labels: 
-              ['1', '2', '3', '4', '5', '6','7','8','9','10','11','12','13','14','15','16','17','18','19','20'],
+            labels:
+              ['Monday', 'Tuesday', 'Wednesday', 'Thusday', 'Friday', 'Sartuday','Sunday'],
             datasets: [
               {
-                data: [5000,5500,5600,5700,5800,5900,6000,6100,6500,6600,6700,6800,6900,7000,7500,7700,7900,8000,5000,5700],
-                strokeWidth: 2,
+                data: [ km_t2, 
+                        km_t3, 
+                        km_t4, 
+                        km_t5, 
+                        km_t6, 
+                        km_t7, 
+                        km_cn
+                      ],
               },
             ],
           }}
-          width={700 }  //Dimensions.get('window').width
+          width={ 500}  // Dimensions.get('window').width
           height={300}
           chartConfig={{
             backgroundColor: '#a8c6fa',
             backgroundGradientFrom: '#a8c6fa',
             backgroundGradientTo: '#a8c6fa',
-            decimalPlaces: 2,
-            color: (opacity=0) => `rgba(03, 30, 75, 0.7)`,
+            decimalPlaces: 0,
+          
+            color: (opacity = 0) => `rgba(03, 30, 75, 0.7)`,
             style: {
-              borderRadius: 16,
+              borderRadius: 0,
             },
           }}
+
           style={{
-            marginVertical: 8,
-            borderRadius: 16,
+            marginVertical: 0,
+            marginHorizontal: 0,
+            borderRadius: 0,
           }}
         />
         </ScrollView>
-         </ImageBackground>
+      </ImageBackground>
       </>
     );
   };
 
+  
+
+
+  const MyBarChart_calo = () => {
+    //const kcal = (Step * 0.04).toFixed(2);
+    //const m = (Step * 0.762).toFixed(2);
+
+    
+   
+    return (
+      <>
+      <ImageBackground style={styles.Background1}>
+        <Text style={styles.header}>Calo ({firstday} - {lastday})</Text>
+        <ScrollView horizontal={true}>
+        <BarChart
+          data={{
+            labels:
+              ['Monday', 'Tuesday', 'Wednesday', 'Thusday', 'Friday', 'Sartuday','Sunday'],
+            datasets: [
+              {
+                data: [ cal_t2, 
+                        cal_t3, 
+                        cal_t4, 
+                        cal_t5, 
+                        cal_t6, 
+                        cal_t7, 
+                        cal_cn
+                      ],
+              },
+            ],
+          }}
+          width={ 500}  // Dimensions.get('window').width
+          height={300}
+          chartConfig={{
+            backgroundColor: '#a8c6fa',
+            backgroundGradientFrom: '#a8c6fa',
+            backgroundGradientTo: '#a8c6fa',
+            decimalPlaces: 0,
+          
+            color: (opacity = 0) => `rgba(03, 30, 75, 0.7)`,
+            style: {
+              borderRadius: 0,
+            },
+          }}
+
+          style={{
+            marginVertical: 0,
+            marginHorizontal: 0,
+            borderRadius: 0,
+          }}
+        />
+        </ScrollView>
+      </ImageBackground>
+      </>
+    );
+  };
+
+  return(
+        <SafeAreaView style={{flex: 1}}>
+        <ScrollView>
+      <View style={styles.container}>
+        <View style={styles.container2}>
+        <TouchableOpacity 
+        style={[styles.button,{marginRight:10}]}
+        onPress={() => navigation.navigate('Analytic_calo')}
+        >
+          <Text>Calo</Text>
+        </TouchableOpacity>
+        </View>
+        <View>
+          <MyBarChart_step/>
+
+          <MyBarChart_km/>
+
+          <MyBarChart_calo/>
+
+        </View>
+      </View>
+      </ScrollView>
+      </SafeAreaView>
+    );
+};
+
+  
 export default function AnalyticScreen_steps({navigation}) {
 	return (
       <HomeStack.Navigator screenOptions={{
