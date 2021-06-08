@@ -46,10 +46,9 @@ function LeaderboardStack({navigation}){
             datas.push({userName: doc.data().name, highScore: doc.data().stepsOfday})
         })
         setData(datas);
-    //or you can use useState like const [data, setData] = useState([]); then setData(datas)
+    
      })
 
-    console.log(data1);
     return(
         <Leaderboard 
         data={data1} 
