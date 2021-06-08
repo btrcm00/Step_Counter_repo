@@ -17,13 +17,12 @@ function UpdateProfileStack({navigation}){
     const signOutUser = async () => {
         try {
             await firebase.auth().signOut();
-            props.navigation.navigate('Login');
+            navigation.navigate('Login');
         } catch (e) {
             console.log(e);
         }
     }
     var user = firebase.auth().currentUser;
-    var [target, setTarget] = React.useState('1200');
     var [data, setData] = React.useState({
         name:'',
         phone: '',
@@ -40,6 +39,26 @@ function UpdateProfileStack({navigation}){
             console.log(error.message)
         });
     }
+    const onHandleChangeEmail = () =>{
+        const db = firebase.firestore();
+        db.collection('User').doc(user.uid).update({
+            email: data.email,
+        }).then(snapshot =>{
+            console.log('ok')
+        }).catch((error)=>{
+            console.log(error.message)
+        });
+    }
+    const onHandleChangeName = () =>{
+        const db = firebase.firestore();
+        db.collection('User').doc(user.uid).update({
+            name: data.name,
+        }).then(snapshot =>{
+            console.log('ok')
+        }).catch((error)=>{
+            console.log(error.message)
+        });
+    }
     const onHandleUpdateProfile = () =>{
         if(data.email.toLowerCase()==user.email.toLowerCase()){
             Alert.alert(
@@ -49,11 +68,41 @@ function UpdateProfileStack({navigation}){
                 ]
             )
         }
+        else if(data.email==''){
+            user.updateProfile({
+                displayName: (data.name=='')?user.displayName:data.name,
+            }).then(() => {
+                // Update successful
+                if(data.goal!='')onHandleChangeTarget();
+                if(data.email!='')onHandleChangeEmail();
+                if(data.name!='')onHandleChangeName();
+                if(data.goal!=''){onHandleChangeTarget();}
+                Alert.alert(
+                    'Successfull!','',
+                    [
+                        {text:'Go to Profile', onPress:()=>{navigation.navigate('Profile')}}
+                    ]
+                )
+            }).catch((error) => {
+                // An error happened.
+                Alert.alert(
+                    'Opps!',error.message,
+                    {text:'Ok'}
+                )
+                
+            });
+        }
         else{
-            if(data.email){
-                user.updateEmail(data.email.toLowerCase()).then(() => {
-                    // Update successful.
-                    onHandleChangeTarget();
+            user.updateEmail(data.email.toLowerCase())
+            .then(()=>{
+                user.updateProfile({
+                    displayName: (data.name=='')?user.displayName:data.name,
+                }).then(() => {
+                    // Update successful
+                    if(data.goal!='')onHandleChangeTarget();
+                    if(data.email!='')onHandleChangeEmail();
+                    if(data.name!='')onHandleChangeName();
+                    if(data.goal!=''){onHandleChangeTarget();}
                     Alert.alert(
                         'Successfull!','',
                         [
@@ -62,32 +111,19 @@ function UpdateProfileStack({navigation}){
                     )
                 }).catch((error) => {
                     // An error happened.
-                    if(error.message == "This operation is sensitive and requires recent authentication. Log in again before retrying this request."){
-                        Alert.alert(
-                            'Opps!',error.message,
-                            [
-                                {text:'Ok',onPress:()=>signOutUser()}
-                            ]
-                        )
-                    }
-                    else{
-                        Alert.alert(
-                            'Opps!',error.message,
-                            {text:'Ok'}
-                        )
-                    }
+                    Alert.alert(
+                        'Opps!',error.message,
+                        {text:'Ok'}
+                    )
                     
                 });
-            }
-            else{
-                onHandleChangeTarget();
+            }).catch((error)=>{
                 Alert.alert(
-                    'Successfull!','',
-                    [
-                        {text:'Go to Profile', onPress:()=>{navigation.navigate('Profile')}}
-                    ]
+                    'Opps!',error.message,
+                    {text:'Ok'}
                 )
-            }
+            })
+            
         }
         
     }
@@ -101,7 +137,16 @@ function UpdateProfileStack({navigation}){
                     size={70}
                     style={{marginLeft:10}}
                 />
-                <Title style={styles.title}>{user.displayName}</Title>
+                <View style={{flex:1}} >
+                        <TextInput
+                            mode="outlined"
+                            label={user.displayName?user.displayName:"Name"}
+                            style = {styles.input}
+                            clearButtonMode = 'always'
+                            onChangeText={(val)=>setData({...data,name:val})}
+                            placeholder= {user.displayName?user.displayName:"Name"}
+                        />
+                    </View>
             </View>
             <View style={[styles.tag,{flex:4}]}>
                 <View style = {{flex:3,marginTop:40}}>

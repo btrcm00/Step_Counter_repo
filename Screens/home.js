@@ -23,8 +23,6 @@ function mqtt_connect() {
     onFailure: onFail
   };
   client.connect(options);
-``
-  //const [Step, setStep] = useState('0'); 
 
   function onConnect() {
     console.log("Connected!");
@@ -109,15 +107,14 @@ function getTime(uid,Step1){
 
 const HomeStack = createStackNavigator();
 var height = Dimensions.get('window').height;
-function HomeStackScreen({navigation,route}){
-  const [Step, setStep] = React.useState('40'); 
+function HomeStackScreen({navigation}){
+  const [Step, setStep] = React.useState('50'); 
   const user = firebase.auth().currentUser;
   const db = firebase.firestore();
-  var target = 10;
-  db.collection('User').doc(user.uid).get().then((doc)=>{
+  var [target, setTarget] = React.useState('20000');
+  db.collection('User').doc(user.uid).onSnapshot((doc)=>{
     if (doc.exists) {
-      target = doc.data().target;
-      console.log(target);
+      setTarget(doc.data().target);
     } else {
         // doc.data() will be undefined in this case
         console.log("No such document!");
@@ -128,11 +125,15 @@ function HomeStackScreen({navigation,route}){
 
   const kcal = (Step * 0.04).toFixed(2);
   const m = (Step * 0.762).toFixed(2);
-  console.log(Step)
-  console.log(target)
-  var width = (Step<=target)?(((Step/target)*100).toFixed(2).toString(10) + '%'):'100%';
+  var width = (Number(Step)<Number(target))?(((Number(Step)/Number(target))*100).toFixed(2).toString(10) + '%'):'100%';
   if(Step==target){
-
+      Alert.alert(
+        'Congratulation!!!','Your target is completed',
+        [
+          {text:'OK',onPress:()=>onHandleTargetCompleted()},
+          {text: 'Update target',onPress:()=>{navigation.navigate('Profile')}}
+        ]
+      )
       var client2;
       client2 = new Paho.Client('io.adafruit.com', 443, '');
       var options2 = {     
@@ -146,13 +147,11 @@ function HomeStackScreen({navigation,route}){
         onFailure: onFail1
       };
       client2.connect(options2);
-    ``
-      //const [Step, setStep] = useState('0'); 
     
       function onConnect1() {
         console.log("Connected Speaker!");
         var speaker={
-          "id":"2",
+          "id":"3",
           "name":"SPEAKER",
           "data":"400",
           "unit":""
@@ -161,24 +160,17 @@ function HomeStackScreen({navigation,route}){
           client2.publish('CSE_BBC/feeds/bk-iot-speaker',json_string)
       }
       function onFail1(context) {
-        console.log(context);
         console.log("Connection failed!");
-        Alert.alert('Failure to Connect',
+        /* Alert.alert('Failure to Connect',
           "Unable to connect to host. Try again later.",
           [
             { text: "OK" }
           ],
-        )
+        ) */
       }
       
 
-    Alert.alert(
-      'Congratulation!!!','Your target is completed',
-      [
-        {text:'OK',onPress:()=>onHandleTargetCompleted()},
-        {text: 'Update target',onPress:()=>{navigation.navigate('Profile')}}
-      ]
-    )
+    
   }
   const onHandleTargetCompleted = () =>{
     navigation.navigate('Home')
@@ -200,13 +192,6 @@ function HomeStackScreen({navigation,route}){
           <View style={styles.todayBox}>
             <View>
               <Text style={styles.todayTitleText}>Steps</Text>
-              <Button
-                title = "Finish"
-                onPress = {() =>{
-                  getTime(user.uid,Step)
-                } }
-              />
-
               
             </View>
             <View>
@@ -219,17 +204,32 @@ function HomeStackScreen({navigation,route}){
               <Text h2 style={styles.bigBlack}>Process</Text>
               <View style={styles.progressBar}>
                 <Animated.View style={[styles.absoluteFill,{width}]}/>
-                <IconButton
-                  icon="run"
-                  color={'black'}
-                  size={height/13}
-                  onPress={() => {
-                    mqtt_connect();
-                    getTime();
-                        //bang ngay, bien chua ngay dat ten bang
-                    runApp = true;
-                  }}
-                />
+                <View style = {{flexDirection:'row',flex:1,alignItems:'center'}}>
+                  <View style={{flex:3}}>
+                    <IconButton
+                      icon="run"
+                      color={'black'}
+                      size={height/13}
+                      onPress={() => {
+                        mqtt_connect();
+                            //bang ngay, bien chua ngay dat ten bang
+                        runApp = true;
+                      }}
+                    />
+                  </View>
+                  <View style={{flex:1,paddingRight:0}}>
+                    <IconButton
+                      icon="flag"
+                      color={'black'}
+                      size={height/13}
+                      onPress={() => {
+                        getTime(user.uid,Step)
+                      }}
+                    />
+                  </View>
+                  
+                  
+                </View>
               </View>
               <Text>{width}</Text>
             </View>
@@ -325,7 +325,6 @@ const styles = StyleSheet.create({
     borderColor: 'white',
     borderWidth: 2,
     borderRadius: 15,
-    alignItems:'center',
     justifyContent:'center',
     shadowColor: "black",
 		shadowOffset: {
