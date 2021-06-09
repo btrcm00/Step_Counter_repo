@@ -96,7 +96,7 @@ function getTime(uid,Step1){
   today = dd + '-' + mm + '-' + yyyy;
   String(today);
   console.log(today);
-  firebase.firestore().collection('User').doc(uid).collection('Step').doc(today).set({
+  firebase.firestore().collection('User').doc(uid).collection('Step').doc(today).update({
     Step: Step1,
   })
 
@@ -110,7 +110,7 @@ function getTime(uid,Step1){
 const HomeStack = createStackNavigator();
 var height = Dimensions.get('window').height;
 function HomeStackScreen({navigation}){
-  const [Step, setStep] = React.useState('0'); 
+  const [Step, setStep] = React.useState('40'); 
   const user = firebase.auth().currentUser;
   const db = firebase.firestore();
   var [target, setTarget] = React.useState('20000');

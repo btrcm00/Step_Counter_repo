@@ -7,6 +7,18 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 const HomeStack = createStackNavigator();
 
 function AnalyticStack_steps({navigation}){
+
+  // const user = firebase.auth().currentUser;
+  // const db = firebase.firestore();
+  // var [data1, setData] = React.useState([]);
+  // db.collection('User').doc(user.uid).collection('Step').get().then((snap) =>{
+  //   const datas = [];
+  //   snap.forEach((doc) =>{
+  //     datas.push({userName: doc.data().name, highScore: doc.data().stepsOfday})
+  //   })
+  //   setData(datas);
+  // }) 
+
     return(
         <SafeAreaView style={{flex: 1}}>
         <ScrollView>
@@ -54,7 +66,7 @@ const MyBarChart = () => {
               ['Monday', 'Tuesday', 'Wednesday', 'Thusday', 'Friday', 'Sartuday','Sunday'],
             datasets: [
               {
-                data: [5000, 6000, 7000 , 8000, 7500, 7700, 5000],
+                data: [5000, 6000, 7000 , 8000, 7500, 7700],
               },
             ],
           }}
@@ -135,7 +147,7 @@ export default function AnalyticScreen_steps({navigation}) {
         fontWeight: 'bold'
         }
     }}>
-        <HomeStack.Screen name="AnalyticSc" component={AnalyticStack_steps} options={{
+        <HomeStack.Screen name="Analytics" component={AnalyticStack_steps} options={{
         title:'Analytic',
         headerLeft: () => (
             <Icon.Button name="analytics" size={25} backgroundColor="#CC99CC" onPress={() => navigation.openDrawer()}></Icon.Button>
