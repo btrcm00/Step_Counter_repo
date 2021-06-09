@@ -70,6 +70,7 @@ function mqtt_connect() {
       Message: messageArrived, 
       Step: count
     })
+    
   } 
   //count --> stepofday
   function onConnectionLost(responseObject) {
@@ -110,7 +111,7 @@ function getTime(uid,Step1){
 const HomeStack = createStackNavigator();
 var height = Dimensions.get('window').height;
 function HomeStackScreen({navigation}){
-  const [Step, setStep] = React.useState('44'); 
+  const [Step, setStep] = React.useState('0'); 
   const user = firebase.auth().currentUser;
   const db = firebase.firestore();
   var [target, setTarget] = React.useState('20000');
@@ -167,6 +168,17 @@ function HomeStackScreen({navigation}){
           ],
         ) */
       }
+      var today = new Date();
+      var dd = String(today.getDate()).padStart(2, '0');
+      var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+      var yyyy = today.getFullYear();
+      var time = today.toLocaleTimeString();
+      today = dd + '-' + mm + '-' + yyyy;
+      firebase.firestore().collection('User').doc(user.uid).collection('Step').doc(today).collection('Log').doc(time +' '+today).set({
+        Time: time + ' ' + today,
+        Message: "Target completed at ", 
+        Step: count
+      })
   }
   const onHandleTargetCompleted = () =>{
     navigation.navigate('Home')
