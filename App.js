@@ -8,7 +8,7 @@ import
     MainTabScreen, 
     ProfileScreen,
     AnalyticScreen_calo,
-    AnalyticScreen_steps,
+    AnalyticScreen,
     AnalyticScreen_km,
     LoginScreen,RegisterScreen,
     UpdateProfileScreen,
@@ -27,7 +27,7 @@ const App=()=>{
             <Drawer.Screen name="Leaderboard" component={LeaderboardScreen}/>
             <Drawer.Screen name="Changepass" component={ChangepassScreen}/>
             <Drawer.Screen name="MainTab" component={MainTabScreen}/>
-            <Drawer.Screen name="Analytic_steps" component={AnalyticScreen_steps}/>
+            <Drawer.Screen name="Analytic_steps" component={AnalyticScreen}/>
             <Drawer.Screen name="Analytic_km" component={AnalyticScreen_km}/>
             <Drawer.Screen name="Analytic_calo" component={AnalyticScreen_calo}/>
             <Drawer.Screen name="Login" component={LoginScreen}/>
