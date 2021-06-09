@@ -18,13 +18,13 @@ function LeaderboardStack({navigation}){
     String(today);
     const db = firebase.firestore();
     var [data1, setData] = React.useState([]);
-    db.collection("User").get().then((snap) =>{
-        const datas = [];
-        snap.forEach((doc) =>{
-            datas.push({userName: doc.data().name, highScore: doc.data().stepsOfday})
-        })
-        setData(datas);
-     }) 
+    // db.collection("User").get().then((snap) =>{
+    //     const datas = [];
+    //     snap.forEach((doc) =>{
+    //         datas.push({userName: doc.data().name, highScore: doc.data().stepsOfday})
+    //     })
+    //     setData(datas);
+    //  }) 
 
     return(
         <Leaderboard 
