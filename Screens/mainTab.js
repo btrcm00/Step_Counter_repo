@@ -5,7 +5,12 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import HomeScreen from './home';
 import ProfileScreen from './profile';
 import LeaderboardScreen from './leaderboard';
+<<<<<<< HEAD
 import AnalyticScreen from './analytics';
+=======
+import HistoryScreen from './history'
+import AnalyticScreen_steps from './analytics_step';
+>>>>>>> 8db46eb63124b51889d6cf32400704c36d157f20
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -38,7 +43,7 @@ export default function MainTabScreen(){
       />
       <Tab.Screen
         name="Analytic"
-        component={AnalyticScreen}
+        component={AnalyticScreen_steps}
         options={{
           tabBarLabel: 'Analytic',
           tabBarColor: '#CC99CC',
@@ -55,6 +60,17 @@ export default function MainTabScreen(){
           tabBarColor: '#CC3366',
           tabBarIcon: ({ color }) => (
             <Icon name="leaderboard" color={color} size={26} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="History"
+        component={HistoryScreen}
+        options={{
+          tabBarLabel: 'History',
+          tabBarColor: '#CDC9A5',
+          tabBarIcon: ({ color }) => (
+            <Icon name="history" color={color} size={26} />
           ),
         }}
       />
