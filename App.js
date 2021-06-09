@@ -9,7 +9,8 @@ import
     ProfileScreen,
     AnalyticScreen,
     LoginScreen,RegisterScreen,
-    UpdateProfileScreen
+    UpdateProfileScreen,
+    HistoryScreen
   } from './Screens';
 import {DrawerContent} from './Screens/DrawerContent';
 const Drawer = createDrawerNavigator();
@@ -18,7 +19,7 @@ const App=()=>{
   //const [userToken, setUserToken] = React.useState(null);
   return(
       <NavigationContainer>
-          <Drawer.Navigator initialRouteName="Login" drawerContent={props => <DrawerContent {...props}/>}>
+          <Drawer.Navigator initialRouteName="Login" screenOptions={MainTabScreen} drawerContent={props => <DrawerContent {...props}/>}>
             <Drawer.Screen name = "Home" component={MainTabScreen}/>
             <Drawer.Screen name = "Profile" component = {ProfileScreen}/>
             <Drawer.Screen name="Leaderboard" component={LeaderboardScreen}/>
@@ -28,7 +29,7 @@ const App=()=>{
             <Drawer.Screen name="Login" component={LoginScreen}/>
             <Drawer.Screen name="Register" component={RegisterScreen}/>
             <Drawer.Screen name="Updateprofile" component={UpdateProfileScreen}/>
-
+            <Drawer.Screen name = "History" component={HistoryScreen}/>
           </Drawer.Navigator>
       </NavigationContainer>
   );

@@ -26,7 +26,7 @@ export default function RegisterScreen({navigation}) {
             email:email,
             password: pass,
             stepsOfday: 0,
-            target: 0,
+            target: 1200,
         }).then((snapshot) =>{
             console.log('ok')
         }).catch((error)=>{
