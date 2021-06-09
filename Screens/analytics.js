@@ -255,14 +255,6 @@ function AnalyticStack({navigation}){
         <SafeAreaView style={{flex: 1}}>
         <ScrollView>
       <View style={styles.container}>
-        <View style={styles.container2}>
-        <TouchableOpacity 
-        style={[styles.button,{marginRight:10}]}
-        onPress={() => navigation.navigate('Analytic_calo')}
-        >
-          <Text>Calo</Text>
-        </TouchableOpacity>
-        </View>
         <View>
           <MyBarChart_step/>
 
