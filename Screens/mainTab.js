@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import HomeScreen from './home';
 import ProfileScreen from './profile';
 import LeaderboardScreen from './leaderboard';
-import AnalyticScreen from './analytics_step';
+import AnalyticScreen from './analytics';
 
 const Tab = createMaterialBottomTabNavigator();
 

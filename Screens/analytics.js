@@ -8,84 +8,98 @@ const HomeStack = createStackNavigator();
 import firebase from '../components/FirebaseConfig'
 //import { get } from 'core-js/fn/reflect';
 
-function AnalyticStack_steps({navigation}){
-  function Checkday(s) {
-    var date = new Date();
-    var day = date.getDay();
-    switch (day) {
-      case 0:       //chủ nhật
-          const Step_cn = s;
-          km_cn = (Step_cn * 0.762).toFixed(2);
-          cal_cn = (Step_cn * 0.04).toFixed(2);  break;
-      case 1:       //thứ 2
-          const Step_t2 = s; 
-          km_t2 = (Step_t2 * 0.762).toFixed(2);
-          cal_t2 = (Step_t2 * 0.04).toFixed(2);  break;
-      case 2:       //thứ 3
-          const Step_t3 = s;
-          km_t3 = (Step_t3 * 0.762).toFixed(2);
-          cal_t3 = (Step_t3 * 0.04).toFixed(2);  break;
-      case 3:     //thứ 4
-          const Step_t4 = s;
-          km_t4 = (Step_t4 * 0.762).toFixed(2);
-          cal_t4 = (Step_t4 * 0.04).toFixed(2);  break;
-      case 4:   //thứ 5
-          const Step_t5 = s;
-          km_t5 = (Step_t5 * 0.762).toFixed(2);
-          cal_t5 = (Step_t5 * 0.04).toFixed(2);  break;
-      case 5:   //thứ 6
-          const Step_t6 = s;
-          km_t6 = (Step_t6 * 0.762).toFixed(2);
-          cal_t6 = (Step_t6 * 0.04).toFixed(2);  break;
-      case 6:   //thứ 7
-          const Step_t7 = s;
-          km_t7 = (Step_t7 * 0.762).toFixed(2);
-          cal_t7 = (Step_t7 * 0.04).toFixed(2);
-    }
-  }
-String(Step_t2);
-String(Step_t3);
-String(Step_t4);
-String(Step_t5);
-String(Step_t6);
-String(Step_t7);
-String(Step_cn);
-
-
-  var curr = new Date;
-  var firstday = new Date(curr.setDate(curr.getDate() - curr.getDay()));
-  var lastday = new Date(curr.setDate(curr.getDate() - curr.getDay()+6));
-  
-  var user = firebase.auth().currentUser;
+function AnalyticStack({navigation}){
+  const Step_cn = '0';  const km_cn = '0';  const cal_cn = '0'; 
+  const Step_t2 = '0';  const km_t2 = '0';  const cal_t2 = '0'; 
+  const Step_t3 = '0';  const km_t3 = '0';  const cal_t3 = '0'; 
+  const Step_t4 = '0';  const km_t4 = '0';  const cal_t4 = '0';   
+  const Step_t5 = '0';  const km_t5 = '0';  const cal_t5 = '0'; 
+  const Step_t6 = '0';  const km_t6 = '0';  const cal_t6 = '0'; 
+  const Step_t7 = '0';  const km_t7 = '0';  const cal_t7 = '0'; 
 
   var today = new Date();
+
+  var firstday = new Date(today.setDate(today.getDate() - today.getDay()));
+  var lastday = new Date(today.setDate(today.getDate() - today.getDay()+6));
+  
+  var user = firebase.auth().currentUser;
   var dd = String(today.getDate()).padStart(2, '0');
   var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
   var yyyy = today.getFullYear();
   // var time = today.toLocaleTimeString();
-
   today = dd + '-' + mm + '-' + yyyy;
+
+
   String(today);
 
+  var [dataStep, setData] = React.useState([]);
+ 
   const db = firebase.firestore();
-  const local_step = db.collection('User').doc(user.uid).collection('Step').doc(today).then((snapshot) =>{
-      const STEP = 0;
-      snapshot.forEach((doc) =>{
-      STEP.where(doc(today), '==', firstday).get()(
-          Checkday(STEP)
-        )  
-      })
-  })
-  var [step, setSTEP] = React.useState();
-  //const snapshot = local_step.where(doc, '==', firstday).get();
+  const docRef = db.collection('User').doc(user.uid).collection('Step');
+  docRef.orderBy('Step', 'dayOfWeek', 'desc').limit(7).get().then((snapshot) =>{
+    const dataStep = [];
+    console.log ("Get data");
+    snapshot.forEach((doc) =>{
+         // đẩy vào mảng 
+         // lấy STEP từ mảng  
+        dataStep.push({STEP: doc.data().Step, DAY: doc.data().dayOfWeek})
+        
+    });
+    setData(dataStep);
+  });
+  // render() {
+    const CheckStep = dataStep.forEach(function (Checkday) {
+      switch (dayOfWeek) {
+      case 'Sunday':       //chủ nhật
+          const Step_cn = Step;
+          km_cn = (Step_cn * 0.762).toFixed(2);
+          cal_cn = (Step_cn * 0.04).toFixed(2);  break;
+      case 'Monday':       //thứ 2
+          const Step_t2 = Step; 
+          km_t2 = (Step_t2 * 0.762).toFixed(2);
+          cal_t2 = (Step_t2 * 0.04).toFixed(2);  break;
+      case 'Tuesday':       //thứ 3
+          const Step_t3 = Step;
+          km_t3 = (Step_t3 * 0.762).toFixed(2);
+          cal_t3 = (Step_t3 * 0.04).toFixed(2);  break;
+      case 'Wednesday':     //thứ 4
+          const Step_t4 = Step;
+          km_t4 = (Step_t4 * 0.762).toFixed(2);
+          cal_t4 = (Step_t4 * 0.04).toFixed(2);  break;
+      case 'Thursday':   //thứ 5
+          const Step_t5 = Step;
+          km_t5 = (Step_t5 * 0.762).toFixed(2);
+          cal_t5 = (Step_t5 * 0.04).toFixed(2);  break;
+      case 'Friday':   //thứ 6
+          const Step_t6 = Step;
+          km_t6 = (Step_t6 * 0.762).toFixed(2);
+          cal_t6 = (Step_t6 * 0.04).toFixed(2);  break;
+      case 'Saturday':   //thứ 7
+          const Step_t7 = Step;
+          km_t7 = (Step_t7 * 0.762).toFixed(2);
+          cal_t7 = (Step_t7 * 0.04).toFixed(2);
+    };
+  });
+  // }
   
+ 
+
+  //const snapshot = local_step.where(doc, '==', firstday).get();
+//String(Step_t2);
+//String(Step_t3);
+//String(Step_t4);
+//String(Step_t5);
+//String(Step_t6);
+//String(Step_t7);
+//String(Step_cn);
  
   const MyBarChart_step = () => {
     return (
       <>
       <ImageBackground style={styles.Background1}>
-        <Text style={styles.header}>Steps ({firstday} - {lastday}) </Text>
+        <Text style={styles.header}>Steps ({/* {firstday} - {lastday} */}) </Text>
         <ScrollView horizontal={true}>
+        <React.Fragment>
         <BarChart
           data={{
             labels:
@@ -123,6 +137,7 @@ String(Step_cn);
             borderRadius: 0,
           }}
         />
+        </React.Fragment>
         </ScrollView>
       </ImageBackground>
       </>
@@ -132,14 +147,12 @@ String(Step_cn);
  
 
   const MyBarChart_km = () => {
-    //const kcal = (Step * 0.04).toFixed(2);
-    //const m = (Step * 0.762).toFixed(2);
-
     return (
       <>
       <ImageBackground style={styles.Background1}>
-        <Text style={styles.header}>Km ({firstday} - {lastday})</Text>
+        <Text style={styles.header}>Km ({/* {firstday} - {lastday} */})</Text>
         <ScrollView horizontal={true}>
+        <React.Fragment>
         <BarChart
           data={{
             labels:
@@ -177,6 +190,7 @@ String(Step_cn);
             borderRadius: 0,
           }}
         />
+        </React.Fragment>
         </ScrollView>
       </ImageBackground>
       </>
@@ -187,16 +201,12 @@ String(Step_cn);
 
 
   const MyBarChart_calo = () => {
-    //const kcal = (Step * 0.04).toFixed(2);
-    //const m = (Step * 0.762).toFixed(2);
-
-    
-   
     return (
       <>
       <ImageBackground style={styles.Background1}>
-        <Text style={styles.header}>Calo ({firstday} - {lastday})</Text>
+        <Text style={styles.header}>Calo ({/* {firstday} - {lastday} */})</Text>
         <ScrollView horizontal={true}>
+        <React.Fragment>
         <BarChart
           data={{
             labels:
@@ -234,6 +244,7 @@ String(Step_cn);
             borderRadius: 0,
           }}
         />
+        </React.Fragment>
         </ScrollView>
       </ImageBackground>
       </>
@@ -267,7 +278,7 @@ String(Step_cn);
 };
 
   
-export default function AnalyticScreen_steps({navigation}) {
+export default function AnalyticScreen({navigation}) {
 	return (
       <HomeStack.Navigator screenOptions={{
         headerStyle: {
@@ -278,7 +289,7 @@ export default function AnalyticScreen_steps({navigation}) {
         fontWeight: 'bold'
         }
     }}>
-        <HomeStack.Screen name="AnalyticSc" component={AnalyticStack_steps} options={{
+        <HomeStack.Screen name="AnalyticSc" component={AnalyticStack} options={{
         title:'Analytic',
         headerLeft: () => (
             <Icon.Button name="analytics" size={25} backgroundColor="#CC99CC" onPress={() => navigation.openDrawer()}></Icon.Button>
