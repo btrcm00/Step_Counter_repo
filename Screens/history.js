@@ -8,9 +8,10 @@ function HistoryStack(){
     const db = firebase.firestore();
     const user = firebase.auth().currentUser;
     var [data1, setData] = React.useState([]);
-    db.collection("User").doc(user.uid).collection("Step").onSnapshot((snap) =>{
+    /* db.collection("User").doc(user.uid).collection("Step").onSnapshot((snap) =>{
         const datas = [];
-        snap.forEach( doc =>{
+        snap.forEach( 
+            doc =>{
                 doc.ref.collection("Log").get().then(snapLog=>{
                     snapLog.forEach( aa=>{
                         datas.push({
@@ -20,9 +21,13 @@ function HistoryStack(){
                         })
                     })
                     setData(datas);
-                })
+                },
+            error => {
+                console.log(error)
+            }
+            )
         })
-     })
+     }) */
     return(
         <View>
             <ScrollView>
