@@ -53,7 +53,6 @@ function mqtt_connect() {
     messageArrived = mes.data;
     if(messageArrived != "on_shake"){
       count+=1;
-      messageArrived = "on_shake";
       dataChange = true;
     }
     const user = firebase.auth().currentUser;
@@ -70,7 +69,7 @@ function mqtt_connect() {
       Message: messageArrived, 
       Step: count
     })
-    
+    messageArrived = "on_shake";
   } 
   //count --> stepofday
   function onConnectionLost(responseObject) {
@@ -114,14 +113,18 @@ function HomeStackScreen({navigation}){
   const [Step, setStep] = React.useState('0'); 
   const user = firebase.auth().currentUser;
   const db = firebase.firestore();
-  var [target, setTarget] = React.useState('20000');
-  db.collection('User').doc(user.uid).onSnapshot((doc)=>{
-    if (doc.exists) {
-      setTarget(doc.data().target);
-    } else {
-        console.log("No such document!");
-    }
-  })
+  var [target, setTarget] = React.useState('5');
+  /* db.collection('User').doc(user.uid).onSnapshot(
+      doc => { 
+        if (doc.exists) {
+          setTarget(doc.data().target);
+        } else {
+            console.log("No such document!");
+        },
+      error => {
+          console.log(error)
+        }
+  }) */
 
   const kcal = (Step * 0.04).toFixed(2);
   const m = (Step * 0.762).toFixed(2);

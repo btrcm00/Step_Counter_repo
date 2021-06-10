@@ -1,5 +1,5 @@
 import React from 'react';
-import {SafeAreaView,Text,View,StyleSheet,Dimensions,ScrollView,ImageBackground, Button} from 'react-native';
+import {SafeAreaView,Text,View,StyleSheet,ScrollView,ImageBackground, Button} from 'react-native';
 import {LineChart,BarChart} from 'react-native-chart-kit';
 import { createStackNavigator } from '@react-navigation/stack';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -36,17 +36,23 @@ function AnalyticStack({navigation}){
  
   const db = firebase.firestore();
   const docRef = db.collection('User').doc(user.uid).collection('Step');
-  docRef.orderBy('Step', 'dayOfWeek', 'desc').limit(7).get().then((snapshot) =>{
+  /* docRef.orderBy('Step', 'dayOfWeek', 'desc').limit(7).get().then((snapshot) =>{
     const dataStep = [];
     console.log ("Get data");
-    snapshot.forEach((doc) =>{
-         // đẩy vào mảng 
-         // lấy STEP từ mảng  
+    snapshot.forEach(
+      doc =>{
         dataStep.push({STEP: doc.data().Step, DAY: doc.data().dayOfWeek})
-        
-    });
+      },
+      error => {
+        console.log(error)
+        }
+      );
     setData(dataStep);
-  });
+  }).then(()=>{
+  }).catch((error)=>{
+    console.log(error.message)
+  })
+   */
   // render() {
     const CheckStep = dataStep.forEach(function (Checkday) {
       switch (dayOfWeek) {
@@ -95,7 +101,6 @@ function AnalyticStack({navigation}){
  
   const MyBarChart_step = () => {
     return (
-      <>
       <ImageBackground style={styles.Background1}>
         <Text style={styles.header}>Steps ({/* {firstday} - {lastday} */}) </Text>
         <ScrollView horizontal={true}>
@@ -140,7 +145,6 @@ function AnalyticStack({navigation}){
         </React.Fragment>
         </ScrollView>
       </ImageBackground>
-      </>
     );
   };
   
