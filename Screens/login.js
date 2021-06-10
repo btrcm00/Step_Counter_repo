@@ -62,22 +62,22 @@ export default function LoginScreen({navigation}) {
     today = dd + '-' + mm + '-' + yyyy;
     String(today);
 
-    var d = new Date();
-        var weekday = new Array(7);
-        weekday[0] = "Sunday";
-        weekday[1] = "Monday";
-        weekday[2] = "Tuesday";
-        weekday[3] = "Wednesday";
-        weekday[4] = "Thursday";
-        weekday[5] = "Friday";
-        weekday[6] = "Saturday";
+    // var d = new Date();
+    //     var weekday = new Array(7);
+    //     weekday[0] = "Sunday";
+    //     weekday[1] = "Monday";
+    //     weekday[2] = "Tuesday";
+    //     weekday[3] = "Wednesday";
+    //     weekday[4] = "Thursday";
+    //     weekday[5] = "Friday";
+    //     weekday[6] = "Saturday";
 
-        var n = weekday[d.getDay()];
-        const db = firebase.firestore();
-        const user = firebase.auth().currentUser;
-        db.collection('User').doc(user.uid).collection('Step').doc(today).update({
-            dayOfWeek: n
-        })
+    //     var n = weekday[d.getDay()];
+    //     const db = firebase.firestore();
+    //     const user = firebase.auth().currentUser;
+    //     db.collection('User').doc(user.uid).collection('Step').doc(today).update({
+    //         dayOfWeek: n
+    //     })
 
     return (
       <View style={styles.container}>
