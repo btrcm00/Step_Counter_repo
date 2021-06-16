@@ -8,22 +8,33 @@ function HistoryStack(){
     const db = firebase.firestore();
     const user = firebase.auth().currentUser;
     var [data1, setData] = React.useState([]);
-    db.collection("User").doc(user.uid).collection("Step").onSnapshot((snap) =>{
+    /* db.collection("User").doc(user.uid).collection("Step").onSnapshot((snap) =>{
         const datas = [];
-        snap.forEach((doc) =>{
-            console.log(doc.data())
-            datas.push({step: doc.data().Step, time: doc.data().Time})
+        snap.forEach( 
+            doc =>{
+                doc.ref.collection("Log").get().then(snapLog=>{
+                    snapLog.forEach( aa=>{
+                        datas.push({
+                            message: aa.data().Message,
+                            step: aa.data().Step,
+                            time: aa.data().Time,
+                        })
+                    })
+                    setData(datas);
+                },
+            error => {
+                console.log(error)
+            }
+            )
         })
-        setData(datas);
-     })
+     }) */
     return(
         <View>
             <ScrollView>
                 {
                     data1.map((item, index) => (
                      <View key = {item.time} style = {styles.item}>
-                        <Text>{item.step}</Text>
-                        <Text>{item.time}</Text>
+                        <Text>{item.message + " " + item.time + " with "+String(item.step) +" steps"}</Text>
                      </View>
                   ))
                }
@@ -70,7 +81,7 @@ const styles = StyleSheet.create({
     margin:5,
     borderRadius: 10,
     shadowColor: "black",
-    padding:40,
+    padding:25,
     shadowOffset: {
     width: -5,
     height: 6,
