@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {IconButton} from 'react-native-paper';
 import Paho from '../src/paho-mqtt'
 import firebase from '../components/FirebaseConfig'
+
 var messageArrived = "on_shake";
 var dataChange = false;
 var runApp = false;
@@ -122,7 +123,7 @@ function getTime(uid,Step1){
 const HomeStack = createStackNavigator();
 var height = Dimensions.get('window').height;
 function HomeStackScreen({navigation}){
-  const [Step, setStep] = React.useState('5'); 
+  const [Step, setStep] = React.useState('0'); 
   const user = firebase.auth().currentUser;
   const db = firebase.firestore();
   var [target, setTarget] = React.useState('1200');

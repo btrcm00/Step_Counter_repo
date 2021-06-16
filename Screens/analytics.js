@@ -1,8 +1,7 @@
 import React from 'react';
-import {SafeAreaView,Text,View,StyleSheet,Dimensions,ScrollView,ImageBackground, Button} from 'react-native';
-import {LineChart,BarChart} from 'react-native-chart-kit';
+import {SafeAreaView,Text,View,StyleSheet,Dimensions,ScrollView,ImageBackground} from 'react-native';
+import {BarChart} from 'react-native-chart-kit';
 import { createStackNavigator } from '@react-navigation/stack';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 const HomeStack = createStackNavigator();
 import firebase from '../components/FirebaseConfig'
@@ -14,8 +13,6 @@ function AnalyticStack({navigation}){
   var yyyy = today.getFullYear();
   // var time = today.toLocaleTimeString();
   today = dd + '-' + mm + '-' + yyyy;
-
-
   String(today);
   var [stept2, setStept2] = React.useState(0); 
   var [kmt2, setKmt2] = React.useState(0); 
@@ -44,81 +41,68 @@ function AnalyticStack({navigation}){
   var [stepcn, setStepcn] = React.useState(0); 
   var [kmcn, setKmcn] = React.useState(0); 
   var [calcn, setCalcn] = React.useState(0);
-const Check=(step,day)=> {
-  switch (day) {
-    case 'Sunday' || 'x':       //chủ nhật
-        setStepcn(step)
-        km_cn = (step * 0.762).toFixed(2); 
-        setKmcn(km_cn)
-        cal_cn = (step * 0.04).toFixed(2); 
-        setCalcn(cal_cn);  break;
-    case 'Monday' || 'x':       //thứ 2 
-        setStept2(step)
-        km_t2 = (step * 0.762).toFixed(2); 
-        setKmt2(km_t2)
-        cal_t2 = (step * 0.04).toFixed(2); 
-        setCalt2(cal_t2);  break;
-    case 'Tuesday' || 'x':       //thứ 3
-        setStept3(step)
-        km_t3 = (step * 0.762).toFixed(2); 
-        setKmt3(km_t3)
-        cal_t3 = (step * 0.04).toFixed(2); 
-        setCalt3(cal_t3);  break;
-    case 'Wednesday' || 'x':     //thứ 4
-        setStept4(step)
-        km_t4 = (step * 0.762).toFixed(2); 
-        setKmt4(km_t4)
-        cal_t4 = (step * 0.04).toFixed(2); 
-        setCalt4(cal_t4);  break;
-    case 'Thursday' || 'x':   //thứ 5
-        setStept5(step)
-        km_t5 = (step * 0.762).toFixed(2); 
-        setKmt5(km_t5)
-        cal_t5 = (step * 0.04).toFixed(2); 
-        setCalt5(cal_t5);  break;
-    case 'Friday' || 'x':   //thứ 6
-        setStept6(step)
-        km_t6 = (step * 0.762).toFixed(2); 
-        setKmt6(km_t6)
-        cal_t6 = (step * 0.04).toFixed(2); 
-        setCalt6(cal_t6);  break;
-    case 'Saturday' || 'x':   //thứ 7
-        setStept7(step)
-        km_t7 = (step * 0.762).toFixed(2); 
-        setKmt7(km_t7)
-        cal_t7 = (step * 0.04).toFixed(2); 
-        setCalt7(cal_t7); 
+  const Check=(step,day)=> {
+    switch (day) {
+      case 'Sunday' || 'x':       //chủ nhật
+          setStepcn(step)
+          var km_cn = (step * 0.762).toFixed(2); 
+          setKmcn(km_cn)
+          var cal_cn = (step * 0.04).toFixed(2); 
+          setCalcn(cal_cn);  break;
+      case 'Monday' || 'x':       //thứ 2 
+          setStept2(step)
+          var km_t2 = (step * 0.762).toFixed(2)
+          setKmt2(km_t2)
+          var cal_t2 = (step * 0.04).toFixed(2)
+          setCalt2(cal_t2);  break;
+      case 'Tuesday' || 'x':       //thứ 3
+          setStept3(step)
+          var km_t3 = (step * 0.762).toFixed(2); 
+          setKmt3(km_t3)
+          var cal_t3 = (step * 0.04).toFixed(2); 
+          setCalt3(cal_t3);  break;
+      case 'Wednesday' || 'x':     //thứ 4
+          setStept4(step)
+          var km_t4 = (step * 0.762).toFixed(2); 
+          setKmt4(km_t4)
+          var cal_t4 = (step * 0.04).toFixed(2); 
+          setCalt4(cal_t4);  break;
+      case 'Thursday' || 'x':   //thứ 5
+          setStept5(step)
+          var km_t5 = (step * 0.762).toFixed(2); 
+          setKmt5(km_t5)
+          var cal_t5 = (step * 0.04).toFixed(2); 
+          setCalt5(cal_t5);  break;
+      case 'Friday' || 'x':   //thứ 6
+          setStept6(step)
+          var km_t6 = (step * 0.762).toFixed(2); 
+          setKmt6(km_t6)
+          var cal_t6 = (step * 0.04).toFixed(2); 
+          setCalt6(cal_t6);  break;
+      case 'Saturday' || 'x':   //thứ 7
+          setStept7(step)
+          var km_t7 = (step * 0.762).toFixed(2); 
+          setKmt7(km_t7)
+          var cal_t7 = (step * 0.04).toFixed(2); 
+          setCalt7(cal_t7); 
+    };
   };
-  console.log(step)
-  console.log(typeof (step))
-  console.log(stept2)
-};
-console.log(stept2)
   
   var [dataS, setData] = React.useState([]);
   const db = firebase.firestore();
   db.collection('User').doc(user.uid).collection('Step').orderBy('Step', 'desc').limit(7).onSnapshot((snap) => {
     const dataStep = []; 
-    console.log ("Get data");
         snap.forEach(doc =>{
-          if(doc.exist){
-            Check(doc.data().Step, doc.data().dayOfWeek)
-          }
-          else{
-            Check(0, 'x')
-          }
+          Check(doc.data().Step, doc.data().dayOfWeek)
+          
         });
-      })
-
-  
-
-
+  })
   const MyBarChart_step = () => {
     
     return (
       <>
       <ImageBackground style={styles.Background1}>
-        <Text style={styles.header}>Steps of the last 7 days </Text>
+        <Text style={styles.header}>Steps in this week </Text>
         <ScrollView horizontal={true}>
        
         <BarChart
@@ -131,25 +115,24 @@ console.log(stept2)
             }
             ]
           }}
-          yAxisSuffix = " steps"
+          yAxisSuffix = ""
           width={ 500}  // Dimensions.get('window').width
           height={300}
-          chartConfig={{
-            backgroundColor: '#a8c6fa',
-            backgroundGradientFrom: '#a8c6fa',
-            backgroundGradientTo: '#a8c6fa',
+          fromZero = {true}
+          withInnerLines = {true}
+          showValuesOnTopOfBars = {false}
+          showBarTops = {true}
+          const chartConfig = {{
             decimalPlaces: 0,
-          
-            color: (opacity = 0) => `rgba(03, 30, 75, 0.7)`,
-            style: {
-              borderRadius: 0,
-            },
-          }}
+            backgroundGradientFrom: "#1E2923",
+            backgroundGradientFromOpacity: 0,
+            backgroundGradientTo: "gray",
+            backgroundGradientToOpacity: 0.5,
+            color: (opacity = 1) => `rgba(70, 0, 146, ${opacity})`,
+            strokeWidth: 2, // optional, default 3
+            barPercentage: 0.7,
+            useShadowColorFromDataset: false, // optional
 
-          style={{
-            marginVertical: 0,
-            marginHorizontal: 0,
-            borderRadius: 0,
           }}
         />
         
@@ -165,7 +148,7 @@ console.log(stept2)
     return (
       <>
       <ImageBackground style={styles.Background1}>
-        <Text style={styles.header}>Distance of the last 7 days </Text>
+        <Text style={styles.header}>Distance in this week </Text>
         <ScrollView horizontal={true}>
         <React.Fragment>
         <BarChart 
@@ -188,22 +171,21 @@ console.log(stept2)
           yAxisSuffix = " m"
           width={ 500}  // Dimensions.get('window').width
           height={300}
-          chartConfig={{
-            backgroundColor: '#a8c6fa',
-            backgroundGradientFrom: '#a8c6fa',
-            backgroundGradientTo: '#a8c6fa',
-            decimalPlaces: 2,
-          
-            color: (opacity = 0) => `rgba(03, 30, 75, 0.7)`,
-            style: {
-              borderRadius: 0,
-            },
-          }}
-
-          style={{
-            marginVertical: 0,
-            marginHorizontal: 0,
-            borderRadius: 0,
+          yAxisInterval = {1}
+          fromZero = {true}
+          withInnerLines = {true}
+          showValuesOnTopOfBars = {false}
+          showBarTops = {true}
+          const chartConfig = {{
+            decimalPlaces: 1,
+            backgroundGradientFrom: "#1E2923",
+            backgroundGradientFromOpacity: 0,
+            backgroundGradientTo: "gray",
+            backgroundGradientToOpacity: 0.5,
+            color: (opacity = 1) => `rgba(70, 0, 146, ${opacity})`,
+            strokeWidth: 2, // optional, default 3
+            barPercentage: 0.7,
+            useShadowColorFromDataset: false // optional
           }}
         />
         </React.Fragment>
@@ -220,7 +202,7 @@ console.log(stept2)
     return (
       <>
       <ImageBackground style={styles.Background1}>
-        <Text style={styles.header}>Number of calories consumed in the last 7 days</Text>
+        <Text style={styles.header}>Number of calories consumed in this week</Text>
         <ScrollView horizontal={true}>
         <React.Fragment>
         <BarChart
@@ -243,33 +225,21 @@ console.log(stept2)
           yAxisSuffix = " cal"
           width= {500}  // Dimensions.get('window').width
           height={300}
-          chartConfig={{
-            backgroundColor: '#a8c6fa',
-            backgroundGradientFrom: '#a8c6fa',
-            backgroundGradientTo: '#a8c6fa',
-            decimalPlaces: 2,
-          
-            color: (opacity = 0) => `rgba(03, 30, 75, 0.7)`,
-            style: {
-              borderRadius: 0,
-            },
+          fromZero = {true}
+          withInnerLines = {true}
+          showValuesOnTopOfBars = {false}
+          showBarTops = {true}
+          const chartConfig = {{
+            decimalPlaces: 1,
+            backgroundGradientFrom: "#1E2923",
+            backgroundGradientFromOpacity: 0,
+            backgroundGradientTo: "gray",
+            backgroundGradientToOpacity: 0.5,
+            color: (opacity = 1) => `rgba(70, 0, 146, ${opacity})`,
+            strokeWidth: 2, // optional, default 3
+            barPercentage: 0.7,
+            useShadowColorFromDataset: false, // optional
           }}
-          /* chartConfig={{
-            backgroundColor: "#a8c6fa",
-            backgroundGradientFrom: "#a8c6fa",
-            backgroundGradientTo: "#a8c6fa",
-            decimalPlaces: 2, // optional, defaults to 2dp
-            color: (opacity = 1) => `rgba(03, 30, 75, ${opacity})`,
-            labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-            style: {
-              borderRadius: 16
-            },
-            propsForDots: {
-              r: "6",
-              strokeWidth: "2",
-              stroke: "#ffa726"
-            }
-          }} */
           style={{
             marginVertical: 0,
             marginHorizontal: 0,
@@ -358,12 +328,19 @@ const styles = StyleSheet.create({
       fontSize: 18,
       padding: 16,
       marginTop: 0,
-
+      color: `rgba(70, 0, 146, 1)`,
+      fontWeight: 'bold',
+      shadowColor: "black",
+      shadowOffset: {
+      width: -3,
+      height: 3,
+      },
+      shadowOpacity: 0.2,
+      elevation: 4,
     },
     Background1: {
       height: 350,
-      backgroundColor: '#a8c6fa',
-      marginBottom:50,
+      backgroundColor: 'white',
     },
 
     Background2: {

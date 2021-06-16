@@ -30,7 +30,7 @@ export function DrawerContent(props) {
                     <View style={styles.userInfoSection}>
                         <View style={{flexDirection:'row',marginTop: 15}}>
                             <Avatar.Image 
-                                source = {require('./StepCounterImg.png')}
+                                source = {require('../components/StepCounterImg.png')}
                                 size={50}
                             />
                             <View style={{marginLeft:15, flexDirection:'column'}}>
