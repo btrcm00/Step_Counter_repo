@@ -29,9 +29,7 @@ function ProfileStack({navigation}){
         <View style = {{flex:1, alignItems:'center',backgroundColor:'#FAF0E6'}}>
             <View style={[styles.tag,{flex:1.3,flexDirection:'row',alignItems:'center'}]}>
                 <Avatar.Image 
-                    source={{ 
-                        uri: 'https://api.adorable.io/avatars/80/abott@adorable.png', 
-                    }}
+                    source={require('../components/StepCounterImg.png')}
                     size={70}
                     style={{marginLeft:10}}
                 />

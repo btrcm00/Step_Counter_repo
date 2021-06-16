@@ -60,7 +60,7 @@ export default function LoginScreen({navigation}) {
                 <View style={styles.container1}>
                 <Image
                     style = {styles.image}
-                    source={require('./StepCounterImg.png')}
+                    source={require('../components/StepCounterImg.png')}
                 />
                 </View>
             </View>
