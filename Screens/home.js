@@ -53,7 +53,6 @@ function mqtt_connect() {
     messageArrived = mes.data;
     if(messageArrived != "on_shake"){
       count+=1;
-      messageArrived = "on_shake";
       dataChange = true;
     }
     const user = firebase.auth().currentUser;
@@ -70,6 +69,7 @@ function mqtt_connect() {
       Message: messageArrived, 
       Step: count
     })
+    messageArrived = "on_shake";
   } 
   //count --> stepofday
   function onConnectionLost(responseObject) {
@@ -86,18 +86,30 @@ function mqtt_connect() {
 }
 
 function getTime(uid,Step1){
+  var d = new Date();
+        var weekday = new Array(7);
+        weekday[0] = "Sunday";
+        weekday[1] = "Monday";
+        weekday[2] = "Tuesday";
+        weekday[3] = "Wednesday";
+        weekday[4] = "Thursday";
+        weekday[5] = "Friday";
+        weekday[6] = "Saturday";
+
+        var n = weekday[d.getDay()];
+
   var today = new Date();
   var dd = String(today.getDate()).padStart(2, '0');
   var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
   var yyyy = today.getFullYear();
   var time = today.toLocaleTimeString();
 
-  today = time + " " + dd + '-' + mm + '-' + yyyy;
+  today = dd + '-' + mm + '-' + yyyy;
   String(today);
   console.log(today);
-  firebase.firestore().collection('User').doc(uid).collection('Step').doc(today).set({
+  firebase.firestore().collection('User').doc(uid).collection('Step').doc(today).update({
     Step: Step1,
-    Time: today,
+    dayOfWeek: n
   })
 
   //set stepOfday
@@ -110,16 +122,17 @@ function getTime(uid,Step1){
 const HomeStack = createStackNavigator();
 var height = Dimensions.get('window').height;
 function HomeStackScreen({navigation}){
-  const [Step, setStep] = React.useState('44'); 
+  const [Step, setStep] = React.useState('5'); 
   const user = firebase.auth().currentUser;
   const db = firebase.firestore();
-  var [target, setTarget] = React.useState('20000');
-  db.collection('User').doc(user.uid).onSnapshot((doc)=>{
-    if (doc.exists) {
-      setTarget(doc.data().target);
-    } else {
-        console.log("No such document!");
-    }
+  var [target, setTarget] = React.useState('1200');
+  db.collection('User').doc(user.uid).onSnapshot(
+      doc => { 
+        if (doc.exists) {
+          setTarget(doc.data().target);
+        } else {
+            console.log("No such document!");
+        }
   })
 
   const kcal = (Step * 0.04).toFixed(2);
@@ -167,6 +180,17 @@ function HomeStackScreen({navigation}){
           ],
         ) */
       }
+      var today = new Date();
+      var dd = String(today.getDate()).padStart(2, '0');
+      var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+      var yyyy = today.getFullYear();
+      var time = today.toLocaleTimeString();
+      today = dd + '-' + mm + '-' + yyyy;
+      firebase.firestore().collection('User').doc(user.uid).collection('Step').doc(today).collection('Log').doc(time +' '+today).set({
+        Time: time + ' ' + today,
+        Message: "Target completed at ", 
+        Step: count
+      })
   }
   const onHandleTargetCompleted = () =>{
     navigation.navigate('Home')

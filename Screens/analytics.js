@@ -6,24 +6,8 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 const HomeStack = createStackNavigator();
 import firebase from '../components/FirebaseConfig'
-// import { Checkbox } from 'react-native-paper';
-// import { map } from 'core-js/core/array';
-//import { get } from 'core-js/fn/reflect';
-
 function AnalyticStack({navigation}){
-  var Step_cn = 0;  var km_cn = 0;  var cal_cn = 0; 
-  var Step_t2= 0;  var km_t2 = 0;  var cal_t2 = 0; 
-  var Step_t3= 0;  var km_t3 = 0;  var cal_t3 = 0; 
-  var Step_t4= 0;  var km_t4 = 0;  var cal_t4 = 0;  
-  var Step_t5= 0;  var km_t5 = 0;  var cal_t5 = 0; 
-  var Step_t6= 0;  var km_t6 = 0;  var cal_t6 = 0; 
-  var Step_t7= 0;  var km_t7 = 0;  var cal_t7 = 0; 
-
   var today = new Date();
-
-  var firstday = new Date(today.setDate(today.getDate() - today.getDay()));
-  var lastday = new Date(today.setDate(today.getDate() - today.getDay()+6));
-  
   var user = firebase.auth().currentUser;
   var dd = String(today.getDate()).padStart(2, '0');
   var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -33,115 +17,83 @@ function AnalyticStack({navigation}){
 
 
   String(today);
+  var [stept2, setStept2] = React.useState(0); 
+  var [kmt2, setKmt2] = React.useState(0); 
+  var [calt2, setCalt2] = React.useState(0);
 
- 
-//   const db = firebase.firestore();
-//   const docref = db.collection('User').doc(user.uid).collection('Step')
-//   var [STEP, setData] = React.useState(docref.Step);
-//   var [DAY, setDay] = React.useState(docref.dayOfWeek);
-//   db.collection('User').doc(user.uid).collection('Step')/* .orderBy('', 'desc') */.limit(7).onSnapshot((doc) =>{
-//     console.log ("Get data"); 
-//     /* snap.forEach((doc) =>{
-//        dataStep.push({STEP: doc.data().Step, DAY: doc.data().dayOfWeek})  */ 
-//        if (doc.exists) {
-//         setData(doc.data().Step);
-//         setDay(doc.data().dayOfWeek)
-//     } else {
-//         // doc.data() will be undefined in this case
-//         console.log("No such document!");
-//     }
-        
-//       });
-//       switch (DAY) {
-//         case 'Sunday':       //chủ nhật
-//             const Step_cn = Step;
-//             km_cn = (Step_cn * 0.762).toFixed(2);
-//             cal_cn = (Step_cn * 0.04).toFixed(2);  break;
-//         case 'Monday':       //thứ 2
-//             const Step_t2 = Step; 
-//             km_t2 = (Step_t2 * 0.762).toFixed(2);
-//             cal_t2 = (Step_t2 * 0.04).toFixed(2);  break;
-//         case 'Tuesday':       //thứ 3
-//             const Step_t3 = Step;
-//             km_t3 = (Step_t3 * 0.762).toFixed(2);
-//             cal_t3 = (Step_t3 * 0.04).toFixed(2);  break;
-//         case 'Wednesday':     //thứ 4
-//             const Step_t4 = STEP;
-//             km_t4 = (Step_t4 * 0.762).toFixed(2);
-//             cal_t4 = (Step_t4 * 0.04).toFixed(2);  break;
-//         case 'Thursday':   //thứ 5
-//             const Step_t5 = Step;
-//             km_t5 = (Step_t5 * 0.762).toFixed(2);
-//             cal_t5 = (Step_t5 * 0.04).toFixed(2);  break;
-//         case 'Friday':   //thứ 6
-//             const Step_t6 = Step;
-//             km_t6 = (Step_t6 * 0.762).toFixed(2);
-//             cal_t6 = (Step_t6 * 0.04).toFixed(2);  break;
-//         case 'Saturday':   //thứ 7
-//             const Step_t7 = Step;
-//             km_t7 = (Step_t7 * 0.762).toFixed(2);
-//             cal_t7 = (Step_t7 * 0.04).toFixed(2);
-//       };
-    
-// console.log(STEP)
-var [stept2, setStept2] = React.useState(0); var [kmt2, setKmt2] = React.useState(0); var [calt2, setCalt2] = React.useState(0);
-var [stept3, setStept3] = React.useState(0); var [kmt3, setKmt3] = React.useState(0); var [calt3, setCalt3] = React.useState(0);
-var [stept4, setStept4] = React.useState(0); var [kmt4, setKmt4] = React.useState(0); var [calt4, setCalt4] = React.useState(0);
-var [stept5, setStept5] = React.useState(0); var [kmt5, setKmt5] = React.useState(0); var [calt5, setCalt5] = React.useState(0);
-var [stept6, setStept6] = React.useState(0); var [kmt6, setKmt6] = React.useState(0); var [calt6, setCalt6] = React.useState(0);
-var [stept7, setStept7] = React.useState(0); var [kmt7, setKmt7] = React.useState(0); var [calt7, setCalt7] = React.useState(0);
-var [stepcn, setStepcn] = React.useState(0); var [kmcn, setKmcn] = React.useState(0); var [calcn, setCalcn] = React.useState(0);
-function Check(step,day) {
+  var [stept3, setStept3] = React.useState(0); 
+  var [kmt3, setKmt3] = React.useState(0); 
+  var [calt3, setCalt3] = React.useState(0);
+
+  var [stept4, setStept4] = React.useState(0); 
+  var [kmt4, setKmt4] = React.useState(0); 
+  var [calt4, setCalt4] = React.useState(0);
+
+  var [stept5, setStept5] = React.useState(0); 
+  var [kmt5, setKmt5] = React.useState(0); 
+  var [calt5, setCalt5] = React.useState(0);
+
+  var [stept6, setStept6] = React.useState(0); 
+  var [kmt6, setKmt6] = React.useState(0); 
+  var [calt6, setCalt6] = React.useState(0);
+
+  var [stept7, setStept7] = React.useState(0); 
+  var [kmt7, setKmt7] = React.useState(0); 
+  var [calt7, setCalt7] = React.useState(0);
+
+  var [stepcn, setStepcn] = React.useState(0); 
+  var [kmcn, setKmcn] = React.useState(0); 
+  var [calcn, setCalcn] = React.useState(0);
+const Check=(step,day)=> {
   switch (day) {
-    case 'Sunday':       //chủ nhật
-        Step_cn = step;
-        setStepcn(Step_cn)
-        km_cn = (Step_cn * 0.762).toFixed(2); setKmcn(km_cn)
-        cal_cn = (Step_cn * 0.04).toFixed(2); setCalcn(cal_cn);  break;
-    case 'Monday':       //thứ 2
-        Step_t2 = step; 
-        setStept2(Step_t2)
-        km_t2 = (Step_t2 * 0.762).toFixed(2); setKmt2(km_t2)
-        cal_t2 = (Step_t2 * 0.04).toFixed(2); setCalt2(cal_t2);  break;
-    case 'Tuesday':       //thứ 3
-        Step_t3 = step;
-        setStept3(Step_t3)
-        km_t3 = (Step_t3 * 0.762).toFixed(2); setKmt3(km_t3)
-        cal_t3 = (Step_t3 * 0.04).toFixed(2); setCalt3(cal_t3);  break;
-    case 'Wednesday':     //thứ 4
-        Step_t4 = step;
-        setStept4(Step_t4)
-        km_t4 = (Step_t4 * 0.762).toFixed(2); setKmt4(km_t4)
-        cal_t4 = (Step_t4 * 0.04).toFixed(2); setCalt4(cal_t4);  break;
-    case 'Thursday':   //thứ 5
-        Step_t5 = step;
-        setStept5(Step_t5)
-        km_t5 = (Step_t5 * 0.762).toFixed(2); setKmt5(km_t5)
-        cal_t5 = (Step_t5 * 0.04).toFixed(2); setCalt5(cal_t5);  break;
-    case 'Friday':   //thứ 6
-        Step_t6 = step;
-        setStept6(Step_t6)
-        km_t6 = (Step_t6 * 0.762).toFixed(2); setKmt6(km_t6)
-        cal_t6 = (Step_t6 * 0.04).toFixed(2); setCalt6(cal_t6);  break;
-    case 'Saturday':   //thứ 7
-        Step_t7 = step;
-        setStept7(Step_t7)
-        km_t7 = (Step_t7 * 0.762).toFixed(2); setKmt7(km_t7)
-        cal_t7 = (Step_t7 * 0.04).toFixed(2); setCalt7(cal_t7); 
+    case 'Sunday' || 'x':       //chủ nhật
+        setStepcn(step)
+        km_cn = (step * 0.762).toFixed(2); 
+        setKmcn(km_cn)
+        cal_cn = (step * 0.04).toFixed(2); 
+        setCalcn(cal_cn);  break;
+    case 'Monday' || 'x':       //thứ 2 
+        setStept2(step)
+        km_t2 = (step * 0.762).toFixed(2); 
+        setKmt2(km_t2)
+        cal_t2 = (step * 0.04).toFixed(2); 
+        setCalt2(cal_t2);  break;
+    case 'Tuesday' || 'x':       //thứ 3
+        setStept3(step)
+        km_t3 = (step * 0.762).toFixed(2); 
+        setKmt3(km_t3)
+        cal_t3 = (step * 0.04).toFixed(2); 
+        setCalt3(cal_t3);  break;
+    case 'Wednesday' || 'x':     //thứ 4
+        setStept4(step)
+        km_t4 = (step * 0.762).toFixed(2); 
+        setKmt4(km_t4)
+        cal_t4 = (step * 0.04).toFixed(2); 
+        setCalt4(cal_t4);  break;
+    case 'Thursday' || 'x':   //thứ 5
+        setStept5(step)
+        km_t5 = (step * 0.762).toFixed(2); 
+        setKmt5(km_t5)
+        cal_t5 = (step * 0.04).toFixed(2); 
+        setCalt5(cal_t5);  break;
+    case 'Friday' || 'x':   //thứ 6
+        setStept6(step)
+        km_t6 = (step * 0.762).toFixed(2); 
+        setKmt6(km_t6)
+        cal_t6 = (step * 0.04).toFixed(2); 
+        setCalt6(cal_t6);  break;
+    case 'Saturday' || 'x':   //thứ 7
+        setStept7(step)
+        km_t7 = (step * 0.762).toFixed(2); 
+        setKmt7(km_t7)
+        cal_t7 = (step * 0.04).toFixed(2); 
+        setCalt7(cal_t7); 
   };
   console.log(step)
   console.log(typeof (step))
-  console.log({stept2})
- /*  Number(Step_t2)
-  Number(Step_t3)
-  Number(Step_t4)
-  Number(Step_t5)
-  Number(Step_t6)
-  Number(Step_t7)
-  Number(Step_cn)
-  console.log(typeof (Step_t4)) */
+  console.log(stept2)
 };
-console.log({stept2})
+console.log(stept2)
   
   var [dataS, setData] = React.useState([]);
   const db = firebase.firestore();
@@ -149,29 +101,13 @@ console.log({stept2})
     const dataStep = []; 
     console.log ("Get data");
         snap.forEach(doc =>{
-          Check(doc.data().Step, doc.data().dayOfWeek)
-            // dataStep.push({ 
-            //   STEP: doc.data().Step, 
-            //   DAY: doc.data().dayOfWeek
-            // })
-            // console.log('success')
-            
+          if(doc.exist){
+            Check(doc.data().Step, doc.data().dayOfWeek)
+          }
+          else{
+            Check(0, 'x')
+          }
         });
-        error => console.log('fail');
-        // setData(dataStep);
-        // console.log(dataStep)
-        // dataStep.forEach(Object => {Check(step,day)})
-        // console.log(Step_t4)     
-        // dataStep.push({
-        //   Monday: Step_t2,
-        //   Tuesday: Step_t3,
-        //   Wednesday: Step_t4,
-        //   Thusday: Step_t5,
-        //   Friday: Step_t6,
-        //   Sartuday: Step_t7,
-        //   Sunday: Step_cn
-        // })
-        // setData(dataStep)
       })
 
   
@@ -182,7 +118,7 @@ console.log({stept2})
     return (
       <>
       <ImageBackground style={styles.Background1}>
-        <Text style={styles.header}>Steps ({/* {firstday} - {lastday} */}) </Text>
+        <Text style={styles.header}>Steps of the last 7 days </Text>
         <ScrollView horizontal={true}>
        
         <BarChart
@@ -195,6 +131,7 @@ console.log({stept2})
             }
             ]
           }}
+          yAxisSuffix = " steps"
           width={ 500}  // Dimensions.get('window').width
           height={300}
           chartConfig={{
@@ -228,7 +165,7 @@ console.log({stept2})
     return (
       <>
       <ImageBackground style={styles.Background1}>
-        <Text style={styles.header}>Meter ({/* {firstday} - {lastday} */})</Text>
+        <Text style={styles.header}>Distance of the last 7 days </Text>
         <ScrollView horizontal={true}>
         <React.Fragment>
         <BarChart 
@@ -248,13 +185,14 @@ console.log({stept2})
               },
             ],
           }}
+          yAxisSuffix = " m"
           width={ 500}  // Dimensions.get('window').width
           height={300}
           chartConfig={{
             backgroundColor: '#a8c6fa',
             backgroundGradientFrom: '#a8c6fa',
             backgroundGradientTo: '#a8c6fa',
-            decimalPlaces: 0,
+            decimalPlaces: 2,
           
             color: (opacity = 0) => `rgba(03, 30, 75, 0.7)`,
             style: {
@@ -282,7 +220,7 @@ console.log({stept2})
     return (
       <>
       <ImageBackground style={styles.Background1}>
-        <Text style={styles.header}>Calo ({/* {firstday} - {lastday} */})</Text>
+        <Text style={styles.header}>Number of calories consumed in the last 7 days</Text>
         <ScrollView horizontal={true}>
         <React.Fragment>
         <BarChart
@@ -302,20 +240,36 @@ console.log({stept2})
               },
             ],
           }}
-          width={ 500}  // Dimensions.get('window').width
+          yAxisSuffix = " cal"
+          width= {500}  // Dimensions.get('window').width
           height={300}
           chartConfig={{
             backgroundColor: '#a8c6fa',
             backgroundGradientFrom: '#a8c6fa',
             backgroundGradientTo: '#a8c6fa',
-            decimalPlaces: 0,
+            decimalPlaces: 2,
           
             color: (opacity = 0) => `rgba(03, 30, 75, 0.7)`,
             style: {
               borderRadius: 0,
             },
           }}
-
+          /* chartConfig={{
+            backgroundColor: "#a8c6fa",
+            backgroundGradientFrom: "#a8c6fa",
+            backgroundGradientTo: "#a8c6fa",
+            decimalPlaces: 2, // optional, defaults to 2dp
+            color: (opacity = 1) => `rgba(03, 30, 75, ${opacity})`,
+            labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+            style: {
+              borderRadius: 16
+            },
+            propsForDots: {
+              r: "6",
+              strokeWidth: "2",
+              stroke: "#ffa726"
+            }
+          }} */
           style={{
             marginVertical: 0,
             marginHorizontal: 0,
