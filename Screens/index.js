@@ -8,3 +8,4 @@ export {default as AnalyticScreen} from './analytics'
 export {default as MainTabScreen} from './mainTab'
 export {default as UpdateProfileScreen} from './updateProfile'
 export {default as HistoryScreen} from './history'
+
