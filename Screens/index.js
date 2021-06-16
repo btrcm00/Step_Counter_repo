@@ -4,9 +4,11 @@ export {default as LoginScreen} from './login'
 export {default as ProfileScreen} from './profile'
 export {default as RegisterScreen} from './register'
 export {default as LeaderboardScreen} from './leaderboard'
-export {default as AnalyticScreen_steps} from './analytics_step'
+export {default as AnalyticScreen} from './analytics'
 export {default as MainTabScreen} from './mainTab'
-export {default as AnalyticScreen_km} from './analytics_km'
-export {default as AnalyticScreen_calo} from './analytics_calo'
+
 export {default as UpdateProfileScreen} from './updateProfile'
+
+
 export {default as HistoryScreen} from './history'
+
